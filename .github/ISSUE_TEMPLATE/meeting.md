@@ -1,4 +1,4 @@
-# [COMMUNITY NAME] Working Group Meeting - <%= date.toFormat("MMMM d, yyyy") %>
+# ASWF Continuous Integration Working Group Meeting - <%= date.toFormat("MMMM d, yyyy") %>
 
 ## Attendance
 
@@ -15,7 +15,6 @@ Extracted from **<%= agendaLabel %>** labelled issues and pull requests from **<
 }).join('\n') %>
 
 ## Action Items
-
 
 ## Notes
 

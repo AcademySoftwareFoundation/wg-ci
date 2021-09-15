@@ -13,6 +13,6 @@ jobs:
         SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
       with:
         fromMailAddress: 'tac@lists.aswf.io'
-        toMailAddress: '[MAILING LIST EMAIL]'
-        subject: '[COMMUNITY NAME] Working Group meeting agenda for today'
+        toMailAddress: 'tac@lists.aswf.io'
+        subject: 'ASWF CI Working Group meeting agenda for today'
         labelsToMonitor: 'meeting'
