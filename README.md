@@ -1,28 +1,39 @@
 # ASWF Continuous Integration Working Group
 
-The ASWF’s investment in CI build infrastructure will provide the industry’s open source software community with the solid foundation needed to improve best practices and address the unique challenges we face.
+The ASWF's investment in CI build infrastructure provides the industry's open source software community with the solid foundation needed to improve best practices and address the unique challenges we face.
 
 The benefits to the community of having a CI build infrastructure include:
 
 * Sharing open source build configurations, scripts, and recipes enables reference builds and alignment between user and vendor configurations
 * Reduce duplicated effort in creating build and runtime environments to run open source software, extending VFX Reference Platform adoption with benefits to open build configurations and reference builds
 * Facilitate community development by exposing the tools necessary to build, run and test OSS
-* Reference builds are produced outside one organization’s firewall and the organization is not in the distribution path
+* Reference builds are produced outside one organization's firewall and the organization is not in the distribution path
 * Lower the barrier to entry for using additional software components and software development
 * Increased adoption of the VFX Reference Platform
 
+The ASWF Continuous Integration (CI) Working Group is tasked to investigate and deliver tools, procedures and services used by ASWF projects in their development process, including:
+
+* Revision control
+* Build toolchains
+* CI build environments
+* Testing
+* Packaging and distribution
+
 Goals of the CI WG are:
 
-1. Managing multiple version builds, plus requirements for dependencies via the VFX Reference Platform
-2. Consultative assistance transitioning to a community CI platform
-3. Support for Mac and Windows builds in addition to Linux
-4. Support for GPU-enabled build and testing
-5. Support for integration of commercial applications and libraries for testing purposes
-6. Help integrate ASWF projects with established package management systems
+* Provide and maintain VFX Reference Platform compliant build environments to be used by anyone requiring a common, reproducible Linux CI build process
+* Provide expertise and consulting on tooling and CI processes for ASWF projects
+* Identify common patterns between projects that can be factored out and reused.
+* Support for Mac and Windows builds
+* Support for multi-platform GPU-enabled build and testing
+* Support for additional CPU architectures build and testing
+* Support for integration of commercial applications and libraries for testing purposes
+* Help integrate ASWF projects with established package management systems
+* Provide a forum for the exchange of ideas between individuals interested in all aspects of the tooling and processes involved in software development, building and distribution
 
 Non-goals of the CI WG are:
 
-1. The CI Working Group does not aim to prescribe to individual projects how they should set up their infrastructure: projects are free to adopt or adapt what best suits their needs.
+* The CI Working Group does not aim to prescribe to individual projects how they should set up their infrastructure: projects are free to adopt or adapt what best suits their needs.
 
 The TAC member sponsor of this working group is Daniel Heckenberg.
 
