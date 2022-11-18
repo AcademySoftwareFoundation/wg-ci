@@ -10,6 +10,10 @@ jobs:
     steps:
       - name: Update APT repo for CUDA
         run: |
+          cat /etc/apt/sources.list
+          ls -l /etc/apt/sources.list.d/
+          sed -i '/developer\.download\.nvidia\.com\/compute\/cuda\/repos/d' /etc/apt/sources.list.d/*
+          sed -i '/developer\.download\.nvidia\.com\/compute\/machine-learning\/repos/d' /etc/apt/sources.list.d/*
           sudo apt-key del 7fa2af80
           wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb
           sudo dpkg -i cuda-keyring_1.0-1_all.deb
