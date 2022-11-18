@@ -1,0 +1,16 @@
+name: GPU_TEST
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+jobs:
+  ubuntu-gpu:
+    runs-on: ubuntu-20.04-gpu-6c-112g-336h-16vr
+    steps:
+      - name Update APT repo for CUDA
+        run: |
+          sudo apt-key del 7fa2af80
+          wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb
+          sudo dpkg -i cuda-keyring_1.0-1_all.deb
+          time sudo apt-get update
