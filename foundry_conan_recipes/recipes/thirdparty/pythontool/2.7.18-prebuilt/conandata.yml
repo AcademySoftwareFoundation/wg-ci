@@ -1,0 +1,4 @@
+sources:
+  "2.7.18-prebuilt":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/cpython.git
+    git_hash: 1838768f621a6aef21460859ed3097189d36e4c8 # head of foundry/v2.7.18 branch

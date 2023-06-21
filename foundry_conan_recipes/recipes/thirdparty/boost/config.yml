@@ -1,0 +1,89 @@
+versions:
+  "1.80.0":
+    folder: "all"
+    variants:
+      options:
+        # Static
+        - python_version: null
+          shared: False
+          namespace: null
+        - python_version: "3.10"
+          shared: False
+          namespace: null
+        # Shared
+        - python_version: "3.10"
+          shared: True
+          namespace: null
+        # Shared (custom namespace)
+        - python_version: null
+          shared: True
+          namespace: "foundryboost"
+        - python_version: "3.10"
+          shared: True
+          namespace: "foundryboost"
+      config:
+        pkgref_namespace: null
+      only_profiles:
+        - vfx23
+  "1.76.0":
+    folder: "all"
+    variants:
+      options:
+        # Static
+        - python_version: null
+          shared: False
+          namespace: null
+        - python_version: "3.9"
+          shared: False
+          namespace: null
+        # Shared
+        - python_version: "3.9"
+          shared: True
+          namespace: null
+        # Shared (custom namespace)
+        - python_version: null
+          shared: True
+          namespace: "foundryboost"
+        - python_version: "3.9"
+          shared: True
+          namespace: "foundryboost"
+      config:
+        pkgref_namespace: null
+      excluded_profiles:
+        - vfx20
+  "1.70.0":
+    folder: "all"
+    variants:
+      options:
+        # Static
+        - python_version: null
+          shared: False
+          namespace: null
+        - python_version: "2"
+          shared: False
+          namespace: null
+        - python_version: "3"
+          shared: False
+          namespace: null
+        # Shared
+        - python_version: null
+          shared: True
+          namespace: null
+        - python_version: "2"
+          shared: True
+          namespace: null
+        - python_version: "3"
+          shared: True
+          namespace: null
+        # Shared (custom namespace)
+        - python_version: null
+          shared: True
+          namespace: "foundryboost"
+        - python_version: "2"
+          shared: True
+          namespace: "foundryboost"
+        - python_version: "3"
+          shared: True
+          namespace: "foundryboost"
+      only_profiles:
+        - vfx20

@@ -1,0 +1,7 @@
+versions:
+  "2.2.0":
+    folder: "all"
+    variants:
+      options:
+        - shared: False
+        - shared: True

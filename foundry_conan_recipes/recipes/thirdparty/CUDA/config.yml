@@ -1,0 +1,48 @@
+versions:
+  "11.1.1":
+    folder: "all"
+    variants:
+      platforms:
+        - linux
+        - win
+      build_types:
+        - Release
+      config:
+        build_timeout: 600 # 10 hours
+        conan_request_timeout: 300 # 300 seconds = 5 minutes
+  "11.3.1":
+    folder: "all"
+    variants:
+      platforms:
+        - linux
+        - win
+      build_types:
+        - Release
+      config:
+        build_timeout: 600 # 10 hours
+        conan_request_timeout: 300 # 300 seconds = 5 minutes
+  "11.4.1":
+    folder: "all"
+    variants:
+      platforms:
+        - linux
+        - win
+      build_types:
+        - Release
+      config:
+        build_timeout: 600 # 10 hours
+        conan_request_timeout: 300 # 300 seconds = 5 minutes
+  "11.8.0":
+    folder: "all"
+    variants:
+      platforms:
+        - linux
+        - win
+      build_types:
+        - Release
+      config:
+        build_timeout: 600 # 10 hours
+        conan_request_timeout: 300 # 300 seconds = 5 minutes
+        pkgref_namespace: null
+      excluded_profiles:
+        - vfx20

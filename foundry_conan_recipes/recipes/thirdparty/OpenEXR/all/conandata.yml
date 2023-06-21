@@ -1,0 +1,24 @@
+sources:
+  "2.3.0":
+    git_url: git@a_gitlab_url:/libraries/conan/thirdparty/openexr
+    git_hash: 847929ae9929c65e0801f4244c4a880fadf27604 # foundry/v2.3.0
+
+  "2.4.2":
+    git_url: git@a_gitlab_url:/libraries/conan/thirdparty/openexr
+    git_hash: eef7603dc16cf1e1aa89de872284384aa00aea88 # foundry/v2.4.2
+    
+  "2.5.2":
+    git_url: git@a_gitlab_url:/libraries/conan/thirdparty/openexr
+    git_hash: 705d0d904b5041eb547a2786c44b3189452590dd # foundry/v2.5.2
+
+  "3.1.4":
+    git_url: git@a_gitlab_url:/libraries/conan/thirdparty/openexr
+    git_hash: 778b5da7d0cee3dc088baed98d65e49f83567cf8 # foundry/v3.1.4
+
+  "3.1.6":
+    git_url: git@a_gitlab_url:/libraries/conan/thirdparty/openexr
+    git_hash: 3bdae90bb318685872b3082527cf39fb93b3387a # foundry/v3.1.6
+
+  "3.1.7":
+    git_url: git@a_gitlab_url:/libraries/conan/thirdparty/openexr
+    git_hash: 47d68542051f3141168b48bbb080eccfa55521e5 # foundry/v3.1.7

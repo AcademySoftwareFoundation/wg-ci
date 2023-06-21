@@ -1,0 +1,13 @@
+versions:
+  "0.7.6":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      options:
+        - pcre2:shared: False
+      platforms:
+        - linux
+        - win
+      excluded_profiles:
+        - vfx20

@@ -1,0 +1,7 @@
+sources:
+  "1.2.10":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/openvr.git
+    git_hash: 823135df1783009cb468d0fc4190816254f7687d # SHA of the tag v1.2.10
+  "1.0.8":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/openvr.git
+    git_hash: e00caf3169ba0f40ba62eb5e577d9925cf375b03 # SHA of the branch `win-static_lib_fix-no_dllexport`

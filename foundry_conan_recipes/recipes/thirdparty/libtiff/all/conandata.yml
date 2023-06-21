@@ -1,0 +1,4 @@
+sources:
+  "4.3.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/libtiff.git
+    git_hash: d21dcc67d0d3f4686ee989a085ad2bea9c58259d # hash for tag v4.3.0

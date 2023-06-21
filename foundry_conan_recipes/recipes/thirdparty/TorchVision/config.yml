@@ -1,0 +1,50 @@
+versions:
+    "0.7.0":
+      folder: "all"
+      variants:
+        cpu_only:
+          platforms:
+            - mac
+          options:
+            - cuda_version: None
+          only_profiles:
+            - vfx20
+        cuda_10:
+          platforms:
+            - linux
+            - win
+          options:
+            - cuda_version: 10.1
+          only_profiles:
+            - vfx20
+        cuda_11:
+          platforms:
+            - linux
+            - win
+          options:
+            - cuda_version: 11.1
+          only_profiles:
+            - vfx20
+    "0.13.1":
+      folder: "all"
+      variants:
+        apple_any:
+          platforms:
+            - mac
+          options:
+            - cuda_version: None
+          only_profiles:
+            - vfx22
+          config:
+            pkgref_namespace: null
+        cuda_11:
+          platforms:
+            - linux
+            - win
+          options:
+            - cuda_version: 11.1
+          only_profiles:
+            - vfx22
+          config:
+            pkgref_namespace: null
+

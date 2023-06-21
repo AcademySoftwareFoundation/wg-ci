@@ -1,0 +1,7 @@
+sources:
+  "0.6.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/robin-map.git
+    git_hash: 622443f40544fb6a693402e69c1328d685eac939  # tag v0.6.3
+
+build-environment:
+  conan: 1.28.1

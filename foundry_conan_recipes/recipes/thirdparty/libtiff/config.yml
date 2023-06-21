@@ -1,0 +1,15 @@
+versions:
+  "3.9.4":
+    folder: "3.x"
+    variants:
+      options:
+        - shared: True
+        - shared: False
+  "4.3.0":
+    folder: "all"
+    variants:
+      options:
+        - shared: True
+        - shared: False
+      config:
+        pkgref_namespace: null

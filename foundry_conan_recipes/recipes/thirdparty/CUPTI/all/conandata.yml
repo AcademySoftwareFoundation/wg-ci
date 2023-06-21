@@ -1,0 +1,7 @@
+sources:
+  "11.3.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/cuda.git
+    git_hash: bc1981d1b40f37afa6d8bd1b1413e331785987dd # commit hash for HEAD of the foundry/v11.3.1 branch
+  "11.4.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/cuda.git
+    git_hash: 318a75675c178ac020e2cb2f5f3fe9a7a32e4998 # commit hash for HEAD of the foundry/v11.4.1 branch

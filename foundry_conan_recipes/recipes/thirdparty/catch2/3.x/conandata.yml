@@ -1,0 +1,10 @@
+sources:
+  "2.3.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/catch2.git
+    git_hash: 15cf3caaceb21172ea42a24e595a2eb58c3ec960 # commit hash v2.3.0 tag
+  "2.13.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/catch2.git
+    git_hash: ff349a50bfc6214b4081f4ca63c7de35e2162f60 # commit hash v2.13.3 tag
+  "3.1.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/catch2.git
+    git_hash: 97c48e0c343d26d50764fafdc90b1e630fbd10ce # commit hash v3.1.0 tag

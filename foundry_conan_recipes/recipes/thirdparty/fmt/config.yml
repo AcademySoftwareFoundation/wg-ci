@@ -1,0 +1,8 @@
+versions:
+  "4.1.0":
+    folder: "all"
+  "8.1.1":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null

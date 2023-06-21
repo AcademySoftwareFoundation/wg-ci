@@ -1,0 +1,11 @@
+versions:
+  "5.32.0":
+    folder: "all"
+    variants:
+      only_profiles:
+        - vfx20
+  "5.36.0":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null

@@ -1,0 +1,42 @@
+if(TARGET OCIO::OCIO)
+    return()
+endif()
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH) # remove one directory level i.e. "cmake/"
+message(STATUS "Found OpenColorIO: ${_IMPORT_PREFIX}")
+
+add_library(OCIO::OCIO SHARED IMPORTED)
+set_target_properties(OCIO::OCIO
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+
+{% if os == "Macos" %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libOpenColorIO{{library_suffix}}.dylib"
+{% elif os == "Linux" %}
+  {% if version_major == 2 and version_minor >= 1 %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib64/libOpenColorIO{{library_suffix}}.so"
+  {% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libOpenColorIO{{library_suffix}}.so"
+  {% endif %}
+{% elif os == "Windows" %}
+  {% if version_major == 2 and version_minor >= 1 %}
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/OpenColorIO{{library_suffix}}.lib"
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/OpenColorIO{{library_suffix}}_{{version_major}}_{{version_minor}}.dll"
+  {% elif version_major == 2 and version_minor == 0 %}
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/OpenColorIO{{library_suffix}}_{{version_major}}_{{version_minor}}.lib"
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/OpenColorIO{{library_suffix}}_{{version_major}}_{{version_minor}}.dll"
+  {% endif %}
+{% endif %}
+)
+
+{% if version_major > 1 and ('beta' in prerelease or 'pre' in prerelease) %}
+add_library(OCIO::AppHelpers STATIC IMPORTED)
+set_target_properties(OCIO::AppHelpers
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/{{ 'lib' if os != 'Windows' else '' }}OpenColorIOapphelpers{{ '.lib' if os == 'Windows' else '.a' }}"
+)
+{% endif %}
+unset(_IMPORT_PREFIX)

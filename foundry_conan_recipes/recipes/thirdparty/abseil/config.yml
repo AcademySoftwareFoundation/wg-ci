@@ -1,0 +1,11 @@
+versions:
+  "20200923.2":
+    folder: "all"
+    variants:
+      only_profiles:
+        - vfx20
+  "20211102.0":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null

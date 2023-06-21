@@ -1,0 +1,15 @@
+versions:
+  "6.3.1":
+    folder: "all"
+    variants:
+      options:
+        - shared: True
+          python_version: 3.9
+      platforms:
+        - win
+      build_types:
+        - Release
+      config:
+        pkgref_namespace: null
+      only_profiles:
+        - vfx23

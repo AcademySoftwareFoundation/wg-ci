@@ -1,0 +1,7 @@
+sources:
+  "20210828":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/technocrane-unreal.git
+    git_hash: 596e74f02e41a70abe586475a436867b4d1e356a  # latest commit on master branch, as of 06-09-2021 (commit made on 28-08-2021)
+
+build-environment:
+  conan: 1.28.1

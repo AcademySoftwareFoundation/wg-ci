@@ -1,0 +1,10 @@
+sources:
+  "2.1.28":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/ptex.git
+    git_hash: eabe1be3d1eb26ee0cb16f7102399fabaa3993e7 # commit hash for HEAD of foundry/v2.1.28 branch
+  "2.3.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/ptex.git
+    git_hash: 207bd40dc9aedc5a9934512155b2a182794e53a7 # commit hash for HEAD of foundry/v2.3.2 branch
+  "2.4.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/ptex.git
+    git_hash: 11b1b7622bffd093b148ff01d34abbfe221cada9 # commit hash for HEAD of foundry/v2.4.1 branch

@@ -1,0 +1,15 @@
+versions:
+  "2019_U6":
+    folder: "all"
+    variants:
+      options:
+        - shared: True
+      only_profiles:
+        - vfx20
+  "2020_U3":
+    folder: "all"
+    variants:
+      options:
+        - shared: True
+      config:
+        pkgref_namespace: null

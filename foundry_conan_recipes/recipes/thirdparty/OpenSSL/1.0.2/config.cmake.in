@@ -1,0 +1,69 @@
+if (CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "openssl requires at least CMake version 3.0.0")
+endif()
+
+get_filename_component(_openssl_install_prefix "${{CMAKE_CURRENT_LIST_DIR}}/.." ABSOLUTE)
+
+message(STATUS "Found OpenSSL: ${{_openssl_install_prefix}}")
+
+if (NOT TARGET OpenSSL::Crypto)
+
+  add_library(OpenSSL::Crypto IMPORTED {OPENSSL_LIBTYPE})
+  set_target_properties(
+    OpenSSL::Crypto
+    PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${{_openssl_install_prefix}}/include
+    IMPORTED_LOCATION ${{_openssl_install_prefix}}/{OPENSSL_LIBDIR}/{OPENSSL_CRYPTO_LIBNAME}{OPENSSL_LIBEXT}
+  )
+  if({OPENSSL_LIBTYPE} STREQUAL "SHARED")
+    if(WIN32)
+      set_target_properties(
+        OpenSSL::Crypto
+        PROPERTIES
+        IMPORTED_IMPLIB ${{_openssl_install_prefix}}/lib/libeay32.lib
+      )
+    endif()
+  else()
+    if(UNIX)
+      set_target_properties(
+        OpenSSL::Crypto
+        PROPERTIES
+        INTERFACE_LINK_LIBRARIES "-lpthread;-ldl"
+      )
+    elseif(WIN32)
+      set_target_properties(
+        OpenSSL::Crypto
+        PROPERTIES
+        INTERFACE_LINK_LIBRARIES "Crypt32.lib;Ws2_32.lib"
+      )
+    endif()
+  endif()
+
+endif()
+
+if (NOT TARGET OpenSSL::SSL)
+
+  add_library(OpenSSL::SSL IMPORTED {OPENSSL_LIBTYPE})
+  set_target_properties(
+    OpenSSL::SSL
+    PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${{_openssl_install_prefix}}/include
+    IMPORTED_LOCATION ${{_openssl_install_prefix}}/{OPENSSL_LIBDIR}/{OPENSSL_SSL_LIBNAME}{OPENSSL_LIBEXT}
+  )
+  if({OPENSSL_LIBTYPE} STREQUAL "SHARED")
+    if(WIN32)
+      set_target_properties(
+        OpenSSL::SSL
+        PROPERTIES
+        IMPORTED_IMPLIB ${{_openssl_install_prefix}}/lib/ssleay32.lib
+      )
+    endif()
+  else()
+    set_target_properties(
+      OpenSSL::SSL
+      PROPERTIES
+      INTERFACE_LINK_LIBRARIES OpenSSL::Crypto
+    )
+  endif()
+
+endif()

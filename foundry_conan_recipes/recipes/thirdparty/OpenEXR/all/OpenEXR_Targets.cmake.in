@@ -1,0 +1,165 @@
+if (CMAKE_VERSION VERSION_LESS 3.10.0)
+    message(FATAL_ERROR "OpenEXR Config requires CMake 3.10+")
+endif()
+
+# Protect against multiple inclusion, which would fail when already imported targets are added once more.
+set(_targetsDefined)
+set(_targetsNotDefined)
+set(_expectedTargets)
+
+
+foreach(_expectedTarget OpenEXR::Half OpenEXR::Iex OpenEXR::IexMath OpenEXR::IlmImf OpenEXR::IlmImfUtil OpenEXR::IlmThread OpenEXR::Imath OpenEXR::OpenEXR)
+    list(APPEND _expectedTargets ${_expectedTarget})
+
+    if(NOT TARGET ${_expectedTarget})
+        list(APPEND _targetsNotDefined ${_expectedTarget})
+    endif()
+
+    if(TARGET ${_expectedTarget})
+        list(APPEND _targetsDefined ${_expectedTarget})
+    endif()
+endforeach()
+
+
+# All expected targets are defined, we're done
+if("${_targetsDefined}" STREQUAL "${_expectedTargets}")
+    unset(_targetsDefined)
+    unset(_targetsNotDefined)
+    unset(_expectedTargets)
+    return()
+endif()
+
+if(NOT "${_targetsDefined}" STREQUAL "")
+    message(FATAL_ERROR "Some (but not all) targets in this export set were already defined.\nTargets Defined: ${_targetsDefined}\nTargets not yet defined: ${_targetsNotDefined}\n")
+endif()
+unset(_targetsDefined)
+unset(_targetsNotDefined)
+unset(_expectedTargets)
+
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
+if(_IMPORT_PREFIX STREQUAL "/")
+    set(_IMPORT_PREFIX "")
+endif()
+
+
+# High Level target definitions
+add_library(OpenEXR::Half {{ "SHARED" if shared else "STATIC" }} IMPORTED)
+set_target_properties(OpenEXR::Half
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include;${_IMPORT_PREFIX}/include/OpenEXR"{% if os == "Windows" and shared %}
+        INTERFACE_COMPILE_DEFINITIONS "OPENEXR_DLL"{% endif %}
+)
+
+add_library(OpenEXR::Iex {{ "SHARED" if shared else "STATIC" }} IMPORTED)
+set_target_properties(OpenEXR::Iex
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include;${_IMPORT_PREFIX}/include/OpenEXR"{% if os == "Windows" and shared %}
+        INTERFACE_COMPILE_DEFINITIONS "OPENEXR_DLL"{% endif %}
+)
+
+add_library(OpenEXR::IexMath {{ "SHARED" if shared else "STATIC" }} IMPORTED)
+set_target_properties(OpenEXR::IexMath
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include;${_IMPORT_PREFIX}/include/OpenEXR"
+        INTERFACE_LINK_LIBRARIES "OpenEXR::Iex"{% if os == "Windows" and shared %}
+        INTERFACE_COMPILE_DEFINITIONS "OPENEXR_DLL"{% endif %}
+)
+
+add_library(OpenEXR::Imath {{ "SHARED" if shared else "STATIC" }} IMPORTED)
+set_target_properties(OpenEXR::Imath
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include;${_IMPORT_PREFIX}/include/OpenEXR"
+        INTERFACE_LINK_LIBRARIES "OpenEXR::Iex"{% if os == "Windows" and shared %}
+        INTERFACE_COMPILE_DEFINITIONS "OPENEXR_DLL"{% endif %}
+)
+
+add_library(OpenEXR::IlmThread {{ "SHARED" if shared else "STATIC" }} IMPORTED)
+set_target_properties(OpenEXR::IlmThread
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include;${_IMPORT_PREFIX}/include/OpenEXR"
+        INTERFACE_LINK_LIBRARIES "OpenEXR::Iex;Threads::Threads"{% if os == "Windows" and shared %}
+        INTERFACE_COMPILE_DEFINITIONS "OPENEXR_DLL"{% endif %}
+)
+
+add_library(OpenEXR::IlmImf {{ "SHARED" if shared else "STATIC" }} IMPORTED)
+set_target_properties(OpenEXR::IlmImf
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include;${_IMPORT_PREFIX}/include/OpenEXR"
+        INTERFACE_LINK_LIBRARIES "OpenEXR::Half;OpenEXR::Imath;OpenEXR::IlmThread;{{ '' if shared else 'ZLIB::ZLIB' }}"{% if os == "Windows" and shared %}
+        INTERFACE_COMPILE_DEFINITIONS "OPENEXR_DLL"{% endif %}
+)
+
+add_library(OpenEXR::IlmImfUtil {{ "SHARED" if shared else "STATIC" }} IMPORTED)
+set_target_properties(OpenEXR::IlmImfUtil
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include;${_IMPORT_PREFIX}/include/OpenEXR"
+        INTERFACE_LINK_LIBRARIES "OpenEXR::IlmImf"{% if os == "Windows" and shared %}
+        INTERFACE_COMPILE_DEFINITIONS "OPENEXR_DLL"{% endif %}
+)
+
+# Dummy for being compatible with current set-up
+add_library(OpenEXR::OpenEXR INTERFACE IMPORTED)
+set_target_properties(OpenEXR::OpenEXR
+    PROPERTIES
+        INTERFACE_LINK_LIBRARIES "OpenEXR::IlmImf;OpenEXR::IlmImfUtil"
+)
+
+# Define binaries for targets above
+set_target_properties(OpenEXR::Half
+    PROPERTIES{% if os == "Windows" and not shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/Half{{platform_postfix}}.lib"{% elif os == "Windows" and shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/Half{{platform_postfix}}.dll"
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/Half{{platform_postfix}}.lib"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libHalf{{platform_postfix}}{{libsuffix}}"{% endif %}
+)
+
+set_target_properties(OpenEXR::Iex
+    PROPERTIES{% if os == "Windows" and not shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/Iex{{platform_postfix}}.lib"{% elif os == "Windows" and shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/Iex{{platform_postfix}}.dll"
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/Iex{{platform_postfix}}.lib"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libIex{{platform_postfix}}{{libsuffix}}"{% endif %}
+)
+
+set_target_properties(OpenEXR::IexMath
+    PROPERTIES{% if os == "Windows" and not shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/IexMath{{platform_postfix}}.lib"{% elif os == "Windows" and shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/IexMath{{platform_postfix}}.dll"
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/IexMath{{platform_postfix}}.lib"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libIexMath{{platform_postfix}}{{libsuffix}}"{% endif %}
+)
+
+set_target_properties(OpenEXR::Imath
+    PROPERTIES{% if os == "Windows" and not shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/Imath{{platform_postfix}}.lib"{% elif os == "Windows" and shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/Imath{{platform_postfix}}.dll"
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/Imath{{platform_postfix}}.lib"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libImath{{platform_postfix}}{{libsuffix}}"{% endif %}
+)
+
+set_target_properties(OpenEXR::IlmThread
+    PROPERTIES{% if os == "Windows" and not shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/IlmThread{{platform_postfix}}.lib"{% elif os == "Windows" and shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/IlmThread{{platform_postfix}}.dll"
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/IlmThread{{platform_postfix}}.lib"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libIlmThread{{platform_postfix}}{{libsuffix}}"{% endif %}
+)
+
+set_target_properties(OpenEXR::IlmImf
+    PROPERTIES{% if os == "Windows" and not shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/IlmImf{{platform_postfix}}.lib"{% elif os == "Windows" and shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/IlmImf{{platform_postfix}}.dll"
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/IlmImf{{platform_postfix}}.lib"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libIlmImf{{platform_postfix}}{{libsuffix}}"{% endif %}
+)
+
+set_target_properties(OpenEXR::IlmImfUtil
+    PROPERTIES{% if os == "Windows" and not shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/IlmImfUtil{{platform_postfix}}.lib"{% elif os == "Windows" and shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/IlmImfUtil{{platform_postfix}}.dll"
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/IlmImfUtil{{platform_postfix}}.lib"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libIlmImfUtil{{platform_postfix}}{{libsuffix}}"{% endif %}
+)

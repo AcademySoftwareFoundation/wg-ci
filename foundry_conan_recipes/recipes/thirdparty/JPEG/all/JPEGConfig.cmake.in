@@ -1,0 +1,19 @@
+if (CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "JPEG requires at least CMake version 3.0.0")
+endif()
+
+get_filename_component(_JPEG_install_prefix "${{CMAKE_CURRENT_LIST_DIR}}/.." ABSOLUTE)
+
+message(STATUS "Found JPEG: ${{_JPEG_install_prefix}}")
+
+if (NOT TARGET JPEG::JPEG)
+
+  add_library(JPEG::JPEG IMPORTED {JPEG_LIBTYPE})
+  set_target_properties(
+    JPEG::JPEG
+    PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${{_JPEG_install_prefix}}/include
+    IMPORTED_LOCATION ${{_JPEG_install_prefix}}/lib/{JPEG_LIBNAME}{JPEG_LIBEXT}
+  )
+endif()
+

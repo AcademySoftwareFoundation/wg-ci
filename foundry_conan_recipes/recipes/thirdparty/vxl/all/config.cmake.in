@@ -1,0 +1,74 @@
+if (CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "VXL requires at least CMake version 3.0.0")
+endif()
+
+if(TARGET VXL::VXL)
+  return()
+endif()
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${{CMAKE_CURRENT_LIST_DIR}}/.." ABSOLUTE)
+
+message(STATUS "Found VXL: ${{_IMPORT_PREFIX}}")
+
+add_library(VXL::VXL INTERFACE IMPORTED)
+
+set(FoundryVXL_INCLUDES
+  "${{_IMPORT_PREFIX}}/include/vxl/vcl"
+  "${{_IMPORT_PREFIX}}/include/vxl/core"
+  "${{_IMPORT_PREFIX}}/include/vxl/v3p/netlib"
+)
+
+# TODO These are in different orders... Does that matter?
+if(UNIX)
+  set(FoundryVXL_LIBS
+    "${{_IMPORT_PREFIX}}/lib/libvnl_algo{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libvnl{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libv3p_netlib{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libvbl{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libvcl{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libvcsl{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libvgl{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libvgl_algo{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libvpl{VXLLIB_LIBEXT}" 
+    "${{_IMPORT_PREFIX}}/lib/libvul{VXLLIB_LIBEXT}"
+  )
+elseif(WIN32)
+  set(FoundryVXL_LIBS
+      "${{_IMPORT_PREFIX}}/lib/netlib{VXLLIB_LIBEXT}"
+      "${{_IMPORT_PREFIX}}/lib/v3p_netlib{VXLLIB_LIBEXT}"
+      "${{_IMPORT_PREFIX}}/lib/vbl{VXLLIB_LIBEXT}"
+      "${{_IMPORT_PREFIX}}/lib/vcl{VXLLIB_LIBEXT}"
+      "${{_IMPORT_PREFIX}}/lib/vcsl{VXLLIB_LIBEXT}"
+      "${{_IMPORT_PREFIX}}/lib/vgl{VXLLIB_LIBEXT}"
+      "${{_IMPORT_PREFIX}}/lib/vgl_algo{VXLLIB_LIBEXT}"
+      "${{_IMPORT_PREFIX}}/lib/vnl{VXLLIB_LIBEXT}"
+      "${{_IMPORT_PREFIX}}/lib/vnl_algo{VXLLIB_LIBEXT}"
+      "${{_IMPORT_PREFIX}}/lib/vpl{VXLLIB_LIBEXT}"
+      "${{_IMPORT_PREFIX}}/lib/vul{VXLLIB_LIBEXT}"
+  )
+else()
+  set(FoundryVXL_LIBS
+    "${{_IMPORT_PREFIX}}/lib/libvnl_algo{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libvnl{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libv3p_netlib{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libvbl{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libvcl{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libvcsl{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libvgl{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libvgl_algo{VXLLIB_LIBEXT}"
+    "${{_IMPORT_PREFIX}}/lib/libvpl{VXLLIB_LIBEXT}" 
+    "${{_IMPORT_PREFIX}}/lib/libvul{VXLLIB_LIBEXT}"
+  )
+endif()
+
+set_target_properties(VXL::VXL PROPERTIES
+	INTERFACE_INCLUDE_DIRECTORIES "${{FoundryVXL_INCLUDES}}"
+  INTERFACE_LINK_LIBRARIES "${{FoundryVXL_LIBS}}"
+  INTERFACE_COMPILE_DEFINITIONS VCL_CAN_STATIC_CONST_INIT_FLOAT=0
+)
+target_compile_features(VXL::VXL INTERFACE {min_cxx_std})
+
+unset( _IMPORT_PREFIX )
+unset( FoundryVXL_INCLUDES )
+unset( FoundryVXL_LIBS )

@@ -1,0 +1,10 @@
+versions:
+  "1.18.0":
+    folder: "all"
+    variants:
+      build_types:
+        - Release
+      config:
+        pkgref_namespace: null
+      excluded_profiles:
+        - vfx20

@@ -1,0 +1,4 @@
+sources:
+  "20150501":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/murmur3.git
+    git_hash: 4e5b0d6cba4060b5c805802f49e67640e90e4071 # HEAD of foundry/v20150501

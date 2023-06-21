@@ -1,0 +1,12 @@
+versions:
+  "2.1.3":
+    folder: "all"
+    variants:
+      foundrygl:
+        platforms:
+          - mac
+        options:
+          - GLBackend: FoundryGL
+      opengl:
+        options:
+          - GLBackend: OpenGL

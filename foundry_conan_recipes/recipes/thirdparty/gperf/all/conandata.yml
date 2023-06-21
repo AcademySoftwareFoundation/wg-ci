@@ -1,0 +1,5 @@
+sources:
+  "3.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/gperf.git
+    git_hash: 7781f0d941edccfc122aca5d2f841773c02dea54 # tag v3.1
+

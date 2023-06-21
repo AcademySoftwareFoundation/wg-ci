@@ -1,0 +1,4 @@
+sources:
+  "19.7.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/portaudio.git
+    git_hash: 147dd722548358763a8b649b3e4b41dfffbcfbb6  # SHA of the tag v19.7.0

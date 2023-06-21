@@ -1,0 +1,12 @@
+sources:
+  "1.2.5.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/zlib.git
+    git_hash: defd366a41f061dc9dc2bb7ab88876909bd5934c # tag v1.2.5.3
+
+  "1.2.11":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/zlib.git
+    git_hash: cacf7f1d4e3d44d871b605da3b647f07d718623f # tag v1.2.11
+
+  "1.2.13":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/zlib.git
+    git_hash: 04f42ceca40f73e2978b50e93806c2a18c1281fc # tag v1.2.13

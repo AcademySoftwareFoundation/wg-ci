@@ -1,0 +1,55 @@
+if (CMAKE_VERSION VERSION_LESS 3.10.0)
+    message(FATAL_ERROR "cuDNN Config requires CMake 3.10+")
+endif()
+
+# Protect against multiple inclusion, which would fail when already imported targets are added once more.
+set(_targetsDefined)
+set(_targetsNotDefined)
+set(_expectedTargets)
+
+foreach(_expectedTarget cuDNN::cuDNN)
+    list(APPEND _expectedTargets ${_expectedTarget})
+
+    if(NOT TARGET ${_expectedTarget})
+        list(APPEND _targetsNotDefined ${_expectedTarget})
+    endif()
+
+    if(TARGET ${_expectedTarget})
+        list(APPEND _targetsDefined ${_expectedTarget})
+    endif()
+endforeach()
+
+
+# All expected targets are defined, we're done
+if("${_targetsDefined}" STREQUAL "${_expectedTargets}")
+    unset(_targetsDefined)
+    unset(_targetsNotDefined)
+    unset(_expectedTargets)
+    return()
+endif()
+
+if(NOT "${_targetsDefined}" STREQUAL "")
+    message(FATAL_ERROR "Some (but not all) targets in this export set were already defined.\nTargets Defined: ${_targetsDefined}\nTargets not yet defined: ${_targetsNotDefined}\n")
+endif()
+unset(_targetsDefined)
+unset(_targetsNotDefined)
+unset(_expectedTargets)
+
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
+if(_IMPORT_PREFIX STREQUAL "/")
+    set(_IMPORT_PREFIX "")
+endif()
+
+add_library(cuDNN::cuDNN SHARED IMPORTED)
+
+set_target_properties(cuDNN::cuDNN
+    PROPERTIES
+        INTERFACE_LINK_LIBRARIES "CUDA::Headers"
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"{% if os == "Linux" %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib64/libcudnn.so"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/cudnn64_{{ version_major }}.dll"
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/x64/cudnn64_{{ version_major }}.lib"{% endif %}
+)

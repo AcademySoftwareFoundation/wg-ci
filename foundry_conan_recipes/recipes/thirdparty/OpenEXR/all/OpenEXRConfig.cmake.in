@@ -1,0 +1,14 @@
+if (CMAKE_VERSION VERSION_LESS 3.10.0)
+    message(FATAL_ERROR "OpenEXR requires CMake 3.10+")
+endif()
+
+include(CMakeFindDependencyMacro)
+find_dependency(Threads)
+find_dependency(ZLIB)
+
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_DIR}" PATH) # remove one directory level i.e. "cmake/"
+message(STATUS "Found OpenEXR: ${_IMPORT_PREFIX} ({{version_major}}.{{version_minor}}.{{version_patch}})")
+
+include(${CMAKE_CURRENT_LIST_DIR}/OpenEXR_Targets.cmake)
+
+unset(_IMPORT_PREFIX)

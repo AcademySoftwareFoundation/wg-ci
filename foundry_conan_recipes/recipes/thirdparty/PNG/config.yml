@@ -1,0 +1,15 @@
+versions:
+  "1.4.8":
+    folder: "all"
+    variants:
+      only_profiles:
+        - vfx20
+  "1.6.9":
+    folder: "all"
+    variants:
+      platforms:
+        - linux
+        - win
+        - mac
+  "1.6.37":
+    folder: "all"

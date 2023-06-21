@@ -1,0 +1,11 @@
+sources:
+  "2.1.0-beta3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/luajit.git
+    git_hash: 8271c643c21d1b2f344e339f559f2de6f3663191  # tag v2.1.0-beta3
+  "2.1.0-beta3.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/luajit.git
+    git_hash: 80aaaeee99d7f7b06c9e75ed3a457c49d86fc4db  # branch v2.1, Jan 2018, used in Katana 3.0v1+
+  "2.1.0-beta3.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/luajit.git
+    git_hash: 1d8b747c161db457e032a023ebbff511f5de5ec2  # branch v2.1, Oct 2020
+

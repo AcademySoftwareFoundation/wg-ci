@@ -1,0 +1,4 @@
+sources:
+  "1.0.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/libuuid.git
+    git_hash: 16cb58d558844045f217d4ee416f931fc1b03794 # commit hash for the libuuid-1.0.3 tag

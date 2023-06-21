@@ -1,0 +1,10 @@
+sources:
+  "3.3.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/opensubdiv.git
+    git_hash: 90b31485860ef8355700acb3e2ec3ac7153aaa37 # head of branch foundry/v3.3.3
+  "3.4.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/opensubdiv.git
+    git_hash: 846e21636073b0921a16a80f512f01cfb8543cfc # head of branch foundry/v3.4.3
+  "3.5.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/opensubdiv.git
+    git_hash: 3e62a6b28407831daae5cf67de9a2c84cce358e9 # head of branch foundry/v3.5.0

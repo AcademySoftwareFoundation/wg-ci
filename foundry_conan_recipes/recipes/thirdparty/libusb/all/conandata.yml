@@ -1,0 +1,4 @@
+sources:
+  "1.0.26":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/libusb.git
+    git_hash: 0012d9fa3e6eb71a1364db048a06eec0dee79c03 # SHA of the foundry/v1.0.26 branch

@@ -1,0 +1,4 @@
+sources:
+  "0.6.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/sentry-native/sentry-native.git
+    git_hash: e274c2b409f6b3f4786382f251b97c948366c667 # SHA for HEAD of foundry/v0.6.0

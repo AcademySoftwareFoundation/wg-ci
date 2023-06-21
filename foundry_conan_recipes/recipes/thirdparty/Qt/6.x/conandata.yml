@@ -1,0 +1,4 @@
+sources:
+  "6.3.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/qt/qt5.git
+    git_hash: 44334b95fc04c85c02bf8e8c2e309a04aa8998d1 # branch foundry/v6.3.1

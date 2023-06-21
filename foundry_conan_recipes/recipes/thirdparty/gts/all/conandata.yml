@@ -1,0 +1,4 @@
+sources:
+  "0.7.6":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/gts.git
+    git_hash: ceb8d01a214f1135de0860410491ebfeb5f05dc0 # foundry/v0.7.6

@@ -1,0 +1,12 @@
+if (SWIG_EXECUTABLE)
+    return ()
+endif ()
+
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH) # remove one directory level i.e. "cmake/"
+
+set(SWIG_EXECUTABLE "${_IMPORT_PREFIX}/bin/{{executable_filename}}")
+
+message(STATUS "Found SWIG: ${SWIG_EXECUTABLE}")
+
+unset(_IMPORT_PREFIX)

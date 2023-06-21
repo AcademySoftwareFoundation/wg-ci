@@ -1,0 +1,30 @@
+if (CMAKE_VERSION VERSION_LESS 3.10.0)
+    message(FATAL_ERROR "LittleCMS requires at least CMake version 3.10.0")
+endif()
+
+get_filename_component(_littlecms_install_prefix "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
+message(STATUS "Found LittleCMS: ${_littlecms_install_prefix}")
+
+add_library(LittleCMS::LittleCMS IMPORTED {{ 'SHARED' if shared else 'STATIC' }})
+
+set_target_properties(LittleCMS::LittleCMS
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_littlecms_install_prefix}/include"
+
+    {% if os == "Windows" and not shared %}
+        IMPORTED_LOCATION "${_littlecms_install_prefix}/lib/{{LIBRARY_NAME}}.lib"
+
+    {% elif os == "Windows" and shared %}
+        IMPORTED_LOCATION "${_littlecms_install_prefix}/bin/{{LIBRARY_NAME}}.dll"
+        IMPORTED_IMPLIB "${_littlecms_install_prefix}/lib/{{LIBRARY_NAME}}.lib"
+
+    {% else %}
+        IMPORTED_LOCATION "${_littlecms_install_prefix}/lib/{{LIBRARY_NAME}}{{libsuffix}}"
+        {% if os == "Linux" and shared %}
+        IMPORTED_NO_SONAME true
+        {% endif %}
+
+    {% endif %}
+)
+
+unset(_littlecms_install_prefix)

@@ -1,0 +1,8 @@
+versions:
+  "2.4.0":
+    folder: "all"
+    variants:
+      options:
+        - shared: False
+      config:
+        pkgref_namespace: null

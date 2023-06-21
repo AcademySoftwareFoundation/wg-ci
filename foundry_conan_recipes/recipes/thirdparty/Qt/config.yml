@@ -1,0 +1,103 @@
+versions:
+  "5.12.11":
+    folder: "5.x"
+    variants:
+      options:
+        - with_webengine: True
+      only_profiles:
+        - vfx20
+      config:
+        build_timeout: 720
+  "5.15.2":
+    folder: "5.x"
+    variants:
+      default:
+        options:
+          - with_webengine: True
+        platforms:
+          - win
+          - linux
+          - mac
+        excluded_profiles:
+          - vfx20
+        config:
+          build_timeout: 720
+          pkgref_namespace: null
+      foundrygl:
+        options:
+          - with_webengine: True
+            GLBackend: FoundryGL
+        platforms:
+          - mac
+          # - mac_arm # TODO: need a foundrygl build on Apple Silicon first
+        excluded_profiles:
+          - vfx20
+        config:
+          build_timeout: 720
+          pkgref_namespace: null
+      no-webengine:
+        options:
+          - with_webengine: False # TODO: this is not yet buildable
+        platforms:
+          - mac_arm
+        excluded_profiles:
+          - vfx20
+        config:
+          build_timeout: 720
+          pkgref_namespace: null
+      no-webengine-foundrygl:
+        options:
+          - with_webengine: False # TODO: this is not yet buildable
+            GLBackend: FoundryGL
+        platforms:
+          - mac_arm
+        excluded_profiles:
+          - vfx20
+        config:
+          build_timeout: 720
+          pkgref_namespace: null
+  "6.3.1":
+    folder: "6.x"
+    variants:
+      vulkan-no-webengine:
+        options:
+          - with_webengine: False
+            with_vulkan: True
+        platforms:
+          - win
+          - linux
+          - mac
+          - mac_arm
+        excluded_profiles:
+          - vfx20
+        config:
+          build_timeout: 720
+          pkgref_namespace: null
+      vulkan-no-webengine-foundrygl:
+        options:
+          - with_webengine: False
+            with_vulkan: True
+            GLBackend: FoundryGL
+        platforms:
+          - mac
+          - mac_arm
+        excluded_profiles:
+          - vfx20
+        config:
+          build_timeout: 720
+          pkgref_namespace: null
+      # Webengine compilation needs retesting on some weekend
+      # webengine-and-vulkan:
+      #   options:
+      #     - with_webengine: True
+      #       with_vulkan: True
+      #   platforms:
+      #     - win
+      #     - linux
+      #     - mac
+      #     - mac_arm
+      #   excluded_profiles:
+      #     - vfx20
+      #   config:
+      #     build_timeout: 720
+      #     pkgref_namespace: null

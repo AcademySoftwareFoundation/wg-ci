@@ -1,0 +1,13 @@
+versions:
+  "1.5.0":
+    folder: "all"
+    variants:
+      only_profiles:
+        - vfx20
+  "2.5.0":
+    folder: "all"
+    variants:
+      excluded_profiles:
+        - vfx20
+      config:
+        pkgref_namespace: null

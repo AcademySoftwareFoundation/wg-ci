@@ -1,0 +1,4 @@
+sources:
+  "0.29.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/pkg-config.git
+    git_hash: 39094d352ed8f01e92705915022d0049f361ac94  # foundry/v0.29.2

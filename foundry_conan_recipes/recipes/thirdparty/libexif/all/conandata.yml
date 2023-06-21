@@ -1,0 +1,5 @@
+sources:
+  "0.6.24":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/libexif.git
+    git_hash: 38310ed4f33fe3c190336aee8b2a2a6a393afcf9 # commit hash for HEAD of foundry/v0.6.24 branch
+

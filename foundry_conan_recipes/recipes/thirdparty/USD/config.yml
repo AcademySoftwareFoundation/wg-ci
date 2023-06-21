@@ -1,0 +1,99 @@
+versions:
+  #"19.11":
+  #  folder: "all"
+  # "20.08":
+  #   folder: "all"
+  #"20.11":
+  #  folder: "all"
+  # "21.05":
+  #   folder: "all"
+  # "21.05-metal":
+  #   folder: "all"
+  # "20.03":
+  #   folder: "all"
+  "22.05":
+    folder: "all"
+    variants:
+      default:
+        options:
+          - shared: True
+            imaging: True
+            python_bindings: True
+            PySide2:python_version: "3.9"
+            boost:python_version: "3.9"
+            boost:shared: True
+            boost:namespace: foundryboost
+            namespace: "fn"
+          - shared: True
+            imaging: True
+            python_bindings: True
+            PySide2:python_version: "3.9"
+            boost:python_version: "3.9"
+            boost:shared: True
+            boost:namespace: foundryboost
+          - shared: True
+            imaging: True
+            python_bindings: False
+            namespace: None
+        config:
+          pkgref_namespace: null
+        only_profiles:
+          - vfx22
+          - vfx23
+        platforms:
+          - linux
+          - mac
+          - mac_arm
+          - win
+      vfx22_foundrygl:
+        options:
+          - imaging: True
+            GLBackend: FoundryGL
+        config:
+          pkgref_namespace: null
+        only_profiles:
+          - vfx22
+          - vfx23
+        platforms:
+          - mac
+          - mac_arm
+  "22.05-vfx23":
+    folder: "all"
+    variants:
+      vfx23:
+        options:
+          - shared: True
+            imaging: True
+            python_bindings: True
+            PySide2:python_version: "3.10"
+            boost:python_version: "3.10"
+            boost:shared: True
+            boost:namespace: foundryboost
+            namespace: "fn"
+          - shared: True
+            imaging: True
+            python_bindings: True
+            PySide2:python_version: "3.10"
+            boost:python_version: "3.10"
+            boost:shared: True
+            boost:namespace: foundryboost
+        config:
+          pkgref_namespace: null
+        only_profiles:
+          - vfx23
+        platforms:
+          - linux
+          - mac
+          - mac_arm
+          - win
+      vfx23_foundrygl:
+        options:
+          - imaging: True
+            GLBackend: FoundryGL
+        config:
+          pkgref_namespace: null
+        only_profiles:
+          - vfx23
+        platforms:
+          - mac
+          - mac_arm

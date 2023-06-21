@@ -1,0 +1,8 @@
+versions:
+  "1.9.3":
+    folder: "all"
+    variants:
+      options:
+        - shared: False
+      config:
+        pkgref_namespace: null

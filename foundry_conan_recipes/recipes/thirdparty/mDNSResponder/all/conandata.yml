@@ -1,0 +1,4 @@
+sources:
+  "1557.120.7":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/mdnsresponder.git
+    git_hash: bad6277713e5132b78f4c47328aa2895e08f3b12 # SHA of tag mDNSResponder-1557.120.7

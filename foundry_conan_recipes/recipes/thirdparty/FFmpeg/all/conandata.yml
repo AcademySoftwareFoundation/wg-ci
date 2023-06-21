@@ -1,0 +1,8 @@
+sources:
+  "4.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/ffmpeg.git
+    git_hash: 54f44ae1e4f31dd8a6134d570d1cd368d511d11e # commit hash for HEAD of release/4.2-foundry branch
+  "5.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/ffmpeg.git
+    git_hash: e0723b7e4e22492275d476fcd30d759e1198bc5b # SHA of tag n5.1
+  

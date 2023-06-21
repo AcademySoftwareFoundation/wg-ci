@@ -1,0 +1,8 @@
+versions:
+  "1.1.3":
+    folder: "all"
+    variants:
+      platforms:
+        - win
+      build_types:
+        - Release

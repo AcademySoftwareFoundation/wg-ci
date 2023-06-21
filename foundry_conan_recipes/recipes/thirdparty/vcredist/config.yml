@@ -1,0 +1,10 @@
+versions:
+  "14.29.30133":
+    folder: "all"
+    variants:
+      platforms:
+        - win
+      only_profiles:
+        - vfx22
+      config:
+        pkgref_namespace: null

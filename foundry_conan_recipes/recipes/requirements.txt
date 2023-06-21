@@ -1,0 +1,4 @@
+conan==1.48.0
+cmake==3.26.0
+ninja==1.10.2.3
+future-fstrings==1.2.0  # deprecated as we build in Python 3 only, and to remove eventually when all references are removed

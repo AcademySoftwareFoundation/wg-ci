@@ -1,0 +1,4 @@
+sources:
+  "0.9.9.8":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/glm.git
+    git_hash: bf71a834948186f4097caa076cd2663c69a10e1e # hash 0.9.9.8 tag

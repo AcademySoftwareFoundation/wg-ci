@@ -1,0 +1,12 @@
+versions:
+  "2.6.4":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      platforms:
+        - linux
+      build_types:
+        - Release
+      excluded_profiles:
+        - vfx20

@@ -1,0 +1,7 @@
+sources:
+  "3.81":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/makewin32.git
+    git_hash: e0c9498ca6a4cba55e4414f828df4a722cca5c77 # HEAD of branch foundry/v3.81
+
+build-environment:
+  conan: 1.28.1

@@ -1,0 +1,21 @@
+versions:
+  "3.2.5":
+    folder: "3.x"
+    variants:
+      only_profiles:
+        - vfx20
+  "4.2.1":
+    folder: "4.x"
+    variants:
+      options:
+        - shared: True
+        - shared: False
+    variants:
+      only_profiles:
+        - vfx20
+  "4.3.3":
+    folder: "4.x"
+    variants:
+      options:
+        - shared: True
+        - shared: False

@@ -1,0 +1,8 @@
+versions:
+  "1.0.3":
+    folder: all
+    variants:
+      platforms:
+        - linux
+      config:
+        pkgref_namespace: null

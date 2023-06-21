@@ -1,0 +1,8 @@
+versions:
+  "20220714":
+    folder: "all"
+    variants:
+      excluded_profiles:
+        - vfx20
+      config:
+        pkgref_namespace: null

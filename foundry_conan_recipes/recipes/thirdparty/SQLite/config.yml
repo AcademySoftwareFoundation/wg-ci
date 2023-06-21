@@ -1,0 +1,7 @@
+versions:
+  "3.32.3":
+    folder: "all"
+    variants:
+      options:
+        - shared: True
+        - shared: False

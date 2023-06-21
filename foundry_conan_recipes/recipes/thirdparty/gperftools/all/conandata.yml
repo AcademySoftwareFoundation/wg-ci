@@ -1,0 +1,4 @@
+sources:
+  "2.10":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/gperftools.git
+    git_hash: c6cc26f12e66088484ba07a4f08f26df922f1291 # SHA for foundry/v2.10

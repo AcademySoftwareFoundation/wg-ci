@@ -1,0 +1,8 @@
+versions:
+  "4.1.1":
+    folder: "all"
+    variants:
+      build_types:
+        - Release
+      config:
+        pkgref_namespace: null

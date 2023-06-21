@@ -1,0 +1,4 @@
+sources:
+  "5.2.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/jemalloc.git
+    git_hash: ea6b3e973b477b8061e0076bb257dbd7f3faa756  # HEAD of foundry/v5.2.1

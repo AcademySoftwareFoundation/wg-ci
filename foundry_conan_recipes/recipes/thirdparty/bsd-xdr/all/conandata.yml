@@ -1,0 +1,4 @@
+sources:
+  "1.0.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/bsd-xdr.git
+    git_hash: d653be33b508ce0e4cf03692e67c963fbafec642 # commit hash for HEAD of foundry/v1.0.0 branch

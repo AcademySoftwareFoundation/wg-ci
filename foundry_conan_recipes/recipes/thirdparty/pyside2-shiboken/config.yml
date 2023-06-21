@@ -1,0 +1,28 @@
+versions:
+  "5.15.2.1":
+    folder: "all"
+    variants:
+      vfx22:
+        options:
+          - shared: True
+            python_version: "3.9"
+        platforms:
+          - win
+        build_types:
+          - Release
+        config:
+          pkgref_namespace: null
+        excluded_profiles:
+          - vfx20
+      vfx23:
+        options:
+          - shared: True
+            python_version: "3.10"
+        platforms:
+          - win
+        build_types:
+          - Release
+        config:
+          pkgref_namespace: null
+        only_profiles:
+          - vfx23

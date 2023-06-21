@@ -1,0 +1,24 @@
+if (CMAKE_VERSION VERSION_LESS 3.10.0)
+    message(FATAL_ERROR "libffi requires at least CMake version 3.10.0")
+endif()
+
+if (TARGET libffi::libffi)
+    return()
+endif()
+
+get_filename_component(_libffi_install_prefix "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
+message(STATUS "Found libffi: ${_libffi_install_prefix}")
+
+
+add_library(libffi::libffi IMPORTED STATIC)
+set_target_properties(libffi::libffi
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES ${_libffi_install_prefix}/include
+{% if os == "Windows" %}
+        IMPORTED_LOCATION "${_libffi_install_prefix}/lib/ffi.lib"
+        INTERFACE_COMPILE_DEFINITIONS FFI_BUILDING
+{% else %}
+        IMPORTED_LOCATION "${_libffi_install_prefix}/lib64/libffi.a"
+{% endif %}
+)
+unset(_libffi_install_prefix)

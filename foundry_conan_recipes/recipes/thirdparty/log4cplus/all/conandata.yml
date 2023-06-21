@@ -1,0 +1,4 @@
+sources:
+  "1.0.4":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/log4cplus.git
+    git_hash: 4c842d476017384ea18a849fe9591d88ae4eb86e  # HEAD of foundry/v1.0.4 branch

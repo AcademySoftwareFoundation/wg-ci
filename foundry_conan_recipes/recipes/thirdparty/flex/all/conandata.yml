@@ -1,0 +1,4 @@
+sources:
+  "2.6.4":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/flex.git
+    git_hash: 4f73e83a5170f2b7de5e9f4b96dd32c68da5ecee # SHA of the HEAD of the foundry/2.6.4 branch.

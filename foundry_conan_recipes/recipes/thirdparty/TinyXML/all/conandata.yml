@@ -1,0 +1,4 @@
+sources:
+  "2.6.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/tinyxml.git
+    git_hash: 591531ca178d9c02ba3105385f785a5604ef8c77  # Branch foundry/v2.6.0.

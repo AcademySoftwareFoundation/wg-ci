@@ -1,0 +1,14 @@
+versions:
+  "3.8.2":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      platforms:
+        - linux      
+        - mac
+        - mac_arm
+      build_types:
+        - Release
+      excluded_profiles:
+        - vfx20

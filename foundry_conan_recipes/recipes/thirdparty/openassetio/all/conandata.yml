@@ -1,0 +1,7 @@
+sources:
+  "1.0.0-alpha.6":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/OpenAssetIO.git
+    git_hash: 42e486d05c60ed4d86f3baa3e95461dda3e3a8a8  # HEAD of foundry/v1.0.0-alpha.6
+  "1.0.0-alpha.10":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/OpenAssetIO.git
+    git_hash: c9c2b0ffe6901b04de8a3b016cc85d155a7683f3  # v1.0.0-alpha.10 tag

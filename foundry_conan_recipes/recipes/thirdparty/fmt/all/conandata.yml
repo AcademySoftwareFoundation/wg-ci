@@ -1,0 +1,7 @@
+sources:
+  "4.1.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/fmt.git
+    git_hash: 1936dddc3c53c1c0db55a665cf419dc7a257ba62 # tag 4.1.0
+  "8.1.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/fmt.git
+    git_hash: b6f4ceaed0a0a24ccf575fab6c56dd50ccf6f1a9 # tag 8.1.1

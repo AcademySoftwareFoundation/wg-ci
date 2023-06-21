@@ -1,0 +1,8 @@
+sources:
+  "1.9.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/flatbuffers.git
+    git_hash: 94321f7339457c37b452f576a624b82bfaf04a8f # HEAD of the foundry/v1.9.0 branch
+
+  "23.1.4":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/flatbuffers.git
+    git_hash: af9ceabeef1a10c1004e2741f8c0c090ca59e5af # SHA for tag v23.1.4

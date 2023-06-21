@@ -1,0 +1,8 @@
+versions:
+  "1.22.0":
+    folder: "all"
+    variants:
+      options:
+        - shared: True
+      config:
+        pkgref_namespace: null

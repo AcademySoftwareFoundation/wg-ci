@@ -1,0 +1,4 @@
+sources:
+  "69.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/icu.git
+    git_hash: 0e7b4428866f3133b4abba2d932ee3faa708db1d # tag release-69-1

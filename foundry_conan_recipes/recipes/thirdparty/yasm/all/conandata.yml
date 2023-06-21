@@ -1,0 +1,4 @@
+sources:
+  "1.3.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/yasm.git
+    git_hash: ba463d3c26c0ece2e797b8d6381b161633b5971a # SHA of tag v1.3.0

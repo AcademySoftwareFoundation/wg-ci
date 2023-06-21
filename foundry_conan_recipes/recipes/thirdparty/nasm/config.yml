@@ -1,0 +1,10 @@
+versions:
+  "2.14.02":
+    folder: "all"
+    variants:
+      platforms:
+        - win
+      build_types:
+        - Release
+      only_profiles:
+        - vfx20

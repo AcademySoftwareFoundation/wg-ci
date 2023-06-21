@@ -1,0 +1,18 @@
+versions:
+  "2.3.0":
+    folder: "2.x"
+    variants:
+      platforms:
+        - win
+        - linux
+        - mac
+        # No `mac_arm` for this version due to: catch2/catch.hpp:5123:13: error: unrecognized instruction mnemonic
+  "2.13.3":
+    folder: "2.x"
+  "2.13.10":
+    folder: "2.x"
+  "3.1.0":
+    folder: "3.x"
+    variants:
+      config:
+        pkgref_namespace: null

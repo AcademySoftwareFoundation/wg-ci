@@ -1,0 +1,5 @@
+sources:
+  "3.2.5":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/zeromq3-x.git
+    git_hash: 10a64157dba161bccdcb39279c20bbc12604b257 # commit hash for HEAD of foundry/v3.2.5 branch, which is at the v3.2.5 tag
+

@@ -1,0 +1,4 @@
+sources:
+  "1.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/opencolorio-config-aces.git
+    git_hash: 60b10d14c644cf9dd8b32f7f0a4a7a72260ccec2 # SHA of the HEAD of branch foundry/v1.0.0

@@ -1,0 +1,7 @@
+sources:
+  "1.8.20":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/doxygen.git
+    git_hash: f246dd2f1c58eea39ea3f50c108019e4d4137bd5 # tag Release_1_8_20
+  "1.9.6":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/doxygen.git
+    git_hash: 4586b5cfaa3d46d51f6a51882951d15644c49edf # tag Release_1_9_6

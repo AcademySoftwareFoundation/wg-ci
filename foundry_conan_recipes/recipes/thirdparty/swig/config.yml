@@ -1,0 +1,12 @@
+versions:
+  "4.1.1":
+    folder: all
+    variants:
+      config:
+        pkgref_namespace: null
+      options:
+        - pcre2:shared: False
+      only_profiles:
+        - vfx22
+      build_types:
+        - Release

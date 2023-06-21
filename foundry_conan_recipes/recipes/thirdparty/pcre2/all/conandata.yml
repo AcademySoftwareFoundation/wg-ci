@@ -1,0 +1,4 @@
+sources:
+  "10.42":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/pcre2.git
+    git_hash: 748a16cffd3e9c8399ea3ffd39c7a5375a0362c6 # commit hash for HEAD of foundry/v10.42

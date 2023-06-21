@@ -1,0 +1,7 @@
+sources:
+  "0.14.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/opentimelineio/opentimelineio.git
+    git_hash: 0e95b41a1695a5ab46b1ad5251e651cda899f5a3 # HEAD of branch foundry/v0.14
+  "0.15.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/opentimelineio/opentimelineio.git
+    git_hash: ebd44e2458e34f4d50c2431889cd3f278085a3e8 # HEAD of branch foundry/v0.15

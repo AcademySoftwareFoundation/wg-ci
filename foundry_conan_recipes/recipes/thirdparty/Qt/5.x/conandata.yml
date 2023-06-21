@@ -1,0 +1,7 @@
+sources:
+  "5.12.11":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/qt/qt5.git
+    git_hash: 3f7e311c7dd28ef5f25c2d8ab8e9f68f6d432772 # HEAD of branch foundry/v5.12.11
+  "5.15.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/qt/qt5.git
+    git_hash: 96c0c9b2c228b6e7adbb60cc920904ee8cb0438d # HEAD of branch foundry/v5.15.2

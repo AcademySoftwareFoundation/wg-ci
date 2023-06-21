@@ -1,0 +1,18 @@
+versions:
+  "1.9.0":
+    folder: "all"
+    variants:
+      windows:
+        # code compiles against all current toolchain versions
+        platforms:
+          - win
+      linux_and_mac:
+        # code does not compile with more recent toolchains
+        platforms:
+          - linux
+          - mac
+        only_profiles:
+          - vfx20
+
+  "23.1.4":
+    folder: "all"

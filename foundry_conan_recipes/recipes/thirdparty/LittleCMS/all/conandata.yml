@@ -1,0 +1,4 @@
+sources:
+  "2.12":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/little-cms.git
+    git_hash: 924a020d09bfe468c665467caf24aadeb41ff77c # tag 2.12

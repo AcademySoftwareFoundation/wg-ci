@@ -1,0 +1,8 @@
+versions:
+  "7.x":
+    folder: "all"
+    variants:
+      excluded_profiles:
+        - vfx20
+      config:
+        pkgref_namespace: null

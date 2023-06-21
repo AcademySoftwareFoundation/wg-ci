@@ -1,0 +1,25 @@
+versions:
+  "1.2.176.1":
+    folder: "all"
+    variants:
+      build_types:
+        - Release
+      only_profiles:
+        - vfx22
+      platforms:
+        - win
+        - linux
+        - mac
+        # Apple Silicon requires more investigation; not clear which version has universal binaries
+  "1.3.239.0":
+    folder: "all"
+    variants:
+      build_types:
+        - Release
+      excluded_profiles:
+        - vfx20
+      platforms:
+        - win
+        - linux
+        - mac
+        # Apple Silicon requires more investigation; not clear which version has universal binaries

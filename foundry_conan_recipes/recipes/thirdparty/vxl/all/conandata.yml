@@ -1,0 +1,4 @@
+sources:
+  "1.18.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/vxl.git
+    git_hash: 273d285b0decd4652449d5ba57447f4fa97bfdd2 # HEAD of branch foundry/v1.18.0

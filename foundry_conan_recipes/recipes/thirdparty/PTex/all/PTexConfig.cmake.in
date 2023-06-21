@@ -1,0 +1,48 @@
+if (CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "PTex requires at least CMake version 3.0.0")
+endif()
+
+get_filename_component(_ptex_install_prefix "${{CMAKE_CURRENT_LIST_DIR}}/.." ABSOLUTE)
+
+if (NOT TARGET PTex::PTex)
+  message(STATUS "Found PTex: ${{_ptex_install_prefix}}")
+
+  find_package(zlib REQUIRED NO_SYSTEM_ENVIRONMENT_PATH)
+  find_package(Threads REQUIRED)
+
+  add_library(PTex::PTex IMPORTED {PTEX_LIBTYPE})
+
+  set(LIBS zlib::zlib
+           Threads::Threads
+  )
+
+  set_target_properties(
+      PTex::PTex
+      PROPERTIES
+      INTERFACE_INCLUDE_DIRECTORIES ${{_ptex_install_prefix}}/include
+      IMPORTED_LOCATION ${{_ptex_install_prefix}}/lib/{PTEX_LIBNAME}{PTEX_LIBEXT}
+      INTERFACE_LINK_LIBRARIES "${{LIBS}}"
+  )
+  if({PTEX_LIBTYPE} STREQUAL "SHARED")
+    if(UNIX)
+      set_target_properties(
+        PTex::PTex
+        PROPERTIES
+        IMPORTED_NO_SONAME true
+      )
+    elseif(WIN32)
+      set_target_properties(
+        PTex::PTex
+        PROPERTIES
+        IMPORTED_IMPLIB ${{_ptex_install_prefix}}/lib/Ptex.lib
+      )
+    endif()
+  else()
+    target_compile_definitions(
+    PTex::PTex
+    INTERFACE
+    PTEX_STATIC
+    )
+  endif()
+endif()
+

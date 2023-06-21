@@ -1,0 +1,21 @@
+if (TARGET QtSingleApplication::QtSingleApplication)
+  return()
+endif()
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH) # remove one directory level i.e. "cmake/"
+
+include(CMakeFindDependencyMacro)
+find_dependency(Qt5 5.15 COMPONENTS Core REQUIRED)
+
+add_library(QtSingleApplication::QtSingleApplication SHARED IMPORTED)
+set_target_properties(QtSingleApplication::QtSingleApplication
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"{% if os == "Windows" %}
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/Qt5Solutions_SingleApplication-head{{ bt_suffix }}.lib"
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/Qt5Solutions_SingleApplication-head{{ bt_suffix }}.dll"{% elif os == "Macos" %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libQtSolutions_SingleApplication-head.dylib"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libQt5Solutions_SingleApplication-head.so"{% endif %}
+        INTERFACE_LINK_LIBRARIES "Qt::Core"
+)

@@ -1,0 +1,4 @@
+sources:
+  "1.13.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/glew.git
+    git_hash: a9ae04e671b409f51cf0fa61f954db68b4de3bdb # commit hash for HEAD of foundry/v1.13.0 branch

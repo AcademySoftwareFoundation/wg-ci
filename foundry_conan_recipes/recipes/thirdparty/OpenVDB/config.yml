@@ -1,0 +1,45 @@
+versions:
+  "7.2.1":
+    folder: "all"
+    variants:
+      options:
+        - boost:python_version: 3
+        - boost:python_version: null
+      only_profiles:
+        - vfx20
+  "9.0.0":
+    folder: "all"
+    variants:
+      options:
+        - boost:python_version: 3.9
+          boost:shared: True
+          boost:namespace: null
+        - boost:python_version: 3.9
+          boost:shared: True
+          boost:namespace: foundryboost
+        - boost:python_version: 3.9
+          boost:shared: false
+        - boost:python_version: null
+          boost:shared: False
+      config:
+        pkgref_namespace: null
+      excluded_profiles:
+        - vfx20
+  "10.0.1":
+    folder: "all"
+    variants:
+      options:
+        - boost:python_version: "3.10"
+          boost:shared: True
+          boost:namespace: null
+        - boost:python_version: "3.10"
+          boost:shared: True
+          boost:namespace: foundryboost
+        - boost:python_version: "3.10"
+          boost:shared: false
+        - boost:python_version: null
+          boost:shared: False
+      config:
+        pkgref_namespace: null
+      only_profiles:
+        - vfx23

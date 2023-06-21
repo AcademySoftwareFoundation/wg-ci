@@ -1,0 +1,27 @@
+versions:
+  "8.6.10":
+    folder: "all"
+    variants:
+      shouty:
+        config:
+          pkgref_name: "TCL"
+        options:
+          - shared: True
+          - shared: False
+      camel:
+        config:
+          pkgref_name: "Tcl"
+        options:
+          - shared: True
+          - shared: False
+  "8.4.16":
+    folder: "all"
+    variants:
+      camel:
+        config:
+          pkgref_name: "Tcl"
+        options:
+          - shared: True
+        excluded_profiles:
+          - vfx20
+

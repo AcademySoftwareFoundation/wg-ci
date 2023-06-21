@@ -1,0 +1,12 @@
+sources:
+  "3.1.4":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/imath.git
+    git_hash: 595640f57bc0be115378239684c32c1e53193366  # foundry/v3.1.4
+
+  "3.1.6":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/imath.git
+    git_hash: 7c6c5fd76edf0c71db1a5a14d66a04a7d2bf9c1f  # v3.1.6
+
+  "3.1.7":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/imath.git
+    git_hash: a4f9d5c6205482e1f1a86c84bb97bafa247fb774  # v3.1.7

@@ -1,0 +1,25 @@
+versions:
+  "11.3.1":
+    folder: "all"
+    variants:
+      platforms:
+        - linux
+        - win
+      build_types:
+        - Release
+      only_profiles:
+        - vfx20
+      config:
+        pkgref_namespace: common/development
+  "11.4.1":
+    folder: "all"
+    variants:
+      platforms:
+        - linux
+        - win
+      build_types:
+        - Release
+      only_profiles:
+        - vfx20
+      config:
+        pkgref_namespace: common/development

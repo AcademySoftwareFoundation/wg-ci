@@ -1,0 +1,36 @@
+versions:
+  "3.3.3":
+    folder: "all"
+    variants:
+      only_profiles:
+        - vfx20
+  "3.4.3":
+    folder: "all"
+    variants:
+      opengl_variant:
+        options:
+          - GLBackend: OpenGL
+      foundrygl_variant:
+        options:
+          - GLBackend: FoundryGL
+        platforms:
+          - mac
+          - mac_arm
+  "3.5.0":
+    folder: "all"
+    variants:
+      opengl_variant:
+        options:
+          - GLBackend: OpenGL
+        excluded_profiles:
+          - vfx20
+          - vfx22
+      foundrygl_variant:
+        options:
+          - GLBackend: FoundryGL
+        platforms:
+          - mac
+          - mac_arm
+        excluded_profiles:
+          - vfx20
+          - vfx22

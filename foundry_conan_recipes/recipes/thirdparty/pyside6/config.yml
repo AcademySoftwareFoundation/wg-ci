@@ -1,0 +1,24 @@
+versions:
+  "6.3.1":
+    folder: "all"
+    variants:
+      variant_opengl:
+        options:
+          - shared: True
+            python_version: 3.9
+        config:
+          pkgref_namespace: null
+        excluded_profiles:
+          - vfx20
+      variant_foundrygl:
+        options:
+          - shared: True
+            python_version: 3.9
+            Qt:GLBackend: FoundryGL
+        platforms:
+          - mac
+          - mac_arm
+        config:
+          pkgref_namespace: null
+        excluded_profiles:
+          - vfx20

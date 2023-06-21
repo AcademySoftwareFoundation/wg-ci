@@ -1,0 +1,4 @@
+sources:
+  "1.3.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/benchmark.git
+    git_hash: 336bb8db986cc52cdf0cefa0a7378b9567d1afee # tag 1.3.0

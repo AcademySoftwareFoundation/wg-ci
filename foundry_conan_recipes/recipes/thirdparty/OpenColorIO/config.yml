@@ -1,0 +1,74 @@
+versions:
+  "2.0.4":
+    folder: "all"
+    variants:
+      options:
+        - python_version: null
+        - python_version: "3"
+          pybind11:python_version: "3"
+        - python_version: null
+          library_suffix: "Foundry"
+        - python_version: "3"
+          pybind11:python_version: "3"
+          library_suffix: "Foundry"
+      config:
+        pkgref_namespace: null
+      only_profiles:
+        - vfx20
+  "2.1.1":
+    folder: "all"
+    variants:
+      options:
+        - python_version: null
+        - python_version: "3.9"
+          pybind11:python_version: "3.9"
+        - python_version: null
+          library_suffix: "Foundry"
+        - python_version: "3.9"
+          pybind11:python_version: "3.9"
+          library_suffix: "Foundry"
+      config:
+        pkgref_namespace: null
+      excluded_profiles:
+        - vfx20
+  "2.1.2":
+    folder: "all"
+    variants:
+      options:
+        - python_version: null
+        - python_version: "3.9"
+          pybind11:python_version: "3.9"
+        - python_version: null
+          library_suffix: "Foundry"
+        - python_version: "3.9"
+          pybind11:python_version: "3.9"
+          library_suffix: "Foundry"
+      config:
+        pkgref_namespace: null
+      excluded_profiles:
+        - vfx20
+  "2.2.1":
+    folder: "all"
+    variants:
+      options:
+        - python_version: null
+          minizip-ng:compat: False
+          zlib:shared: False
+        - python_version: "3.10"
+          pybind11:python_version: "3.10"
+          minizip-ng:compat: False
+          zlib:shared: False
+        - python_version: null
+          minizip-ng:compat: False
+          zlib:shared: False
+          library_suffix: "Foundry"
+        - python_version: "3.10"
+          pybind11:python_version: "3.10"
+          minizip-ng:compat: False
+          zlib:shared: False
+          library_suffix: "Foundry"
+      config:
+        pkgref_namespace: null
+      excluded_profiles:
+        - vfx20
+        - vfx22

@@ -1,0 +1,57 @@
+versions:
+  "2.6.1":
+    folder: "all"
+    variants:
+      vfx20:
+        options:
+          - python_version: "2"
+          - python_version: "3"
+        only_profiles:
+          - vfx20
+      vfx22:
+        options:
+          - python_version: "3.9"
+        only_profiles:
+          - vfx22
+      vfx23:
+        options:
+          - python_version: "3.9"
+          - python_version: "3.10"
+        only_profiles:
+          - vfx23
+  "2.9.1":
+    folder: "all"
+    variants:
+      vfx22:
+        config:
+          pkgref_namespace: null
+        options:
+          - python_version: "3.9"
+        only_profiles:
+          - vfx22
+      vfx23:
+        config:
+          pkgref_namespace: null
+        options:
+          - python_version: "3.9"
+          - python_version: "3.10"
+        only_profiles:
+          - vfx23
+  "2.9.2":
+    folder: "all"
+    variants:
+      vfx22:
+        config:
+          pkgref_namespace: null
+        options:
+          - python_version: "3.9"
+        only_profiles:
+          - vfx22
+      vfx23:
+        config:
+          pkgref_namespace: null
+        options:
+          - python_version: "3.9"
+          - python_version: "3.10"
+        only_profiles:
+          - vfx23

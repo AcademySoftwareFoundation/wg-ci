@@ -1,0 +1,34 @@
+if (CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "TIFF requires at least CMake version 3.0.0")
+endif()
+
+get_filename_component(_tiff_install_prefix "${{CMAKE_CURRENT_LIST_DIR}}/.." ABSOLUTE)
+
+message(STATUS "Found TIFF: ${{_tiff_install_prefix}}")
+
+if (NOT TARGET TIFF::TIFF)
+
+  add_library(TIFF::TIFF IMPORTED {LIBTIFF_LIBTYPE})
+  set_target_properties(
+    TIFF::TIFF
+    PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${{_tiff_install_prefix}}/include
+    IMPORTED_LOCATION ${{_tiff_install_prefix}}/lib/{LIBTIFF_LIBNAME}{LIBTIFF_LIBEXT}
+  )
+  if({LIBTIFF_LIBTYPE} STREQUAL "SHARED")
+    if(UNIX)
+      set_target_properties(
+        TIFF::TIFF
+        PROPERTIES
+        IMPORTED_NO_SONAME true
+      )
+    elseif(WIN32)
+      set_target_properties(
+        TIFF::TIFF
+        PROPERTIES
+        IMPORTED_IMPLIB ${{_tiff_install_prefix}}/lib/libtiff.lib
+      )
+    endif()
+  endif()
+endif()
+

@@ -1,0 +1,14 @@
+versions:
+  "3.0.9":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      options:
+        - compat: True
+          zlib:shared: False
+        - compat: False
+          zlib:shared: False
+      excluded_profiles:
+        - vfx20
+        - vfx22

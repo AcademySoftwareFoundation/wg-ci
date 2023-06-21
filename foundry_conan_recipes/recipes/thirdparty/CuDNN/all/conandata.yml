@@ -1,0 +1,19 @@
+sources:
+  "8.0.5":
+    "cuda10.1":
+        git_url: git@a_gitlab_url:libraries/conan/thirdparty/cudnn.git
+        git_hash: f68cce4808fa699a00d9934650a84cdd6caf445f # commit hash for HEAD of the foundry/v8.0.5.39-cuda10.1 branch
+    "cuda11.1":
+        git_url: git@a_gitlab_url:libraries/conan/thirdparty/cudnn.git
+        git_hash: 609c2838a80be0344b390d931efbd8cfb523e7af # commit hash for HEAD of the foundry/v8.0.5.39-cuda11.1 branch
+  "8.2.1":
+    "cuda11.x":
+        git_url: git@a_gitlab_url:libraries/conan/thirdparty/cudnn.git
+        git_hash: 82964b31c53361d727c3190f19f05a394fa42194 # commit hash for HEAD of the foundry/v8.2.1.32-cuda11.x branch
+  "8.4.1":
+    "cuda11.1":
+        git_url: git@a_gitlab_url:libraries/conan/thirdparty/cudnn.git
+        git_hash: 71d2db51af656ce6ffa4703e3f18f0cb7a97cad9 # commit hash for HEAD of the foundry/v8.4.1.50-cuda11.x branch
+
+build-environment:
+  conan: 1.28.1

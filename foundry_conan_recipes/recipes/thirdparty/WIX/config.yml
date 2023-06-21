@@ -1,0 +1,13 @@
+versions:
+  "3.11":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      platforms:
+        - win
+      build_types:
+        - Release
+      only_profiles:
+        - vfx22
+        # other profiles will reuse vfx22 binaries

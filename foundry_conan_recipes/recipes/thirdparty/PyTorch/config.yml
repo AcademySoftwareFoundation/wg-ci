@@ -1,0 +1,45 @@
+versions:
+  "1.6.0":
+    folder: "all"
+    variants:
+      vfx20_only:
+        platforms:
+          - linux
+          - win
+        options:
+          - cuda_version: 10.1
+            cudnn_version: 8.0.5
+          - cuda_version: 11.1
+            cudnn_version: 8.0.5
+        only_profiles:
+          - vfx20
+      mac:
+        platforms:
+          - mac
+        only_profiles:
+          - vfx20
+  "1.12.1":
+    folder: "all"
+    variants:
+      cuda11:
+        platforms:
+          - linux
+          - win
+        options:
+          - cuda_version: 11.1
+            cudnn_version: 8.4.1
+        only_profiles:
+          - vfx22
+      mac:
+        platforms:
+          - mac
+        only_profiles:
+          - vfx22
+      mac_arm:
+        platforms:
+          - mac_arm
+        options:
+          - use_mkl: False
+            use_openmp: False
+        only_profiles:
+          - vfx22

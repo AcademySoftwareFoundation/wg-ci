@@ -1,0 +1,8 @@
+sources:
+  "1.6.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/pytorch/pytorch.git
+    git_hash: 8797026fb781345b14531aaa42e7fb858c98b3eb # commit hash to HEAD of foundry/1.6.0 - includes patches for CUDA 11
+  "1.12.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/pytorch/pytorch.git
+    git_hash: e0cbbe770dfbfd456eb0212b4fbf69b0982e1044 # commit hash to HEAD of foundry/v1.12.1
+

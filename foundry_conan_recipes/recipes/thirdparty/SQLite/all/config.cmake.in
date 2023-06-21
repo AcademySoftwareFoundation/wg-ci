@@ -1,0 +1,36 @@
+if (CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "sqlite requires at least CMake version 3.0.0")
+endif()
+
+get_filename_component(_sqlite_install_prefix "${{CMAKE_CURRENT_LIST_DIR}}/.." ABSOLUTE)
+
+message(STATUS "Found sqlite: ${{_sqlite_install_prefix}}")
+
+if (NOT TARGET SQLite::SQLite3)
+
+  add_library(SQLite::SQLite3 IMPORTED {SQLITE_LIBTYPE})
+  set_target_properties(
+    SQLite::SQLite3
+    PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${{_sqlite_install_prefix}}/include
+    IMPORTED_LOCATION ${{_sqlite_install_prefix}}/{SQLITE_LIBRARY_SUBDIR}/{SQLITE_LIBPREFIX}{SQLITE_LIBNAME}{SQLITE_LIBEXT}
+  )
+  if({SQLITE_LIBTYPE} STREQUAL "SHARED")
+    if(WIN32)
+      set_target_properties(
+        SQLite::SQLite3
+        PROPERTIES
+        IMPORTED_IMPLIB ${{_sqlite_install_prefix}}/lib/{SQLITE_LIBNAME}.lib
+      )
+    endif()
+  else()
+    if(UNIX)
+      set_target_properties(
+        SQLite::SQLite3
+        PROPERTIES
+        INTERFACE_LINK_LIBRARIES "-lpthread;-ldl"
+      )
+    endif()
+  endif()
+
+endif()

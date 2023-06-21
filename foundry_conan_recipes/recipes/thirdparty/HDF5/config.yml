@@ -1,0 +1,10 @@
+versions:
+  "1.8.7":
+    folder: "all"
+    variants:
+      variant_vfx20:
+        only_profiles:
+          - vfx20
+      default:
+        excluded_profiles:
+          - vfx20

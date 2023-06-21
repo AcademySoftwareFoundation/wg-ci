@@ -1,0 +1,4 @@
+sources:
+  "2.4.13.7":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/opencv.git
+    git_hash: 51cfa519249c89d24035b3f96315ad997deb300f  # tag 2.4.13.7

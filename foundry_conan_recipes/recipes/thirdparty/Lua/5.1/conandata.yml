@@ -1,0 +1,4 @@
+sources:
+  "5.1.5":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/lua.git
+    git_hash: d24d4984b1e82366d8e7234747bac495d6643e5f  # HEAD of foundry/v5.1.5 branch

@@ -1,0 +1,103 @@
+if (CMAKE_VERSION VERSION_LESS 3.10.0)
+    message(FATAL_ERROR "RadeonImageFilters Config requires CMake 3.10+")
+endif()
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
+if(_IMPORT_PREFIX STREQUAL "/")
+    set(_IMPORT_PREFIX "")
+endif()
+
+# Set models directory
+set(RADEONIMAGEFILTERS_MODELS_DIR "${_IMPORT_PREFIX}/models")
+
+if(NOT TARGET RadeonImageFilters::RadeonImageFilters)
+    add_library(RadeonImageFilters::RadeonImageFilters SHARED IMPORTED)
+    set_target_properties(RadeonImageFilters::RadeonImageFilters
+        PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+        {% if os == "Windows" %}
+            IMPORTED_IMPLIB   "${_IMPORT_PREFIX}/lib/RadeonImageFilters.lib"
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/RadeonImageFilters.dll"
+        {% else %}
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libRadeonImageFilters.{{libsuffix}}"
+        {% endif %}
+    )
+endif()
+
+if(NOT TARGET RadeonImageFilters::RadeonML)
+    add_library(RadeonImageFilters::RadeonML SHARED IMPORTED)
+    set_target_properties(RadeonImageFilters::RadeonML
+        PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+        {% if os == "Windows" %}
+            IMPORTED_IMPLIB   "${_IMPORT_PREFIX}/lib/RadeonML.lib"
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/RadeonML.dll"
+        {% else %}
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libRadeonML.{{libsuffix}}"
+        {% endif %}
+    )
+endif()
+
+{% if os == "Windows" %}
+if(NOT TARGET RadeonImageFilters::dxcompiler)
+    add_library(RadeonImageFilters::dxcompiler MODULE IMPORTED)
+    set_target_properties(RadeonImageFilters::dxcompiler
+        PROPERTIES
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/dxcompiler.dll"
+    )
+endif()
+
+if(NOT TARGET RadeonImageFilters::dxil)
+    add_library(RadeonImageFilters::dxil MODULE IMPORTED)
+    set_target_properties(RadeonImageFilters::dxil
+        PROPERTIES
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/dxil.dll"
+    )
+endif()
+
+if(NOT TARGET RadeonImageFilters::RadeonML_DirectML)
+    add_library(RadeonImageFilters::RadeonML_DirectML MODULE IMPORTED)
+    set_target_properties(RadeonImageFilters::RadeonML_DirectML
+        PROPERTIES
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/RadeonML_DirectML.dll"
+    )
+endif()
+{% endif %}
+
+{% if os == "Windows" or os == "Linux" %}
+if(NOT TARGET RadeonImageFilters::MIOpen)
+    add_library(RadeonImageFilters::MIOpen MODULE IMPORTED)
+    set_target_properties(RadeonImageFilters::MIOpen
+        PROPERTIES
+        {% if os == "Windows" %}
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/MIOpen.dll"
+        {% else %}
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libMIOpen.{{libsuffix}}"
+        {% endif %}
+    )
+endif()
+
+if(NOT TARGET RadeonImageFilters::RadeonML_MIOpen)
+    add_library(RadeonImageFilters::RadeonML_MIOpen MODULE IMPORTED)
+    set_target_properties(RadeonImageFilters::RadeonML_MIOpen
+        PROPERTIES
+        {% if os == "Windows" %}
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/RadeonML_MIOpen.dll"
+        {% else %}
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libRadeonML_MIOpen.{{libsuffix}}"
+        {% endif %}
+    )
+endif()
+{% endif %}
+
+{% if os == "Macos" %}
+if(NOT TARGET RadeonImageFilters::RadeonML_MPS)
+    add_library(RadeonImageFilters::RadeonML_MPS MODULE IMPORTED)
+    set_target_properties(RadeonImageFilters::RadeonML_MPS
+        PROPERTIES
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libRadeonML_MPS.{{libsuffix}}"
+    )
+endif()
+{% endif %}

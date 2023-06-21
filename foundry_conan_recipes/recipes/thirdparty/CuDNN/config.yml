@@ -1,0 +1,34 @@
+versions:
+  "8.0.5":
+    folder: "all"
+    variants:
+      platforms:
+        - linux
+        - win
+      options:
+        - cuda_version: 10.1
+        - cuda_version: 11.1
+      build_types:
+        - Release
+
+  "8.2.1":
+    folder: "all"
+    variants:
+      platforms:
+        - linux
+        - win
+      options:
+        - cuda_version: 11.x
+      build_types:
+        - Release
+
+  "8.4.1":
+    folder: "all"
+    variants:
+      platforms:
+        - linux
+        - win
+      options:
+        - cuda_version: 11.1
+      build_types:
+        - Release

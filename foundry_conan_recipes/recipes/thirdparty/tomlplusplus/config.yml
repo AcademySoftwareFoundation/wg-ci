@@ -1,0 +1,10 @@
+versions:
+  "3.2.0":
+    folder: "all"
+    variants:
+      only_profiles:
+        - vfx22
+      build_types:
+        - Release
+      config:
+        pkgref_namespace: null

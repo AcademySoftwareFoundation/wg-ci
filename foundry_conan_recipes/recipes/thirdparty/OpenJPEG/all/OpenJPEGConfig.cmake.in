@@ -1,0 +1,20 @@
+if (CMAKE_VERSION VERSION_LESS 3.0.0)
+    message(FATAL_ERROR "OpenJPEG requires at least CMake version 3.0.0")
+endif()
+
+get_filename_component(_openjpeg_install_prefix "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
+
+if (TARGET OpenJPEG::OpenJPEG)
+    return()
+endif()
+
+message(STATUS "Found OpenJPEG: ${_openjpeg_install_prefix}")
+add_library(OpenJPEG::OpenJPEG IMPORTED {{libtype}})
+set_target_properties(OpenJPEG::OpenJPEG
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES ${_openjpeg_install_prefix}/include/openjpeg-{{ver.major}}.{{ver.minor}}{% if os == "Windows" and libtype == "SHARED" %}
+        IMPORTED_LOCATION ${_openjpeg_install_prefix}/bin/{{libname}}{{libext}}
+        IMPORTED_IMPLIB ${_openjpeg_install_prefix}/lib/{{libname}}.lib{% else %}
+        IMPORTED_LOCATION ${_openjpeg_install_prefix}/lib/{{libname}}{{libext}}{% endif %}{% if os != "Windows" and libtype == "SHARED" %}
+        IMPORTED_NO_SONAME True{% endif %}
+)

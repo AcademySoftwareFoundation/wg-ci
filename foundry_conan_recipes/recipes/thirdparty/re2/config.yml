@@ -1,0 +1,9 @@
+versions:
+  "2022-02-01":
+    folder: "all"
+    variants:
+      options:
+        - shared: True
+        - shared: False
+      config:
+        pkgref_namespace: null

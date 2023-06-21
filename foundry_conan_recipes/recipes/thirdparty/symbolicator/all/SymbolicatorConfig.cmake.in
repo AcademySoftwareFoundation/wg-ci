@@ -1,0 +1,16 @@
+if (TARGET Symbolicator::symbolicator)
+  return()
+endif()
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH) # remove one directory level i.e. "cmake/"
+message(STATUS "Found Symbolicator: ${_IMPORT_PREFIX}")
+
+add_executable(Symbolicator::symbolicator IMPORTED)
+add_executable(Symbolicator::symsorter IMPORTED)
+
+set_target_properties(Symbolicator::symbolicator PROPERTIES IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/{{symbolicator}}")
+set_target_properties(Symbolicator::symsorter PROPERTIES IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/{{symsorter}}")
+
+unset(_IMPORT_PREFIX)

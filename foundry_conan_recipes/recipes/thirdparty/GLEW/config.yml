@@ -1,0 +1,18 @@
+versions:
+  "1.5.8":
+    folder: "1.5.8"
+    variants:
+      only_profiles:
+        - vfx20
+  "1.13.0":
+    folder: "all"
+    variants:
+      opengl_variant:
+        options:
+          - GLBackend: OpenGL
+      foundrygl_variant:
+        options:
+          - GLBackend: FoundryGL
+        platforms:
+          - mac
+          - mac_arm

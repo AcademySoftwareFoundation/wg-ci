@@ -1,0 +1,17 @@
+versions:
+  "0.3.0":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      options:
+        - shared: True
+          HIDAPI:shared: True
+        - shared: True
+          HIDAPI:shared: False
+        - shared: False
+          HIDAPI:shared: True
+        - shared: False
+          HIDAPI:shared: False
+      excluded_profiles:
+        - vfx20

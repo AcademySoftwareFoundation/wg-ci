@@ -1,0 +1,133 @@
+if (CMAKE_VERSION VERSION_LESS 3.10.0)
+    message(FATAL_ERROR "MKL Config requires CMake 3.10+")
+endif()
+
+# Protect against multiple inclusion, which would fail when already imported targets are added once more.
+set(_targetsDefined)
+set(_targetsNotDefined)
+set(_expectedTargets)
+
+#
+# Vml functions are publicly available in the MKL::Intel library;
+# To use Vml library you need to add the MKL::Intel target and
+# make sure you deploy all the mkl_vml_* shared libs near the
+# executable. MKL::Intel loads dynamicly the vml libraries at
+# runtime when requested
+#
+{% if os == "Linux" %}
+foreach(_expectedTarget MKL::Sequential MKL::Core MKL::Def MKL::Intel MKL::RT){% else %}
+foreach(_expectedTarget MKL::Sequential MKL::Core MKL::Intel MKL::RT){% endif %}
+    list(APPEND _expectedTargets ${_expectedTarget})
+
+    if(NOT TARGET ${_expectedTarget})
+        list(APPEND _targetsNotDefined ${_expectedTarget})
+    endif()
+
+    if(TARGET ${_expectedTarget})
+        list(APPEND _targetsDefined ${_expectedTarget})
+    endif()
+endforeach()
+
+
+# All expected targets are defined, we're done
+if("${_targetsDefined}" STREQUAL "${_expectedTargets}")
+    unset(_targetsDefined)
+    unset(_targetsNotDefined)
+    unset(_expectedTargets)
+    return()
+endif()
+
+if(NOT "${_targetsDefined}" STREQUAL "")
+    message(FATAL_ERROR "Some (but not all) targets in this export set were already defined.\nTargets Defined: ${_targetsDefined}\nTargets not yet defined: ${_targetsNotDefined}\n")
+endif()
+unset(_targetsDefined)
+unset(_targetsNotDefined)
+unset(_expectedTargets)
+
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
+if(_IMPORT_PREFIX STREQUAL "/")
+    set(_IMPORT_PREFIX "")
+endif()
+
+# High Level target definitions
+add_library(MKL::Sequential {{ "SHARED" if shared else "STATIC" }} IMPORTED)
+set_target_properties(MKL::Sequential
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"{% if os == "Linux" %}
+        INTERFACE_LINK_LIBRARIES "m;dl;pthread"{% endif %}
+)
+
+add_library(MKL::Core {{ "SHARED" if shared else "STATIC" }} IMPORTED)
+set_target_properties(MKL::Core
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"{% if os == "Linux" %}
+        INTERFACE_LINK_LIBRARIES "m;dl;pthread"{% endif %}
+)
+
+{% if os == "Linux" %}
+add_library(MKL::Def {{ "SHARED" if shared else "STATIC" }} IMPORTED)
+set_target_properties(MKL::Def
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+        INTERFACE_LINK_LIBRARIES "m;dl;pthread"
+){% endif %}
+
+add_library(MKL::Intel {{ "SHARED" if shared else "STATIC" }} IMPORTED)
+set_target_properties(MKL::Intel
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"{% if os == "Linux" %}
+        INTERFACE_LINK_LIBRARIES "MKL::Sequential;MKL::Core;MKL::Def"{% else %}
+        INTERFACE_LINK_LIBRARIES "MKL::Sequential;MKL::Core"{% endif %}
+)
+
+add_library(MKL::RT {{ "SHARED" if shared else "STATIC" }} IMPORTED)
+set_target_properties(MKL::RT
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+        INTERFACE_LINK_LIBRARIES "m;dl;pthread"
+)
+
+set_target_properties(MKL::Sequential
+    PROPERTIES{% if os == "Windows" and not shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/mkl_sequential.lib"{% elif os == "Windows" and shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/mkl_sequential.dll"
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/mkl_sequential_dll.lib"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libmkl_sequential{{libsuffix}}"
+        IMPORTED_NO_SONAME True{% endif %}
+)
+
+set_target_properties(MKL::Core
+    PROPERTIES{% if os == "Windows" and not shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/mkl_core.lib"{% elif os == "Windows" and shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/mkl_core.dll"
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/mkl_core_dll.lib"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libmkl_core{{libsuffix}}"
+        IMPORTED_NO_SONAME True{% endif %}
+)
+
+{% if os == "Linux" %}
+set_target_properties(MKL::Def
+    PROPERTIES
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libmkl_def{{libsuffix}}"
+        IMPORTED_NO_SONAME True
+){% endif %}
+
+set_target_properties(MKL::Intel
+    PROPERTIES{% if os == "Windows" and not shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/mkl_intel_lp64.lib"{% elif os == "Windows" and shared %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/mkl_intel_lp64_dll.lib"
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/mkl_intel_lp64_dll.lib"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libmkl_intel_lp64{{libsuffix}}"
+        IMPORTED_NO_SONAME True{% endif %}
+)
+
+{% if os == "Linux" %}
+set_target_properties(MKL::RT
+    PROPERTIES
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libmkl_rt{{libsuffix}}"
+        IMPORTED_NO_SONAME True
+)
+{% endif %}

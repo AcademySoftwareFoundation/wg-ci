@@ -1,0 +1,46 @@
+versions:
+  "5.15.2.1":
+    folder: "all"
+    variants:
+      opengl_variant:
+        options:
+          - shared: True
+            python_version: "3.9"
+        config:
+          pkgref_namespace: null
+        excluded_profiles:
+          - vfx20
+      foundrygl_variant:
+        options:
+          - shared: True
+            python_version: "3.9"
+            Qt:GLBackend: FoundryGL
+        config:
+          pkgref_namespace: null
+        platforms:
+          - mac
+          - mac_arm
+        excluded_profiles:
+          - vfx20
+      opengl_vfx23_variant:
+        options:
+          - shared: True
+            python_version: "3.10"
+            pyside2-shiboken:python_version: "3.10"
+        config:
+          pkgref_namespace: null
+        only_profiles:
+          - vfx23
+      foundrygl_vfx23_variant:
+        options:
+          - shared: True
+            python_version: "3.10"
+            pyside2-shiboken:python_version: "3.10"
+            Qt:GLBackend: FoundryGL
+        config:
+          pkgref_namespace: null
+        platforms:
+          - mac
+          - mac_arm
+        only_profiles:
+          - vfx23

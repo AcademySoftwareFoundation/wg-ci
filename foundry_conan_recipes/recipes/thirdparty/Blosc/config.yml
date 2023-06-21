@@ -1,0 +1,10 @@
+versions:
+  "1.14.3":
+    folder: "all"
+    variants:
+      options:
+        - shared: False
+          fPIC: False
+        - shared: False
+          fPIC: True
+        - shared: True

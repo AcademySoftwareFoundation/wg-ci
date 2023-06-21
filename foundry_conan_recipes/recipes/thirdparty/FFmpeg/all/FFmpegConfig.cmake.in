@@ -1,0 +1,154 @@
+if (CMAKE_VERSION VERSION_LESS 3.10.0)
+    message(FATAL_ERROR "FFmpeg Config requires CMake 3.10+")
+endif()
+
+# Protect against multiple inclusion, which would fail when already imported targets are added once more.
+set(_targetsDefined)
+set(_targetsNotDefined)
+set(_expectedTargets)
+
+
+foreach(_expectedTarget FFmpeg::FFmpeg FFmpeg::ffmpeg FFmpeg::avutil FFmpeg::swscale FFmpeg::swresample FFmpeg::avcodec FFmpeg::avformat FFmpeg::avfilter FFmpeg::avdevice)
+    list(APPEND _expectedTargets ${_expectedTarget})
+
+    if(NOT TARGET ${_expectedTarget})
+        list(APPEND _targetsNotDefined ${_expectedTarget})
+    endif()
+
+    if(TARGET ${_expectedTarget})
+        list(APPEND _targetsDefined ${_expectedTarget})
+    endif()
+endforeach()
+
+
+# All expected targets are defined, we're done
+if("${_targetsDefined}" STREQUAL "${_expectedTargets}")
+    unset(_targetsDefined)
+    unset(_targetsNotDefined)
+    unset(_expectedTargets)
+    return()
+endif()
+
+if(NOT "${_targetsDefined}" STREQUAL "")
+    message(FATAL_ERROR "Some (but not all) targets in this export set were already defined.\nTargets Defined: ${_targetsDefined}\nTargets not yet defined: ${_targetsNotDefined}\n")
+endif()
+unset(_targetsDefined)
+unset(_targetsNotDefined)
+unset(_expectedTargets)
+
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_ffmpeg_import_location "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_ffmpeg_import_location "${_ffmpeg_import_location}" PATH) # remove one directory level i.e. "cmake/"
+message(STATUS "Found FFmpeg: ${_ffmpeg_import_location} ({{version_major}}.{{version_minor}}")
+
+add_library(FFmpeg::avutil SHARED IMPORTED)
+set_target_properties(FFmpeg::avutil
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_ffmpeg_import_location}/include"
+)
+
+add_library(FFmpeg::swscale SHARED IMPORTED)
+set_target_properties(FFmpeg::swscale
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_ffmpeg_import_location}/include"
+        INTERFACE_LINK_LIBRARIES "FFmpeg::avutil"
+)
+
+add_library(FFmpeg::swresample SHARED IMPORTED)
+set_target_properties(FFmpeg::swresample
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_ffmpeg_import_location}/include"
+        INTERFACE_LINK_LIBRARIES "FFmpeg::avutil"
+)
+
+add_library(FFmpeg::avcodec SHARED IMPORTED)
+set_target_properties(FFmpeg::avcodec
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_ffmpeg_import_location}/include"
+        INTERFACE_LINK_LIBRARIES "FFmpeg::swresample;FFmpeg::avutil"
+)
+
+add_library(FFmpeg::avformat SHARED IMPORTED)
+set_target_properties(FFmpeg::avformat
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_ffmpeg_import_location}/include"
+        INTERFACE_LINK_LIBRARIES "FFmpeg::avcodec;FFmpeg::swresample;FFmpeg::avutil"
+)
+
+add_library(FFmpeg::avfilter SHARED IMPORTED)
+set_target_properties(FFmpeg::avfilter
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_ffmpeg_import_location}/include"
+        INTERFACE_LINK_LIBRARIES "FFmpeg::swscale;FFmpeg::avformat;FFmpeg::avcodec;FFmpeg::swresample;FFmpeg::avutil"
+)
+
+add_library(FFmpeg::avdevice SHARED IMPORTED)
+set_target_properties(FFmpeg::avdevice
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_ffmpeg_import_location}/include"
+        INTERFACE_LINK_LIBRARIES "FFmpeg::avfilter;FFmpeg::swscale;FFmpeg::avformat;FFmpeg::avcodec;FFmpeg::swresample;FFmpeg::avutil"
+)
+
+# Meta-library, practically the same as FFmpeg::avdevice
+add_library(FFmpeg::FFmpeg INTERFACE IMPORTED)
+set_target_properties(
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_ffmpeg_import_location}/include"
+        INTERFACE_LINK_LIBRARIES "FFmpeg::avdevice;FFmpeg::avfilter;FFmpeg::swscale;FFmpeg::avformat;FFmpeg::avcodec;FFmpeg::swresample;FFmpeg::avutil"
+)
+
+# ffmpeg is a command line toolbox to manipulate, convert and stream multimedia content.
+add_executable(FFmpeg::ffmpeg IMPORTED)
+set_target_properties(FFmpeg::ffmpeg
+    PROPERTIES
+    {% if os == "Windows" %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/bin/ffmpeg.exe"
+    {% else %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/bin/ffmpeg"
+    {% endif %}
+)
+
+set_target_properties(FFmpeg::avutil
+    PROPERTIES{% if os == "Windows" %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/bin/avutil{{AVUTIL_DLL_SUFFIX}}.dll"
+        IMPORTED_IMPLIB "${_ffmpeg_import_location}/lib/avutil.lib"{% else %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/lib/libavutil{{shsuffix}}"{% endif %}
+)
+set_target_properties(FFmpeg::swscale
+    PROPERTIES{% if os == "Windows" %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/bin/swscale{{SWSCALE_DLL_SUFFIX}}.dll"
+        IMPORTED_IMPLIB "${_ffmpeg_import_location}/lib/swscale.lib"{% else %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/lib/libswscale{{shsuffix}}"{% endif %}
+)
+set_target_properties(FFmpeg::swresample
+    PROPERTIES{% if os == "Windows" %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/bin/swresample{{SWRESAMPLE_DLL_SUFFIX}}.dll"
+        IMPORTED_IMPLIB "${_ffmpeg_import_location}/lib/swresample.lib"{% else %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/lib/libswresample{{shsuffix}}"{% endif %}
+)
+set_target_properties(FFmpeg::avcodec
+    PROPERTIES{% if os == "Windows" %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/bin/avcodec{{AVCODEC_DLL_SUFFIX}}.dll"
+        IMPORTED_IMPLIB "${_ffmpeg_import_location}/lib/avcodec.lib"{% else %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/lib/libavcodec{{shsuffix}}"{% endif %}
+)
+set_target_properties(FFmpeg::avformat
+    PROPERTIES{% if os == "Windows" %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/bin/avformat{{AVFORMAT_DLL_SUFFIX}}.dll"
+        IMPORTED_IMPLIB "${_ffmpeg_import_location}/lib/avformat.lib"{% else %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/lib/libavformat{{shsuffix}}"{% endif %}
+)
+set_target_properties(FFmpeg::avfilter
+    PROPERTIES{% if os == "Windows" %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/bin/avfilter{{AVFILTER_DLL_SUFFIX}}.dll"
+        IMPORTED_IMPLIB "${_ffmpeg_import_location}/lib/avfilter.lib"{% else %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/lib/libavfilter{{shsuffix}}"{% endif %}
+)
+set_target_properties(FFmpeg::avdevice
+    PROPERTIES{% if os == "Windows" %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/bin/avdevice{{AVDEVICE_DLL_SUFFIX}}.dll"
+        IMPORTED_IMPLIB "${_ffmpeg_import_location}/lib/avdevice.lib"{% else %}
+        IMPORTED_LOCATION "${_ffmpeg_import_location}/lib/libavdevice{{shsuffix}}"{% endif %}
+)
+unset(_ffmpeg_import_location)

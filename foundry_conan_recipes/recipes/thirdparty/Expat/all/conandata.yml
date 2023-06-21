@@ -1,0 +1,4 @@
+sources:
+  "2.2.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/expat.git
+    git_hash: 5a161d11ae85949fa1c0e3b127f4ce4df1b31f27 # commit hash for HEAD of foundry/v2.2.0 branch

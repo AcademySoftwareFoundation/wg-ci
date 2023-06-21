@@ -1,0 +1,13 @@
+versions:
+  "v0.7.0":
+    folder: "all"
+    variants:
+      platforms:
+        - linux
+        - win
+        - mac
+        - mac_arm
+      build_types:
+        - Release
+      config:
+        pkgref_namespace: null

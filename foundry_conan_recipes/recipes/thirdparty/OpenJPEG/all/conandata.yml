@@ -1,0 +1,8 @@
+sources:
+  "1.5.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/openjpeg.git
+    git_hash: 7d97b181d301d6f3c0a6b5bcd1a12eca5ff153c1 # commit hash for foundry/v1.5
+
+  "2.5.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/openjpeg.git
+    git_hash: a5891555eb49ed7cc26b2901ea680acda136d811 # SHA for tag v2.5.0

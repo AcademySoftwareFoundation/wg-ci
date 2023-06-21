@@ -1,0 +1,16 @@
+sources:
+  "1.80.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/boost/boost.git
+    git_hash: 4264d25bf6e36c6dd1f5dad7f2cbf4925d080923 # HEAD of the foundry/v1.80.0 branch
+
+  "1.76.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/boost/boost.git
+    git_hash: f69d66f7a3508bfd115bab31ee68c335d529d08f # HEAD of the foundry/v1.76.0 branch
+
+  "1.70.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/boost/boost.git
+    git_hash: ae5f22a1f0ebeac0687c2e8df8ac6e3cf28e29ce # HEAD of the foundry/v1.70.0 branch
+
+  "1.66.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/boost/boost.git
+    git_hash: 914bcc50b951072b28624d5854312c6e8052a724 # HEAD of the foundry/v1.66.0 branch

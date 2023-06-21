@@ -1,0 +1,4 @@
+sources:
+    "0.13.1":
+        git_url: git@a_gitlab_url:libraries/conan/thirdparty/pytorch/text.git
+        git_hash: 3422c8c75818cf5004eb6e503c7a3c51e85ae273 # current head of foundry/v0.13.1 branch

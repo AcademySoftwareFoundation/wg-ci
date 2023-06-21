@@ -1,0 +1,4 @@
+sources:
+  "7.x":
+    git_url:  git@a_gitlab_url:libraries/conan/thirdparty/opennurbs.git
+    git_hash: 95dec19c000ddb4b1a9651a1d063b40cd6cb1678 # SHA for the HEAD of the branch foundry/7.x

@@ -1,0 +1,4 @@
+sources:
+  2.9.9:
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/libxml2.git
+    git_hash: v2.9.9

@@ -1,0 +1,9 @@
+versions:
+  "69.1":
+    folder: "all"
+    variants:
+      options:
+        - shared: False
+        - shared: True
+      platforms:
+        - linux

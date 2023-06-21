@@ -1,0 +1,10 @@
+versions:
+  "1.0.26":
+    folder: "all"
+    variants:
+      platforms:
+        - linux
+      excluded_profiles:
+        - vfx20
+      config:
+        pkgref_namespace: null

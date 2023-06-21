@@ -1,0 +1,7 @@
+sources:
+  "1.7.10":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/alembic.git
+    git_hash: d79b68f54993ef7161fd4af875296a9bf9964a14 # commit hash for HEAD of foundry/v1.7.10 branch
+  "1.8.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/alembic.git
+    git_hash: 814c0818466db5e0f8ff5707f158fec3019991f2 # commit hash for HEAD of foundry/v1.8.3 branch

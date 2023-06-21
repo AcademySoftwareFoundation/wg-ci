@@ -1,0 +1,31 @@
+if(TARGET LuaJIT::LuaJIT)
+    return()
+endif()
+
+add_library(LuaJIT::LuaJIT INTERFACE IMPORTED)
+
+get_filename_component(_install_prefix "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
+
+set_target_properties(LuaJIT::LuaJIT
+    PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${_install_prefix}/include/luajit-@@VERSION_MAJOR@@.@@VERSION_MINOR@@"
+)
+
+if(APPLE)
+    set_target_properties(LuaJIT::LuaJIT
+        PROPERTIES
+        INTERFACE_LINK_LIBRARIES "${_install_prefix}/lib/libluajit-@@LUA_ABI_VERSION_MAJOR@@.@@LUA_ABI_VERSION_MINOR@@@@APPLE_SUFFIX@@;${CMAKE_DL_LIBS}"
+    )
+elseif(UNIX)
+    set_target_properties(LuaJIT::LuaJIT
+        PROPERTIES
+        INTERFACE_LINK_LIBRARIES "${_install_prefix}/lib/libluajit-@@LUA_ABI_VERSION_MAJOR@@.@@LUA_ABI_VERSION_MINOR@@@@UNIX_SUFFIX@@;${CMAKE_DL_LIBS}"
+    )
+elseif(WIN32)
+    set_target_properties(LuaJIT::LuaJIT
+        PROPERTIES
+        INTERFACE_LINK_LIBRARIES "${_install_prefix}/lib/lua@@LUA_ABI_VERSION_MAJOR@@@@LUA_ABI_VERSION_MINOR@@@@WIN32_SUFFIX@@;-NODEFAULTLIB:libcmt"
+    )
+else()
+    message(FATAL_ERROR "Unknown OS")
+endif()

@@ -1,0 +1,28 @@
+versions:
+  "0.6.0":
+    folder: "all"
+    variants:
+      win:
+        options:
+          - shared: False
+          - shared: True
+        platforms:
+          - win
+        config:
+          pkgref_namespace: null
+        excluded_profiles:
+          - vfx20
+      nix:
+        options:
+          - shared: False
+            Curl:openssl_version: "1.1"
+          - shared: True
+            Curl:openssl_version: "1.1"
+        platforms:
+          - linux
+          - mac
+          - mac_arm
+        config:
+          pkgref_namespace: null
+        excluded_profiles:
+          - vfx20

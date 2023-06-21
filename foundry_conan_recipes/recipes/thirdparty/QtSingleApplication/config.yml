@@ -1,0 +1,18 @@
+versions:
+  "2.6.0":
+    folder: "all"
+    variants:
+      opengl_variant:
+        platforms: [win, linux, mac]
+        excluded_profiles:
+          - vfx20
+        config:
+          pkgref_namespace: null
+      foundrygl_variant:
+        platforms: [mac]
+        options:
+          - Qt:GLBackend: FoundryGL
+        excluded_profiles:
+          - vfx20
+        config:
+          pkgref_namespace: null

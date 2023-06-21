@@ -1,0 +1,7 @@
+sources:
+  "2019_U6":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/tbb.git
+    git_hash: cc2c04e2f5363fb8b34c10718ce406814810d1e6 # tag 2019_U6
+  "2020_U3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/tbb.git
+    git_hash: d3b7cae6cfefdab5713f22dad3ca189ad24b53e4 # HEAD of foundry/v2020U3
