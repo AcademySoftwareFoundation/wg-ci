@@ -1,0 +1,36 @@
+if (TARGET OpenHMD::openhmd)
+  return()
+endif ()
+
+include(CMakeFindDependencyMacro)
+find_dependency(HIDAPI CONFIG REQUIRED)
+{% if os != "Windows" %}
+find_dependency(Threads REQUIRED)
+{% endif %}
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH) # remove one directory level i.e. "cmake/"
+
+message(STATUS "Found OpenHMD: ${_IMPORT_PREFIX}")
+
+add_library(OpenHMD::openhmd {{lib_type}} IMPORTED)
+
+set_target_properties(OpenHMD::openhmd
+    PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+{% if os != "Windows" %}
+    INTERFACE_LINK_LIBRARIES "hidapi::hidapi;Threads::Threads;-lm"
+{% else %}
+    INTERFACE_LINK_LIBRARIES "hidapi::hidapi"
+{% endif %}
+    IMPORTED_LOCATION "${_IMPORT_PREFIX}/{{lib_dirname}}/{{lib_filename}}"
+{% if win_lib_filename %}
+    IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/{{win_lib_filename}}"
+{% endif %}
+{% if compile_definitions %}
+    INTERFACE_COMPILE_DEFINITIONS "{{compile_definitions}}"
+{% endif %}
+)
+
+unset(_IMPORT_PREFIX)

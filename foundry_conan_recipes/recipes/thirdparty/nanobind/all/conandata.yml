@@ -1,0 +1,4 @@
+sources:
+  "20220714":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/nanobind.git
+    git_hash: 43a96c537824b4a8b5202e166c1bff239a7e547e # HEAD of foundry/v20220714

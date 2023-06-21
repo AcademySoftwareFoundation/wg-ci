@@ -1,0 +1,4 @@
+sources:
+  "0.8":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/avahi.git
+    git_hash: f060abee2807c943821d88839c013ce15db17b58 # SHA of tag v0.8

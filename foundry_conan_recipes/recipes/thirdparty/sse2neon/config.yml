@@ -1,0 +1,19 @@
+versions:
+  "1.5.1":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      platforms:
+        - linux
+        - mac
+        - mac_arm
+  "1.6.0":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      platforms:
+        - linux
+        - mac
+        - mac_arm

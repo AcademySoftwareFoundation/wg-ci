@@ -1,0 +1,4 @@
+sources:
+  "0.3.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/openhmd.git
+    git_hash: cf6224ef510959e80cd784b6455f96ba8cf81915 # foundry/v0.3.0

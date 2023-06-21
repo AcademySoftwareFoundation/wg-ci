@@ -1,0 +1,10 @@
+versions:
+  "13.0.1":
+    folder: "all"
+    variants:
+      config:
+        build_timeout: 600 # 10 hours
+        conan_request_timeout: 300 # 300 seconds = 5 minutes
+        pkgref_namespace: null
+      excluded_profiles:
+        - vfx20

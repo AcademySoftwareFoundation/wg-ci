@@ -1,0 +1,4 @@
+sources:
+  "3.2.4":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/bullet3.git
+    git_hash: 7dee3436e747958e7088dfdcea0e4ae031ce619e # SHA of tag v3.2.4

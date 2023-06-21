@@ -1,0 +1,4 @@
+sources:
+  "5.15.2.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/pyside/pyside.git
+    git_hash: 0eeaee2929dd0b6dbeae65a97df917c2c7a478f5 # commit hash for HEAD of foundry/v5.15.2.1 branch

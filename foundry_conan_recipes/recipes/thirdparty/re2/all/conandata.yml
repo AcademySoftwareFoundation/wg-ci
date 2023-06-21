@@ -1,0 +1,4 @@
+sources:
+  "2022-02-01":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/re2.git
+    git_hash: 885eb38accf49e2ccdd2fa6786f3590cf40a3e23 # SHA for tag 2022-02-01

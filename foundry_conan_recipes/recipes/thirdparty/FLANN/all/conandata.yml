@@ -1,0 +1,4 @@
+sources:
+  "1.8.5":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/flann.git
+    git_hash: 5d86d03dd2510a072edb051c83a142e3498c1e36 # branch: foundry/v1.8.5

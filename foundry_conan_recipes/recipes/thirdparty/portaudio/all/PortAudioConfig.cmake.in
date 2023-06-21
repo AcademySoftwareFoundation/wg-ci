@@ -1,0 +1,55 @@
+if(TARGET PortAudio::PortAudio)
+    return()
+endif()
+
+include(CMakeFindDependencyMacro)
+find_dependency(Threads REQUIRED)
+
+set(MATH_LIBRARY "")
+include(CheckLibraryExists)
+check_library_exists(m pow "" LIBM)
+if(LIBM)
+    find_library(M_LIB m)
+    set(MATH_LIBRARY "m")
+endif()
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH) # remove one directory level i.e. "cmake/"
+message(STATUS "Found PortAudio: ${_IMPORT_PREFIX}")
+
+add_library(PortAudio::PortAudio {{ 'STATIC' if static else 'SHARED' }}  IMPORTED)
+
+set_target_properties(PortAudio::PortAudio
+    PROPERTIES
+        IMPORTED_LINK_INTERFACE_LANGUAGES "C"
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+
+{% if os == "Macos" %}
+    {% if static %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libportaudio.a"
+    {% else %}
+        IMPORTED_SONAME "@rpath/libportaudio.dylib"
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libportaudio.dylib"
+    {% endif %}
+        INTERFACE_LINK_LIBRARIES "-framework CoreAudio;-framework AudioToolbox;-framework AudioUnit;-framework CoreFoundation;-framework CoreServices;Threads::Threads;${MATH_LIBRARY}"
+{% elif os == "Windows" %}
+    {% if static %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/portaudio_static_x64.lib"
+    {% else %}
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/portaudio_x64.lib"
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/portaudio_x64.dll"
+    {% endif %}
+        IMPORTED_LINK_INTERFACE_LIBRARIES "winmm;dsound;ole32;uuid;setupapi"
+{% elif os == "Linux" %}
+    {% if static %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libportaudio.a"
+    {% else %}
+        IMPORTED_SONAME "libportaudio.so"
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libportaudio.so"
+    {% endif %}
+        IMPORTED_LINK_INTERFACE_LIBRARIES "asound;Threads::Threads;${MATH_LIBRARY}"
+{% endif %}
+)
+
+unset(_IMPORT_PREFIX)

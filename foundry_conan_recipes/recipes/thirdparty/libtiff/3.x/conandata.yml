@@ -1,0 +1,4 @@
+sources:
+  "3.9.4":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/libtiff.git
+    git_hash: 13d81013940a93db3b17eaa0d49a366e21b058ab # commit hash for HEAD of foundry/v3.9.4

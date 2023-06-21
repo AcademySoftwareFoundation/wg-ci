@@ -1,0 +1,4 @@
+sources:
+  "20210910":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/stb.git
+    git_hash: af1a5bc352164740c1cc1354942b1c6b72eacb8a

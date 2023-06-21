@@ -1,0 +1,15 @@
+versions:
+  "1.2.10":
+    folder: all
+    variants:
+      config:
+        pkgref_name: "OpenVR"
+        pkgref_namespace: null
+  "1.0.8":
+    folder: "all"
+    variants:
+      options:
+        - shared: True
+      config:
+        pkgref_name: "openvr"
+        pkgref_namespace: null

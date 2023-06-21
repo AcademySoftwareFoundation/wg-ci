@@ -1,0 +1,4 @@
+sources:
+  "2.4.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/libigl.git
+    git_hash: 5e1f8e139cd5169294e414763a11b771c4839021 # SHA of the HEAD of branch foundry/v2.4.0

@@ -1,0 +1,4 @@
+sources:
+  "2.5.0.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/freetype2.git
+    git_hash: 266d8fd870b85cf6bfa4c3c49ed1b869d8f331a4 # HEAD of branch foundry/v2.5.0.1-tar

@@ -1,0 +1,25 @@
+versions:
+  "1.0.0-alpha.6":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      options:
+        - shared: True
+          python_version: 3.9
+        - shared: False
+          python_version: 3.9
+      only_profiles:
+        - vfx22
+  "1.0.0-alpha.10":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      options:
+        - shared: True
+          python_version: 3.9
+        - shared: False
+          python_version: 3.9
+      only_profiles:
+        - vfx22

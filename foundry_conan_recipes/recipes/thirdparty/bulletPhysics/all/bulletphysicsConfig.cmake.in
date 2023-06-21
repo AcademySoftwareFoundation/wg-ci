@@ -1,0 +1,64 @@
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH) # remove one directory level i.e. "cmake/"
+message(STATUS "Found bulletphysics: ${_IMPORT_PREFIX}")
+
+if(NOT TARGET Bullet::Bullet)
+    add_library(Bullet::Bullet3Collision STATIC IMPORTED)
+    set_target_properties(Bullet::Bullet3Collision
+        PROPERTIES
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/{{libprefix}}Bullet3Collision{{bt}}.{{libext}}"
+    )
+
+    add_library(Bullet::Bullet3Common STATIC IMPORTED)
+    set_target_properties(Bullet::Bullet3Common
+        PROPERTIES
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/{{libprefix}}Bullet3Common{{bt}}.{{libext}}"
+    )
+
+    add_library(Bullet::Bullet3Dynamics STATIC IMPORTED)
+    set_target_properties(Bullet::Bullet3Dynamics
+        PROPERTIES
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/{{libprefix}}Bullet3Dynamics{{bt}}.{{libext}}"
+    )
+
+    add_library(Bullet::BulletCollision STATIC IMPORTED)
+    set_target_properties(Bullet::BulletCollision
+        PROPERTIES
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/{{libprefix}}BulletCollision{{bt}}.{{libext}}"
+    )
+
+    add_library(Bullet::BulletDynamics STATIC IMPORTED)
+    set_target_properties(Bullet::BulletDynamics
+        PROPERTIES
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/{{libprefix}}BulletDynamics{{bt}}.{{libext}}"
+    )
+
+    add_library(Bullet::BulletSoftBody STATIC IMPORTED)
+    set_target_properties(Bullet::BulletSoftBody
+        PROPERTIES
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/{{libprefix}}BulletSoftBody{{bt}}.{{libext}}"
+    )
+
+    add_library(Bullet::HACD STATIC IMPORTED)
+    set_target_properties(Bullet::HACD
+        PROPERTIES
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/{{libprefix}}HACD{{bt}}.{{libext}}"
+    )
+
+    add_library(Bullet::LinearMath STATIC IMPORTED)
+    set_target_properties(Bullet::LinearMath
+        PROPERTIES
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/{{libprefix}}LinearMath{{bt}}.{{libext}}"
+    )
+
+    add_library(Bullet::Bullet INTERFACE IMPORTED)
+    set_target_properties(Bullet::Bullet
+        PROPERTIES
+            INTERFACE_COMPILE_FEATURES cxx_std_14
+            INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include/bullet"
+            INTERFACE_LINK_LIBRARIES "Bullet::BulletDynamics;Bullet::BulletCollision;Bullet::BulletSoftBody;Bullet::Bullet3Collision;Bullet::Bullet3Common;Bullet::Bullet3Dynamics;Bullet::HACD;Bullet::LinearMath"
+    )
+endif(NOT TARGET Bullet::Bullet)
+
+unset(_IMPORT_PREFIX)

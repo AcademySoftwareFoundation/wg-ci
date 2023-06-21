@@ -1,0 +1,22 @@
+versions:
+  "2018.4":
+    folder: "all"
+    variants:
+      only_profiles:
+        - vfx20
+  "2019.5.281":
+    folder: "all"
+    variants:
+      only_profiles:
+        - vfx20
+  "2020.4":
+    folder: "all"
+    variants:
+      platforms:
+        - win
+        - linux
+        - mac
+      only_profiles:
+        - vfx22
+      config:
+        pkgref_namespace: null

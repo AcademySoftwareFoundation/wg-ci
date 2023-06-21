@@ -1,0 +1,4 @@
+sources:
+  "13.0.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/llvm-project.git
+    git_hash: 75e33f71c2dae584b13a7d1186ae0a038ba98838 # SHA for tag llvmorg-13.0.1

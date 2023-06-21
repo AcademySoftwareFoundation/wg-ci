@@ -1,0 +1,4 @@
+sources:
+  "3.3.5":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/glfw.git
+    git_hash: d3b73abba0cab8cbb2a638151477f54d8502a07e

@@ -1,0 +1,5 @@
+sources:
+  "6.3.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/pyside/pyside.git
+    git_hash: f706876e70c47037a122605ca69063e7a4b1834a # commit hash for HEAD of foundry/v6.3.1 branch  
+

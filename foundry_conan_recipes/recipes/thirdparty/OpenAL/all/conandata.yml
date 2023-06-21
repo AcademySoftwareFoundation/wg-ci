@@ -1,0 +1,4 @@
+sources:
+  "1.22.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/openal-soft.git
+    git_hash: c1c63a27de66cd44ef756b190a73bfa8bc6dbbab # SHA of tag 1.22.0

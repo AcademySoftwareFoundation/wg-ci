@@ -1,0 +1,10 @@
+versions:
+  "1.7.3":
+    folder: "all"
+    variants:
+      build_types:
+        - Release
+      excluded_profiles:
+        - vfx20
+      config:
+        pkgref_namespace: null

@@ -1,0 +1,38 @@
+if (CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "zlib requires at least CMake version 3.0.0")
+endif()
+
+get_filename_component(_zlib_install_prefix "${{CMAKE_CURRENT_LIST_DIR}}/.." ABSOLUTE)
+
+message(STATUS "Found zlib: ${{_zlib_install_prefix}}")
+
+if (NOT TARGET zlib::zlib)
+
+  add_library(zlib::zlib IMPORTED {ZLIB_LIBTYPE})
+  set_target_properties(
+    zlib::zlib
+    PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${{_zlib_install_prefix}}/include
+    IMPORTED_LOCATION ${{_zlib_install_prefix}}/lib/{ZLIB_LIBNAME}{ZLIB_LIBEXT}
+  )
+  if({ZLIB_LIBTYPE} STREQUAL "SHARED")
+    if(UNIX)
+      set_target_properties(
+        zlib::zlib
+        PROPERTIES
+        IMPORTED_NO_SONAME true
+      )
+    elseif(WIN32)
+      set_target_properties(
+        zlib::zlib
+        PROPERTIES
+        IMPORTED_IMPLIB ${{_zlib_install_prefix}}/lib/zdll.lib
+      )
+    endif()
+  endif()
+
+endif()
+
+if (NOT TARGET ZLIB::ZLIB)
+  add_library(ZLIB::ZLIB ALIAS zlib::zlib)
+endif()

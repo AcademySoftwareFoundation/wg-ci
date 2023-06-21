@@ -1,0 +1,8 @@
+sources:
+  "7.53.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/curl.git
+    git_hash: a7135ac3c3d825ec9f4919ee0212434e01e76b4c # commit hash for HEAD of foundry/v7.53.0 branch
+
+  "7.72.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/curl.git
+    git_hash: 9d954e49bce3706a9a2efb119ecd05767f0f2a9e # commit hash for HEAD of foundry/v7.72.0 branch

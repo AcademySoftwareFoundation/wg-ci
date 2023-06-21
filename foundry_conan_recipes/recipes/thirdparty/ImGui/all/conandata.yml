@@ -1,0 +1,13 @@
+sources:
+  "1.64":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/imgui.git
+    git_hash: 233212ad36be698a8488ad39bad5ed20068c7e5a  # HEAD of foundry/v1.64 branch
+  "1.79":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/imgui.git
+    git_hash: 3d6cbb260a7c182c408f0cbbec1bd2e72e3251e6  # HEAD of foundry/v1.79 branch
+  "1.86":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/imgui.git
+    git_hash: 512c54bbc062c41c74f8a8bd8ff1fd6bebd1e6d0  # HEAD of foundry/v1.86 branch
+  "1.87":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/imgui.git
+    git_hash: 97374c737ad60dade133c0856d46f0e12fdace34  # HEAD of foundry/v1.87 branch

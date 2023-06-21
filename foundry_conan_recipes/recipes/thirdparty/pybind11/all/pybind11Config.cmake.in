@@ -1,0 +1,28 @@
+get_filename_component(_pybind11_install_prefix "${{CMAKE_CURRENT_LIST_DIR}}/.." ABSOLUTE)
+message(STATUS "Found pybind11: ${{_pybind11_install_prefix}} (found version {PYBIND11_VERSION})")
+
+if (NOT TARGET pybind11::pybind11)
+
+    set(PYBIND11_PYTHON_VERSION {PYTHON_VERSION} CACHE STRING "Python version being used." )
+
+    if (UNIX AND NOT APPLE)
+        set(PYBIND11_VERSION {PYBIND11_VERSION})
+
+        # Prevent pybind from adding LTO flags, as it causes problems when
+        # linking with ld 2.23 on Jenkins. This manifests as missing symbols for
+        # seemingly unrelated functions.  We could pass NO_EXTRAS to
+        # pybind11_add_module, but that also disables stripping of redundant
+        # binary sections.  (See https://github.com/pybind/pybind11/issues/1415
+        # for what looks like the same gcc bug, with different symptoms due to a
+        # later version of gcc/ld.)
+        set(PYBIND11_LTO_CXX_FLAGS "")
+    else()
+        if(${{CMAKE_BUILD_TYPE}} STREQUAL "Debug")
+          set(PYTHON_IS_DEBUG True)
+        endif()
+    endif()
+
+    # Include pybind11's CMakeLists.txt so we have access to pybind11_add_module().
+    add_subdirectory(${{_pybind11_install_prefix}} ${{_pybind11_install_prefix}})
+
+endif()

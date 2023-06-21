@@ -1,0 +1,4 @@
+sources:
+  "3.4.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/libffi.git
+    git_hash: f9ea41683444ebe11cfa45b05223899764df28fb # v3.4.2 tag

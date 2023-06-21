@@ -1,0 +1,13 @@
+sources:
+  "2.0.4":
+    git_url: git@a_gitlab_url:/libraries/conan/thirdparty/opencolorio
+    git_hash: 6e9fd098b5fa4c8cabb9d39d06b96aeb3efe1e64 # foundry-v2.0.4
+  "2.1.1":
+    git_url: git@a_gitlab_url:/libraries/conan/thirdparty/opencolorio
+    git_hash: 946727996deb2600ddeb297003d21d46aace4db8 # foundry/v2.1.1
+  "2.1.2":
+    git_url: git@a_gitlab_url:/libraries/conan/thirdparty/opencolorio
+    git_hash: e446df15270024834078fc4b5fd8cb35548c4c26 # foundry/v2.1.2
+  "2.2.1":
+    git_url: git@a_gitlab_url:/libraries/conan/thirdparty/opencolorio
+    git_hash: 933f3361d965c81d58763e4e36956a232be14206 # foundry/v2.2.1

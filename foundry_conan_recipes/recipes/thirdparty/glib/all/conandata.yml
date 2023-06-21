@@ -1,0 +1,4 @@
+sources:
+  "2.75.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/GNOME/GLib.git
+    git_hash: b5e33a3a6140026811b79c82a8407b7a36dbc114 # commit hash for HEAD at foundry/v2.75.2

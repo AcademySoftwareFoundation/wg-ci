@@ -1,0 +1,9 @@
+versions:
+  "1.18.1":
+    folder: "all"
+    variants:
+      options:
+        - shared: True
+        - shared: False
+      config:
+        pkgref_namespace: null

@@ -1,0 +1,9 @@
+versions:
+  "19.7.0":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      options:
+        - shared: False
+        - shared: True

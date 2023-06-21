@@ -1,0 +1,37 @@
+if (TARGET Blosc::Blosc )
+  return()
+endif()
+
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH) # remove one directory level i.e. "cmake/"
+
+{% if shared %}
+add_library( Blosc::Blosc SHARED IMPORTED )
+set_target_properties( Blosc::Blosc
+  PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${_IMPORT_PREFIX}/include{% if win %}
+    IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/blosc.dll"
+    IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/blosc.lib"{% else %}
+    IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libblosc{{shsuffix}}"{% endif %}
+    )
+{% else %}
+include(CMakeFindDependencyMacro)
+find_dependency(ZLIB)
+
+add_library( Blosc::Blosc STATIC IMPORTED )
+set_target_properties( Blosc::Blosc
+  PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${_IMPORT_PREFIX}/include{% if win %}
+    IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libblosc.lib"{% else %}
+    IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libblosc.a"{% endif %}
+    INTERFACE_LINK_LIBRARIES ZLIB::ZLIB
+    )
+{% endif %}
+add_library( Blosc::blosc ALIAS Blosc::Blosc)
+
+find_package(Threads REQUIRED)
+target_link_libraries(Blosc::Blosc INTERFACE Threads::Threads)
+
+unset( _IMPORT_PREFIX )

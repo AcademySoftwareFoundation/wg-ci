@@ -1,0 +1,10 @@
+from @PXR_PY_PACKAGE_NAME@ import Plug
+import sys
+
+pluginName = "hioOpenVDB"
+plugin = Plug.Registry().GetPluginWithName(pluginName)
+if plugin is None:
+    print("Check plugins test: couldn't find USD plugin with name: %s." % pluginName)
+    sys.exit(1)
+plugin.Load()
+sys.exit(0)

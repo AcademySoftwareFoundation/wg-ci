@@ -1,0 +1,7 @@
+sources:
+  "2.0.9":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/FakeIt.git
+    git_hash: b9f705f897052a33a5e6dd129a049f6b628206e5 # SHA of the HEAD of branch foundry/v2.0.9
+
+build-environment:
+  conan: 1.28.1

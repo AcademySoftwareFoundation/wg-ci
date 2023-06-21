@@ -1,0 +1,4 @@
+sources:
+  "4.1.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/swig.git
+    git_hash: 67f4bdc3cd156e032c7e8d0b2550e5dc67d405c9 # foundry/v4.1.1

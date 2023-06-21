@@ -1,0 +1,4 @@
+sources:
+  "0.13.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/hidapi.git
+    git_hash: 343ac9289e9a2c64c0ecf8103f4b4f8406bb31cc # foundry/v0.13.1

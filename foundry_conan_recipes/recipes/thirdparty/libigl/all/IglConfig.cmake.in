@@ -1,0 +1,22 @@
+# Find dependent libraries.
+include(CMakeFindDependencyMacro)
+find_dependency(Eigen3)
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH) # remove one directory level i.e. "cmake/"
+message(STATUS "Found Igl: ${_IMPORT_PREFIX}")
+
+if(NOT TARGET Igl::Igl)
+    add_library(Igl::Igl IMPORTED STATIC)
+    set_target_properties(Igl::Igl
+        PROPERTIES
+            INTERFACE_COMPILE_DEFINITIONS IGL_STATIC_LIBRARY
+            INTERFACE_INCLUDE_DIRECTORIES ${_IMPORT_PREFIX}/include
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/{{libprefix}}igl.{{libsuffix}}"
+            INTERFACE_LINK_LIBRARIES "Eigen3::Eigen"
+    )
+endif()
+
+unset(_IMPORT_PREFIX)
+

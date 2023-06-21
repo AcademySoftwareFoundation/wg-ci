@@ -1,0 +1,4 @@
+sources:
+  "1.14.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/c-blosc.git
+    git_hash: 88864b5fb759d12a0b32c47ad9f0436d00adea88 # commit hash for HEAD of foundry/v1.14.3 branch

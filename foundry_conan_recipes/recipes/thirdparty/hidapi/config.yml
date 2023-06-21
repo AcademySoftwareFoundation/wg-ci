@@ -1,0 +1,11 @@
+versions:
+  "0.13.1":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      options:
+        - shared: True
+        - shared: False
+      excluded_profiles:
+        - vfx20

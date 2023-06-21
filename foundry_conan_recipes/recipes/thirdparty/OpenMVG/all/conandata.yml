@@ -1,0 +1,7 @@
+sources:
+  "1.6":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/openmvg/openmvg.git
+    git_hash: ebc6c8d5e43963c904070b38b3f04ccf6ba5bbd3 # branch foundry/v1.6
+
+build-environment:
+  conan: 1.28.1

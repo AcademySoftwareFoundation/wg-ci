@@ -1,0 +1,4 @@
+sources:
+  "2021.7.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/opencl/opencl-sdk.git
+    git_hash: ec3747c4baa634501a1ac8fd07859c0605df5263 # commit hash for HEAD of branch foundry/v2021.07.01

@@ -1,0 +1,10 @@
+versions:
+  "3.81":
+    folder: "3.81"
+    variants:
+      platforms:
+        - win
+      build_types:
+        - Release
+      only_profiles:
+        - vfx20

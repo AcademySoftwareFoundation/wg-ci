@@ -1,0 +1,10 @@
+versions:
+  "2.7.18-prebuilt":
+    folder: "2.7.18-prebuilt"
+    variants:
+      only_profiles:
+        - vfx20
+      build_types:
+        - Release
+      config:
+        pkgref_namespace: null

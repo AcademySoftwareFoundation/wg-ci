@@ -1,0 +1,4 @@
+sources:
+  "1.0.2u":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/openssl.git
+    git_hash: e818b74be2170fbe957a07b0da4401c2b694b3b8 # tag 1.0.2u

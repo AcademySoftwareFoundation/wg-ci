@@ -1,0 +1,7 @@
+versions:
+  "5.2.1":
+    folder: "all"
+    variants:
+      platforms:
+        - linux
+        - win

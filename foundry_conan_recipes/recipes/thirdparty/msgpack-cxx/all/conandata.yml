@@ -1,0 +1,4 @@
+sources:
+  "4.1.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/msgpack-c.git
+    git_hash: 63511f29dbac8a1200a7653e561055e82e43d391 # SHA of tag cpp-4.1.1

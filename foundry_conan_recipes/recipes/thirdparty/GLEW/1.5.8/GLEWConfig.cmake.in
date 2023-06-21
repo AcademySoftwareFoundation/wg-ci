@@ -1,0 +1,40 @@
+if (CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "GLEW requires at least CMake version 3.0.0")
+endif()
+
+get_filename_component(_glew_install_prefix "${{CMAKE_CURRENT_LIST_DIR}}/.." ABSOLUTE)
+
+if (NOT TARGET GLEW::GLEW)
+  message(STATUS "Found GLEW: ${{_glew_install_prefix}}")
+  add_library(GLEW::GLEW IMPORTED {GLEW_LIBTYPE})
+  set_target_properties(
+    GLEW::GLEW
+    PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${{_glew_install_prefix}}/include
+    IMPORTED_LOCATION ${{_glew_install_prefix}}/lib/{GLEW_LIBNAME}{GLEW_LIBEXT}
+  )
+  if({GLEW_LIBTYPE} STREQUAL "SHARED")
+    if(UNIX)
+      set_target_properties(
+        GLEW::GLEW
+        PROPERTIES
+        IMPORTED_NO_SONAME true
+    )
+    elseif(WIN32)
+      set_target_properties(
+        GLEW::GLEW
+        PROPERTIES
+        IMPORTED_IMPLIB ${{_glew_install_prefix}}/lib/{GLEW_LIBNAME}.lib
+      )
+    endif()
+  else()
+    find_package(OpenGL REQUIRED)
+    set_target_properties(
+      GLEW::GLEW
+      PROPERTIES
+      INTERFACE_LINK_LIBRARIES "OpenGL::GL;OpenGL::GLU"
+    )
+    add_compile_definitions(GLEW::GLEW PUBLIC GLEW_STATIC)
+  endif()
+endif()
+

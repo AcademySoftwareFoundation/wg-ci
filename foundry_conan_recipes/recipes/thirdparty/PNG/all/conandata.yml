@@ -1,0 +1,12 @@
+sources:
+  "1.4.8":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/libpng.git
+    git_hash: 7e26f8ef6145d33cce732cd74773f5f261388c82 # commit hash for HEAD of foundry/v1.4.8 branch
+
+  "1.6.37":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/libpng.git
+    git_hash: a40189cf881e9f0db80511c382292a5604c3c3d1 # commit hash for v1.6.37 tag
+
+  "1.6.9":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/libpng.git
+    git_hash: 3e753eb8b2d19c7eb72c81a722a0eeb45b98cabe # commit hash for v1.6.9 tag

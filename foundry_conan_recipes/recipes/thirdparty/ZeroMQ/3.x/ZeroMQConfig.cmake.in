@@ -1,0 +1,34 @@
+if (CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "ZeroMQ requires at least CMake version 3.0.0")
+endif()
+
+get_filename_component(_zeromq_install_prefix "${{CMAKE_CURRENT_LIST_DIR}}/.." ABSOLUTE)
+
+if (NOT TARGET ZeroMQ::ZeroMQ)
+  message(STATUS "Found ZeroMQ: ${{_zeromq_install_prefix}}")
+  add_library(ZeroMQ::ZeroMQ IMPORTED {ZEROMQ_LIBTYPE})
+  set_target_properties(
+    ZeroMQ::ZeroMQ
+    PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${{_zeromq_install_prefix}}/include
+    IMPORTED_LOCATION ${{_zeromq_install_prefix}}/{ZEROMQ_LIBDIR}/{ZEROMQ_LIBNAME}{ZEROMQ_LIBEXT}
+  )
+  if(UNIX)
+    include(CMakeFindDependencyMacro)
+    find_dependency(Threads)
+    set_target_properties(
+      ZeroMQ::ZeroMQ
+      PROPERTIES
+      IMPORTED_NO_SONAME true
+      INTERFACE_LINK_LIBRARIES "pthread"
+  )
+  elseif(WIN32)
+    set_target_properties(
+      ZeroMQ::ZeroMQ
+      PROPERTIES
+      IMPORTED_IMPLIB ${{_zeromq_install_prefix}}/lib/{ZEROMQ_LIBNAME}.lib
+      INTERFACE_LINK_LIBRARIES "ws2_32;iphlpapi"
+    )
+  endif()
+endif()
+

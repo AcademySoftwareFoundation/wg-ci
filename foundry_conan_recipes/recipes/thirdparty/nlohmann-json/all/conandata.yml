@@ -1,0 +1,4 @@
+sources:
+  "3.11.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/nlohmann-json.git
+    git_hash: bc889afb4c5bf1c0d8ee29ef35eaaf4c8bef8a5d # commit hash v3.11.2 tag

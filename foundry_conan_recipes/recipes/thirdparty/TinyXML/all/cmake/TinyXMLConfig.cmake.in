@@ -1,0 +1,31 @@
+cmake_minimum_required(VERSION 3.0.0)
+
+if(TARGET TinyXML::TinyXML)
+    return()
+endif()
+
+get_filename_component(_tinyxml_install_prefix "${{CMAKE_CURRENT_LIST_DIR}}/.." ABSOLUTE)
+message(STATUS "Found TinyXML: ${{_tinyxml_install_prefix}}.")
+
+add_library(TinyXML::TinyXML IMPORTED {TINYXML_LIBTYPE})
+
+set_target_properties(TinyXML::TinyXML
+    PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${{_tinyxml_install_prefix}}/include"
+    INTERFACE_COMPILE_DEFINITIONS "TIXML_USE_STL"
+    IMPORTED_LOCATION ${{_tinyxml_install_prefix}}/{TINYXML_LIBDIR}/{TINYXML_LIBNAME}{TINYXML_LIBEXT}
+)
+
+if({TINYXML_LIBTYPE} STREQUAL "SHARED")
+    if(UNIX)
+        set_target_properties(TinyXML::TinyXML
+            PROPERTIES
+            IMPORTED_NO_SONAME true
+        )
+    elseif(WIN32)
+        set_target_properties(TinyXML::TinyXML
+            PROPERTIES
+            IMPORTED_IMPLIB ${{_tinyxml_install_prefix}}/lib/{TINYXML_LIBNAME}.lib
+        )
+    endif()
+endif()

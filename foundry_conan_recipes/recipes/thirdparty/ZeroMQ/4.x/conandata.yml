@@ -1,0 +1,8 @@
+sources:
+  "4.2.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/libzmq.git
+    git_hash: 7005f22726d4a6ca527f27560a0a132394fdbbcc # commit hash for HEAD of foundry/v4.2.1 branch, which is at the v4.2.1 tag
+  "4.3.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/libzmq.git
+    git_hash: 24d00f5311144c7c79f89a50623573f3f9022ee3 # foundry/v4.3.3
+

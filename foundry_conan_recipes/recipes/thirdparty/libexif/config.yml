@@ -1,0 +1,6 @@
+versions:
+  "0.6.24":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null

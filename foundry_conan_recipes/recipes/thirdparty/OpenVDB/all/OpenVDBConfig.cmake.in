@@ -1,0 +1,63 @@
+if (CMAKE_VERSION VERSION_LESS 3.10.0)
+    message(FATAL_ERROR "OpenVDB requires at least CMake version 3.10.0")
+endif()
+
+if (TARGET OpenVDB::Dynamic)
+    return()
+endif()
+
+include(CMakeFindDependencyMacro)
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_OPENVDB_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_OPENVDB_IMPORT_PREFIX "${_OPENVDB_IMPORT_PREFIX}" PATH) # remove one directory level i.e. "cmake/"
+
+message(STATUS "Found OpenVDB: ${_OPENVDB_IMPORT_PREFIX}")
+
+# Interface specifies only INTERFACE properties, i.e. header only etc
+add_library(OpenVDB::Dynamic INTERFACE IMPORTED)
+set_target_properties(OpenVDB::Dynamic
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES ${_OPENVDB_IMPORT_PREFIX}/include
+)
+
+find_dependency(Blosc CONFIG REQUIRED Blosc)
+
+set(Boost_NO_BOOST_CMAKE ON)
+if ({{use_imath}})
+    find_dependency(Imath CONFIG REQUIRED)
+    find_dependency(Boost COMPONENTS {{boost_components}} REQUIRED)
+else()
+    find_dependency(OpenEXR CONFIG REQUIRED COMPONENTS Half IlmImf)
+    find_dependency(Boost CONFIG COMPONENTS {{boost_components}} REQUIRED)
+endif()
+find_dependency(TBB CONFIG REQUIRED COMPONENTS tbb)
+
+if(APPLE)
+    set_target_properties(OpenVDB::Dynamic PROPERTIES
+        INTERFACE_LINK_LIBRARIES "${_OPENVDB_IMPORT_PREFIX}/lib/libopenvdb.dylib"
+    )
+elseif(UNIX)
+    set_target_properties(OpenVDB::Dynamic PROPERTIES
+        INTERFACE_LINK_LIBRARIES "${_OPENVDB_IMPORT_PREFIX}/lib/libopenvdb.so"
+    )
+elseif(WIN32)
+    set_target_properties(OpenVDB::Dynamic PROPERTIES 
+        INTERFACE_LINK_LIBRARIES "${_OPENVDB_IMPORT_PREFIX}/lib/openvdb.lib"
+    )
+    target_compile_definitions(OpenVDB::Dynamic INTERFACE -DOPENEXR_DLL)
+else()
+    message(FATAL_ERROR "Unknown OS")
+endif()
+
+set_property(TARGET OpenVDB::Dynamic APPEND
+    PROPERTY
+    INTERFACE_LINK_LIBRARIES
+    Blosc::Blosc
+    {{openexr_libs}}
+    {{boost_libs}}
+    TBB::tbb)
+
+target_compile_features(OpenVDB::Dynamic INTERFACE cxx_std_14)
+
+unset(_OPENVDB_IMPORT_PREFIX)

@@ -1,0 +1,4 @@
+sources:
+  "1.4.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/openimagedenoise/oidn.git
+    git_hash: d959bac5b7130b31c41095811ddfbe58c4cf03f4 # SHA of tag v1.4.3

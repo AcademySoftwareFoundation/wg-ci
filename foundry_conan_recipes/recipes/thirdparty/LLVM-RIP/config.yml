@@ -1,0 +1,64 @@
+versions:
+  "13.0.0.2":
+    folder: "all"
+    variants:
+      win_X86:
+        platforms:
+          - win
+        options:
+          - target_arch: "X86"
+        only_profiles:
+          - vfx*
+        config:
+          build_timeout: 360 # 360 minutes
+          conan_request_timeout: 300 # 300 seconds = 5 minutes
+          pkgref_namespace: null
+      mac_X86:
+        platforms:
+          - mac
+        options:
+          - target_arch: "X86"
+            enable_assertions: False
+          - target_arch: "X86"
+            enable_assertions: True
+        build_types:
+          - Release
+        only_profiles:
+          - vfx*
+        config:
+          build_timeout: 360 # 360 minutes
+          conan_request_timeout: 300 # 300 seconds = 5 minutes
+          pkgref_namespace: null
+      mac_AArch64:
+        platforms:
+          - mac_arm
+        options:
+          - target_arch: "AArch64"
+            enable_assertions: False
+          - target_arch: "AArch64"
+            enable_assertions: True
+        build_types:
+          - Release
+        only_profiles:
+          - vfx22
+        config:
+          build_timeout: 360 # 360 minutes
+          conan_request_timeout: 300 # 300 seconds = 5 minutes
+          pkgref_namespace: null
+      linux_X86:
+        platforms:
+          - linux
+        options:
+          - target_arch: "X86"
+            enable_assertions: False
+          - target_arch: "X86"
+            enable_assertions: True
+        build_types:
+          - Release
+        only_profiles:
+          - vfx*
+        config:
+          build_timeout: 360 # 360 minutes
+          conan_request_timeout: 300 # 300 seconds = 5 minutes
+          pkgref_namespace: null
+

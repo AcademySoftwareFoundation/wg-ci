@@ -1,0 +1,13 @@
+sources:
+  "7.2.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/openvdb.git
+    git_hash: e7b6c7aeb62a9f1141172daa1968cc2957279597 # branch foundry/v7.2.1
+
+  "9.0.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/openvdb.git
+    git_hash: cb7029e694490ea5e40966697206c4ec8e2eacc4 # branch foundry/v9.0.0
+
+  "10.0.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/openvdb.git
+    git_hash: 3d820fdc9625069f2d0ae7bb61064a4e469e7c16 # branch foundry/v10.0.1
+

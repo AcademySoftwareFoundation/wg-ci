@@ -1,0 +1,7 @@
+versions:
+  "2021.7.1":
+    folder: "all"
+    variants:
+      platforms:
+        - linux
+        - win

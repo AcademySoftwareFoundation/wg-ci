@@ -1,0 +1,27 @@
+versions:
+  "2.7.18":
+    folder: "all"
+    variants:
+      only_profiles:
+        - vfx20
+
+  "3.7.7":
+    folder: "all"
+    variants:
+      only_profiles:
+        - vfx20
+
+  "3.9.10":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      excluded_profiles:
+        - vfx20
+  "3.10.10":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      only_profiles:
+        - vfx23

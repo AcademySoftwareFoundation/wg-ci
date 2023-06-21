@@ -1,0 +1,4 @@
+sources:
+  "1.18.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/ispc.git
+    git_hash: 9d630fd8a24e739beaaf2e6748370840e024c78f # SHA of branch foundry/v1.18.0

@@ -1,0 +1,4 @@
+sources:
+  "3.0.9":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/minizip.git
+    git_hash: db9df99b911d0024ee2727a0267ed82e994c2df1 # tag v3.0.9

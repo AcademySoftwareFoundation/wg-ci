@@ -1,0 +1,4 @@
+sources:
+  "3.32.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/sqlite.git
+    git_hash: ee3686eb50c0e3dbb087c9a0976f7e37e1b014ae # tag version-3.32.3

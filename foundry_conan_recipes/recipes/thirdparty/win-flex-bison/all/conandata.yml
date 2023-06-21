@@ -1,0 +1,4 @@
+sources:
+  "2.5.24":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/winflexbison.git
+    git_hash: 52333db801c89e1a7d504fbc5dcbceaad073a91c # HEAD of branch foundry/v2.5.24

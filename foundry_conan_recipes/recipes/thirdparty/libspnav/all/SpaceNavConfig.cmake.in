@@ -1,0 +1,25 @@
+# Find dependent libraries.
+include(CMakeFindDependencyMacro)
+find_dependency(X11)
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH) # remove one directory level i.e. "cmake/"
+message(STATUS "Found SpaceNav: ${_IMPORT_PREFIX}")
+
+if(NOT TARGET SpaceNav::SpaceNav)
+    add_library(SpaceNav::SpaceNav SHARED IMPORTED)
+    set_target_properties(SpaceNav::SpaceNav
+        PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+        {% if shared %}
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libspnav.so.0.1"
+            IMPORTED_NO_SONAME ON
+        {% else %}
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libspnav.a"
+        {% endif %}
+            INTERFACE_LINK_LIBRARIES "${X11_LIBRARIES}"
+    )
+endif()
+
+unset(_IMPORT_PREFIX)

@@ -1,0 +1,4 @@
+sources:
+  "3.2.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/tomlplusplus.git
+    git_hash: 4b166b69f28e70a416a1a04a98f365d2aeb90de8 # SHA of the HEAD of tag v3.2.0

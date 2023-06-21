@@ -1,0 +1,7 @@
+sources:
+  "1.1.1g":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/openssl.git
+    git_hash: e2e09d9fba1187f8d6aafaa34d4172f56f1ffb72 # tag 1.1.1g
+  "1.1.1m":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/openssl.git
+    git_hash: ac3cef223a4c61d6bee34527b6d4c8c6432494a7 # tag OpenSSL_1_1_1m on master

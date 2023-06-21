@@ -1,0 +1,35 @@
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH) # remove one directory level i.e. "cmake/"
+message(STATUS "Found OpenVR: ${_IMPORT_PREFIX}")
+
+if(NOT TARGET OpenVR::OpenVR)
+    add_library(OpenVR::OpenVR {{ 'SHARED' if shared else 'STATIC' }} IMPORTED)
+    set_target_properties(OpenVR::OpenVR
+        PROPERTIES
+            INTERFACE_COMPILE_FEATURES cxx_std_11
+            INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+        {% if os == "Linux" %}
+            INTERFACE_LINK_LIBRARIES "${CMAKE_DL_LIBS}"
+        {% endif %}
+        {% if os == "Macos" and not shared %}
+            INTERFACE_LINK_LIBRARIES "-framework Foundation"
+        {% endif %}
+        {% if os == "Windows" and not shared %}
+            INTERFACE_COMPILE_DEFINITIONS "VR_API_STATIC"
+        {% endif %}
+        {% if os == "Windows" and shared %}
+            IMPORTED_IMPLIB   "${_IMPORT_PREFIX}/lib/{{libprefix}}openvr_api64.lib"
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/{{libprefix}}openvr_api64.dll"
+        {% else %}
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/{{libprefix}}openvr_api{{libsuffix}}"
+        {% endif %}
+    )
+{% if os == "Linux" and shared %}
+
+    set_target_properties(OpenVR::OpenVR PROPERTIES IMPORTED_NO_SONAME true)
+
+{% endif %}
+endif(NOT TARGET OpenVR::OpenVR)
+
+unset(_IMPORT_PREFIX)

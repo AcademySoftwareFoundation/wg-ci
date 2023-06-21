@@ -1,0 +1,5 @@
+/* Define to 1 if you have the `strndup' function. */
+#cmakedefine HAVE_STRNDUP
+
+/* Define to 1 if you have the `wcsdup' function. */
+#cmakedefine HAVE_WCSDUP

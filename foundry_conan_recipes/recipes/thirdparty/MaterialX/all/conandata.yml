@@ -1,0 +1,4 @@
+sources:
+  "1.38.6":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/materialx.git
+    git_hash: 923d607a34697139b513f4ed3b8f6bcb849daca2 # commit hash for the v1.38.6 tag

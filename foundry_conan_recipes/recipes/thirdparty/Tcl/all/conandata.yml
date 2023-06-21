@@ -1,0 +1,8 @@
+sources:
+  "8.6.10":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/tcl.git
+    git_hash: c16a462ff097fc5e10ec1732c7d9ad4c717b0822 # head of foundry/v8.6.10
+  "8.4.16":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/tcl.git
+    git_hash: e939f25bfda2fd544258c836170e237f663d79dc # head of foundry/v8.4.16
+

@@ -1,0 +1,4 @@
+sources:
+  "3.11":
+    git_url: git@a_gitlab_url:libraries/binaries/WIX.git
+    git_hash: 1fdd5de073a340b803c1e01e8f0268d4416b1adb # HEAD of branch 3.11_BRANCH

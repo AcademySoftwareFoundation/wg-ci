@@ -1,0 +1,8 @@
+versions:
+  "2.5.0.1":
+    folder: "pre-cmake"
+    variants:
+      only_profiles:
+        - vfx20
+  "2.10.4":
+    folder: "all"

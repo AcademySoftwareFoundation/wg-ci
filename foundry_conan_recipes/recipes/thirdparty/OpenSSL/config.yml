@@ -1,0 +1,27 @@
+versions:
+  "1.1.1m":
+    folder: "1.1.x"
+    variants:
+      options:
+        - shared: True
+        - shared: False
+      config:
+        pkgref_namespace: null
+  "1.1.1g":
+    folder: "1.1.x"
+    variants:
+      options:
+        - shared: True
+        - shared: False
+      platforms:
+        - win
+        - linux
+        - mac
+  "1.0.2u":
+    folder: "1.0.2"
+    variants:
+      options:
+        - shared: True
+        - shared: False
+      only_profiles:
+        - vfx20

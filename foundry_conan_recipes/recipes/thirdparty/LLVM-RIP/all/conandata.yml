@@ -1,0 +1,6 @@
+sources:
+  "13.0.0.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/llvm-project.git
+    git_hash: c89fa7dd2af724b3480a103cd31f9d9609e786b8 # HEAD of rip/v13.0.0 branch
+
+

@@ -1,0 +1,21 @@
+versions:
+  "5.15.2":
+    folder: "all"
+    variants:
+      default:
+        only_profiles:
+          - vfx22
+        build_types:
+          - Release
+        config:
+          pkgref_namespace: null
+      mac_builds:
+        only_profiles:
+          - vfx23
+        platforms:
+          - mac
+          - mac_arm
+        build_types:
+          - Release
+        config:
+          pkgref_namespace: null

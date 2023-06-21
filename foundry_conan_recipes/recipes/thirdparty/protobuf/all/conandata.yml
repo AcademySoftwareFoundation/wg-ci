@@ -1,0 +1,4 @@
+sources:
+  "3.17.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/protobuf.git
+    git_hash: 70db61a91bae270dca5db2f9837deea11118b148 # tag v3.17.2

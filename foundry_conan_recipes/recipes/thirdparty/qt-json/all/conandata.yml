@@ -1,0 +1,7 @@
+sources:
+  "20121115":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/qt-json.git
+    git_hash: 9c82e7b849ac589ab79f3e3f7921e8b8134d51bc # branch foundry/v20121115
+  "20180212":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/qt-json.git
+    git_hash: 6f181e49696350a4569f93107d676ff010cf9d57 # hash at 2018-02-12

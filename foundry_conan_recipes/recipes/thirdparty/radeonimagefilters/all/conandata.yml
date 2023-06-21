@@ -1,0 +1,4 @@
+sources:
+  "1.7.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/radeon-image-filters.git
+    git_hash: 863affd1813332c50134e61e018864c57ef6b8ab # SHA of the HEAD of the foundry/v1.7.3 branch

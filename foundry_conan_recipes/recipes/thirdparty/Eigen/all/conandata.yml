@@ -1,0 +1,4 @@
+sources:
+  "3.4.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/eigen.git
+    git_hash: 3147391d946bb4b6c68edd901f2add6ac1f31f8c # SHA of the HEAD of tag 3.4.0

@@ -1,0 +1,7 @@
+sources:
+    "0.7.0":
+        git_url: git@a_gitlab_url:libraries/conan/thirdparty/pytorch/vision.git
+        git_hash: f17b08f35ef61463ecc932443fbe5f56cb8979f0 # current head of foundry/v0.7.0 branch
+    "0.13.1":
+        git_url: git@a_gitlab_url:libraries/conan/thirdparty/pytorch/vision.git
+        git_hash: 62307bb7c1963576ba2a09919e46b8cdfd76be61 # current head of foundry/v0.13.1 branch

@@ -1,0 +1,13 @@
+versions:
+  "0.8":
+    folder: "all"
+    variants:
+      options:
+        - shared: True
+      platforms:
+        - linux
+      # Addition of only_profiles here is intentional, Avahi package will not be used after Modo 16.1. so no need for newer profiles.
+      only_profiles:
+        - vfx22
+      config:
+        pkgref_namespace: null

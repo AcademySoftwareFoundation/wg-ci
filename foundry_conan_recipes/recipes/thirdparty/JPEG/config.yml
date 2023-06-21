@@ -1,0 +1,8 @@
+versions:
+  "6b":
+    folder: "all"
+  "9e":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null

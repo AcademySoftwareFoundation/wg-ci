@@ -1,0 +1,4 @@
+sources:
+  "14.29.30133":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/vcredist.git
+    git_hash: e8fac3cc2424dcd593694cd8ebad736c47ca7c6c # tag v14.29.30133

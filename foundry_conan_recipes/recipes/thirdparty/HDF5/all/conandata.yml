@@ -1,0 +1,4 @@
+sources:
+  "1.8.7":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/hdf5.git
+    git_hash: fe8adb6d7cb419f97dbf12a5c097e4586f238e74 # commit hash for HEAD of foundry/v1.8.7

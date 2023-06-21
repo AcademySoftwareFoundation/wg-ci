@@ -1,0 +1,7 @@
+sources:
+  "19.0.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/pyzmq.git
+    git_hash: 8fb0f0f6e8fb7b0a0cfaf8d32d22960f70d3d4fa  # tag v19.0.2
+  "18.0.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/pyzmq.git
+    git_hash: 0e39492b2030e4b09c0109d4cb5388fd8802df11  # tag v18.0.2

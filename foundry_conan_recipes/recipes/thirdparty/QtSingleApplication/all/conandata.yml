@@ -1,0 +1,4 @@
+sources:
+    "2.6.0":
+      git_url: git@a_gitlab_url:libraries/conan/thirdparty/qt-solutions
+      git_hash: c32e87567c7f6c8c76120e416cabee4a9aa32622 # SHA of the HEAD of the foundry/v2.6.0 branch

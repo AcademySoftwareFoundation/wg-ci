@@ -1,0 +1,4 @@
+sources:
+  "1.0.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/opencolorio-configs.git
+    git_hash: 0857366ee279bd0e091c0b4f593fc17bc9687cb1 # commit hash for HEAD of foundry/v1.2 branch

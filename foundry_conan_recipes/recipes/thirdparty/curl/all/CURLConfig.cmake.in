@@ -1,0 +1,31 @@
+if(TARGET CURL::CURL)
+    return()
+endif()
+
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_curl_import_prefix "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_curl_import_prefix "${_curl_import_prefix}" PATH) # remove one directory level i.e. "cmake/"
+message(STATUS "Found CURL: ${_curl_import_prefix}")
+
+include(CMakeFindDependencyMacro)
+find_dependency(OpenSSL CONFIG)
+find_dependency(ZLIB)
+
+add_library(CURL::CURL {{ "SHARED" if shared else "STATIC" }} IMPORTED)
+set_target_properties(CURL::CURL
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_curl_import_prefix}/include"
+        INTERFACE_LINK_LIBRARIES "OpenSSL::SSL;OpenSSL::Crypto;ZLIB::ZLIB"{% if not shared %}
+        INTERFACE_COMPILE_DEFINITIONS "CURL_STATICLIB"{% endif %}
+)
+
+set_target_properties(CURL::CURL
+    PROPERTIES{% if os != "Windows" %}
+        IMPORTED_LOCATION "${_curl_import_prefix}/lib/libcurl{{libsuffix}}"{% elif shared %}
+        IMPORTED_LOCATION "${_curl_import_prefix}/bin/curl.dll"
+        IMPORTED_IMPLIB "${_curl_import_prefix}/lib/libcurl_imp.lib"{% else %}
+        IMPORTED_LOCATION "${_curl_import_prefix}/lib/libcurl.lib"{% endif %}
+)
+
+unset(_curl_import_prefix)

@@ -1,0 +1,26 @@
+if(TARGET GPerfTools::GPerfTools)
+    return()
+endif()
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_gperftools_import_prefix "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_gperftools_import_prefix "${_gperftools_import_prefix}" PATH)
+message(STATUS "Found GPerfTools: ${_gperftools_import_prefix}")
+
+find_package(Threads REQUIRED)
+add_library(GPerfTools::GPerfTools SHARED IMPORTED)
+set_target_properties(GPerfTools::GPerfTools
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_gperftools_import_prefix}/include"
+        INTERFACE_LINK_LIBRARIES Threads::Threads
+)
+
+set_target_properties(GPerfTools::GPerfTools
+    PROPERTIES{% if os == "Linux" %}
+        IMPORTED_LOCATION "${_gperftools_import_prefix}/lib/libtcmalloc_minimal.so"{% elif os == "Macos" %}
+        IMPORTED_LOCATION "${_gperftools_import_prefix}/lib/libtcmalloc_minimal.dylib"{% elif os == "Windows" %}
+        IMPORTED_LOCATION "${_gperftools_import_prefix}/bin/tcmalloc_minimal.dll"
+        IMPORTED_IMPLIB "${_gperftools_import_prefix}/lib/tcmalloc_minimal.lib"{% endif %}
+)
+
+unset(_gperftools_import_prefix)

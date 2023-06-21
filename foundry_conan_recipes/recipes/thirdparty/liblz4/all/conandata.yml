@@ -1,0 +1,4 @@
+sources:
+  "1.9.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/lz4.git
+    git_hash: d44371841a2f1728a3f36839fd4b7e872d0927d3 # SHA of tag v1.9.3

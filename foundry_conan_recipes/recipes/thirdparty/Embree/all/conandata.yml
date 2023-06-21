@@ -1,0 +1,7 @@
+sources:
+  "3.11.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/embree.git
+    git_hash: 35e343fcc6da518b41a5c687ee0f7d9342d50729 # SHA of tag foundry/v3.11.0
+  "3.13.5":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/embree.git
+    git_hash: 698442324ccddd11725fb8875275dc1384f7fb40 # SHA of tag v3.13.5

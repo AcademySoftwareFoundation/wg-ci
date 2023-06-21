@@ -1,0 +1,10 @@
+versions:
+  "18.7.0":
+    folder: "all"
+    variants:
+      build_types:
+        - Release
+      only_profiles:
+        - vfx22
+      config:
+        pkgref_namespace: null

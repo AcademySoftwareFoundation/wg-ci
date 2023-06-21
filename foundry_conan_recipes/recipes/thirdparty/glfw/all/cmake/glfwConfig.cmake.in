@@ -1,0 +1,45 @@
+if(TARGET glfw::glfw)
+    return()
+endif()
+
+get_filename_component(_install_prefix "${{CMAKE_CURRENT_LIST_DIR}}/.." PATH)
+get_filename_component(_install_prefix "${{_install_prefix}}" PATH)
+message(STATUS "Found glfw: ${{_install_prefix}}.")
+
+add_library(glfw::glfw IMPORTED {GLFW_LIBTYPE})
+
+set(_imported_location)
+set(_interface_include_directories ${{_install_prefix}}/include)
+set(_interface_link_libraries)
+
+find_package(Threads REQUIRED)
+
+if(APPLE)
+    set(_imported_location ${{_install_prefix}}/lib/libglfw3.{GLFW_APPLE_SUFFIX})
+    list(APPEND _interface_link_libraries
+        ${{CMAKE_DL_LIBS}}
+        "-framework Cocoa"
+        "-framework IOKit"
+        "-framework CoreFoundation")
+elseif(UNIX)
+    find_package(X11 REQUIRED)
+    set(_imported_location ${{_install_prefix}}/lib/libglfw3.{GLFW_UNIX_SUFFIX})
+    list(APPEND _interface_include_directories
+        ${{X11_X11_INCLUDE_PATH}})
+    list(APPEND _interface_link_libraries
+        ${{CMAKE_DL_LIBS}}
+        ${{CMAKE_THREAD_LIBS_INIT}}
+        ${{X11_X11_LIB}})
+elseif(WIN32)
+    set(_imported_location ${{_install_prefix}}/lib/glfw3.{GLFW_WIN32_SUFFIX})
+    list(APPEND _interface_link_libraries
+         gdi32)
+else()
+    message(FATAL_ERROR "Unknown OS")
+endif()
+
+set_target_properties(glfw::glfw
+    PROPERTIES
+    IMPORTED_LOCATION "${{_imported_location}}"
+    INTERFACE_INCLUDE_DIRECTORIES "${{_interface_include_directories}}"
+    INTERFACE_LINK_LIBRARIES "${{_interface_link_libraries}}")

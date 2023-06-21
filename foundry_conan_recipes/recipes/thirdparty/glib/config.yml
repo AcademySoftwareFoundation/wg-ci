@@ -1,0 +1,15 @@
+versions:
+  "2.75.2":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      options:
+        - pcre2:shared: False
+      platforms:
+        - linux
+        - mac
+        #- mac_arm  # Linker error.
+        - win
+      excluded_profiles:
+        - vfx20

@@ -1,0 +1,120 @@
+if (CMAKE_VERSION VERSION_LESS 3.10.0)
+    message(FATAL_ERROR "Vulkan Config requires CMake 3.10+")
+endif()
+
+# Protect against multiple inclusion, which would fail when already imported targets are added once more.
+set(_targetsDefined)
+set(_targetsNotDefined)
+set(_expectedTargets)
+
+foreach(_expectedTarget Vulkan::Headers Vulkan::Vulkan Vulkan::shaderc {% if os == "Macos" %}Vulkan::Framework Vulkan::MoltenVK Vulkan::MoltenVKHeaders{% endif %} )
+    list(APPEND _expectedTargets ${_expectedTarget})
+
+    if(NOT TARGET ${_expectedTarget})
+        list(APPEND _targetsNotDefined ${_expectedTarget})
+    endif()
+
+    if(TARGET ${_expectedTarget})
+        list(APPEND _targetsDefined ${_expectedTarget})
+    endif()
+endforeach()
+
+
+# All expected targets are defined, we're done
+if("${_targetsDefined}" STREQUAL "${_expectedTargets}")
+    unset(_targetsDefined)
+    unset(_targetsNotDefined)
+    unset(_expectedTargets)
+    return()
+endif()
+
+if(NOT "${_targetsDefined}" STREQUAL "")
+    message(FATAL_ERROR "Some (but not all) targets in this export set were already defined.\nTargets Defined: ${_targetsDefined}\nTargets not yet defined: ${_targetsNotDefined}\n")
+endif()
+unset(_targetsDefined)
+unset(_targetsNotDefined)
+unset(_expectedTargets)
+
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
+if(_IMPORT_PREFIX STREQUAL "/")
+    set(_IMPORT_PREFIX "")
+endif()
+
+add_library(Vulkan::Headers INTERFACE IMPORTED)
+set_target_properties(Vulkan::Headers
+    PROPERTIES
+    {% if os == "Linux" %}
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/x86_64/include"
+    {% elif os == "Windows" %}
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/Include"
+    {% elif os == "Macos" %}
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/macOS/include"
+    {% endif %}
+)
+
+{% if os == "Windows" %}
+add_library(Vulkan::Vulkan STATIC IMPORTED)
+{% else %}
+add_library(Vulkan::Vulkan SHARED IMPORTED)
+{% endif %}
+set_target_properties(Vulkan::Vulkan
+    PROPERTIES
+    {% if os == "Linux" %}
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/x86_64/include"
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/x86_64/lib/libvulkan.so.{{version_major}}.{{version_minor}}.{{version_patch}}"
+    {% elif os == "Windows" %}
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/Include"
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/Lib/vulkan-{{version_major}}.lib"
+    {% elif os == "Macos" %}
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/macOS/include"
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/macOS/lib/libvulkan.{{version_major}}.{{version_minor}}.{{version_patch}}.dylib"
+    {% endif %}
+)
+
+{% if os == "Macos" %}
+set( VulkanFrameworksPath ${_IMPORT_PREFIX}/macOS/Frameworks )
+add_library(Vulkan::Framework SHARED IMPORTED)
+set_target_properties(Vulkan::Framework
+    PROPERTIES
+        FRAMEWORK TRUE
+        FRAMEWORK_VERSION A
+        INTERFACE_COMPILE_OPTIONS "-F${VulkanFrameworksPath}"
+        INTERFACE_LINK_LIBRARIES "-F${VulkanFrameworksPath} -framework vulkan"
+        INTERFACE_SOURCES "${VulkanFrameworksPath}/vulkan.framework"
+        IMPORTED_LOCATION "${VulkanFrameworksPath}/vulkan.framework/vulkan"
+)
+
+add_library(Vulkan::MoltenVK SHARED IMPORTED)
+set_target_properties(Vulkan::MoltenVK
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/MoltenVK/include"
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/MoltenVK/dylib/macOS/libMoltenVK.dylib"
+)
+
+add_library(Vulkan::MoltenVKHeaders INTERFACE IMPORTED)
+set_target_properties(Vulkan::MoltenVKHeaders
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/MoltenVK/include"
+)
+{% endif %}
+
+add_library(Vulkan::shaderc SHARED IMPORTED)
+set_target_properties(Vulkan::shaderc
+    PROPERTIES
+    {% if os == "Linux" %}
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/x86_64/include"
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/x86_64/lib/libshaderc_shared.so.{{version_major}}"
+    {% elif os == "Windows" %}
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/Include"
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/Bin/shaderc_shared.dll"
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/Lib/shaderc_shared.lib"
+    {% elif os == "Macos" %}
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/macOS/include"
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/macOS/lib/libshaderc_shared.{{version_major}}.dylib"
+    {% endif %}
+)
+
+unset(_IMPORT_PREFIX)

@@ -1,0 +1,12 @@
+sources:
+  "2018.4":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/mkl.git
+    git_hash: 962d11502b9274cfe66fb8d6600f28b52c2b1658
+
+  "2019.5.281":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/mkl.git
+    git_hash: 5f9aafec09a7e73813dd7f041b7e4c8adf55f87d
+
+  "2020.4":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/mkl.git
+    git_hash: 111a3654a9f7c7c03c2a91d8f0a97b5dc8c4bb26

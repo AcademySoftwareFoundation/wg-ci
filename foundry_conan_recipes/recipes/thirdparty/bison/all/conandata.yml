@@ -1,0 +1,4 @@
+sources:
+  "3.8.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/bison.git
+    git_hash: f1a34558677a6732704a5abdbca1a1c9cd3d7a62 # SHA of branch foundry/v3.8.2

@@ -1,0 +1,29 @@
+versions:
+  "2.4.2":
+    folder: "all"
+    variants:
+      options:
+        - shared: False
+        - shared: True
+      only_profiles:
+        - vfx20
+  "3.1.4":
+    folder: "all"
+    variants:
+      options:
+        - shared: False
+        - shared: True
+      excluded_profiles:
+        - vfx20
+      config:
+        pkgref_namespace: null
+  "3.1.6":
+    folder: "all"
+    variants:
+      options:
+        - shared: False
+        - shared: True
+      excluded_profiles:
+        - vfx20
+      config:
+        pkgref_namespace: null

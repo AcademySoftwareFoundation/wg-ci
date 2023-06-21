@@ -1,0 +1,7 @@
+sources:
+  "1.16.1-prebuilt":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/ispc_prebuilt.git
+    git_hash: 691f8cdb8a1c3c636b60e263e05305f5d356acce # SHA of the HEAD of branch v1.16.1
+
+build-environment:
+  conan: 1.28.1

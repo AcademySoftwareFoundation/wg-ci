@@ -1,0 +1,4 @@
+sources:
+  "1.43.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/google-rpc/grpc.git
+    git_hash: dc78581af30da834b7b95572f109bf6c708686e0  # v1.43.2 tag

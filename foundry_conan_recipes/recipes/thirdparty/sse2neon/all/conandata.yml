@@ -1,0 +1,7 @@
+sources:
+  "1.5.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/sse2neon.git
+    git_hash: 6a56e5a3ffa0d0848e4e8e35752434b2ec9e3219 # hash v1.5.1 tag
+  "1.6.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/sse2neon.git
+    git_hash: 3f7692b2c6142509a8969c26379f9d7f2e2a3a22 # hash foundry/v1.6.0 tag that's sse2neon 1.6.0 with patches that enable usage in RIP

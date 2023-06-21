@@ -1,0 +1,4 @@
+sources:
+  "1.0.6":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/bzip2.git
+    git_hash: 962d606 # tag bzip2-1.0.6

@@ -1,0 +1,47 @@
+if (CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "TBB requires at least CMake version 3.0.0")
+endif()
+
+
+get_filename_component(_tbb_install_prefix "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
+
+
+if (NOT TBB_FIND_COMPONENTS)
+  set(TBB_FIND_COMPONENTS "tbb;tbbmalloc;tbbmalloc_proxy")
+  foreach (_tbb_component ${TBB_FIND_COMPONENTS})
+    set(TBB_FIND_REQUIRED_${_tbb_component} 1)
+  endforeach()
+endif()
+
+message(STATUS "Found TBB: ${_tbb_install_prefix}")
+
+foreach (_tbb_component ${TBB_FIND_COMPONENTS})
+  if (NOT TARGET TBB::${_tbb_component})
+
+    add_library(TBB::${_tbb_component} IMPORTED SHARED)
+    set_target_properties(
+      TBB::${_tbb_component}
+      PROPERTIES
+      INTERFACE_INCLUDE_DIRECTORIES ${_tbb_install_prefix}/include
+      INTERFACE_COMPILE_DEFINITIONS __TBB_NO_IMPLICIT_LINKAGE
+      IMPORTED_LOCATION ${_tbb_install_prefix}/@TBB_SHARED_LIBRARY_PREFIX@${_tbb_component}@TBB_CONFIG@@TBB_SHARED_LIBRARY_SUFFIX@
+    )
+    if(WIN32)
+      set_target_properties(
+        TBB::${_tbb_component}
+        PROPERTIES
+        IMPORTED_IMPLIB ${_tbb_install_prefix}/@TBB_IMPORT_LIBRARY_PREFIX@${_tbb_component}@TBB_CONFIG@@TBB_IMPORT_LIBRARY_SUFFIX@
+      )
+    endif()
+    if(UNIX AND NOT APPLE)
+      set_target_properties(
+        TBB::${_tbb_component}
+        PROPERTIES
+        INTERFACE_LINK_OPTIONS -L${_tbb_install_prefix}/lib
+      )
+    endif()
+
+    set(TBB_${_tbb_component}_FOUND 1)
+
+  endif()
+endforeach()

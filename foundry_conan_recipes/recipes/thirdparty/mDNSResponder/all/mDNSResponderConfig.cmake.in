@@ -1,0 +1,24 @@
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH) # remove one directory level i.e. "cmake/"
+message(STATUS "Found mDNSResponder: ${_IMPORT_PREFIX}")
+
+if(NOT TARGET mDNSResponder::mDNSResponder)
+    add_library(mDNSResponder::mDNSResponder SHARED IMPORTED)
+    set_target_properties(mDNSResponder::mDNSResponder
+        PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+        {% if os == "Windows" %}
+            IMPORTED_IMPLIB   "${_IMPORT_PREFIX}/lib/dnssd.lib"
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/dnssd.dll"
+        {% else %}
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/libdns_sd.{{libsuffix}}"
+        {% endif %}
+
+        {% if os == "Linux" %}
+            IMPORTED_NO_SONAME true
+        {% endif %}
+    )
+endif()
+
+unset(_IMPORT_PREFIX)

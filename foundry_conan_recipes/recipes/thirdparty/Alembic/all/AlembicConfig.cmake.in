@@ -1,0 +1,28 @@
+if (CMAKE_VERSION VERSION_LESS 3.10.0)
+    message(FATAL_ERROR "Alembic requires at least CMake version 3.10.0")
+endif()
+
+if (TARGET Alembic::Alembic)
+    return()
+endif()
+
+get_filename_component(_alembic_install_prefix "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
+message(STATUS "Found Alembic: ${_alembic_install_prefix}")
+
+include(CMakeFindDependencyMacro)
+find_dependency(OpenEXR){% if not shared %}
+set(HDF5_USE_STATIC_LIBRARIES ON)
+find_dependency(HDF5 COMPONENTS C CXX){% endif %}
+
+add_library(Alembic::Alembic IMPORTED {{ 'SHARED' if shared else 'STATIC' }})
+set_target_properties(Alembic::Alembic
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES ${_alembic_install_prefix}/include{% if os == "Windows" and not shared %}
+        IMPORTED_LOCATION "${_alembic_install_prefix}/lib/Alembic.lib"{% elif os == "Windows" and shared %}
+        IMPORTED_LOCATION "${_alembic_install_prefix}/bin/Alembic.dll"
+        IMPORTED_IMPLIB "${_alembic_install_prefix}/lib/Alembic.lib"{% else %}
+        IMPORTED_LOCATION "${_alembic_install_prefix}/lib/libAlembic{{libsuffix}}"{% endif %}
+        INTERFACE_LINK_LIBRARIES "{{openexr_libs}};{% if not shared %}${HDF5_LIBRARIES}{% endif %}"{% if os != "Windows" and shared %}
+        IMPORTED_NO_SONAME true{% endif %}
+)
+unset(_alembic_install_prefix)

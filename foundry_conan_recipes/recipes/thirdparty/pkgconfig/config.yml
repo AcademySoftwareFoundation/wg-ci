@@ -1,0 +1,7 @@
+versions:
+  "0.29.2":
+    folder: "all"
+    variants:
+      platforms:
+        - mac
+        - mac_arm

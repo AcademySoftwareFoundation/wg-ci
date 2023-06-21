@@ -1,0 +1,10 @@
+versions:
+  "1557.120.7":
+    folder: "all"
+    variants:
+      options:
+        - shared: True
+      config:
+        pkgref_namespace: null
+      excluded_profiles:
+        - vfx20

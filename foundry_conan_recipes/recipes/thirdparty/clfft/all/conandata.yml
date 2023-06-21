@@ -1,0 +1,4 @@
+sources:
+  "2.14.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/clfft.git
+    git_hash: 5d2f0312a6130127d6dce1abfaa6a27b782dcdd3 # commit hash for HEAD of foundry/master (v2.14.0 with warning suppress and MacOS rpath patches applied)

@@ -1,0 +1,673 @@
+#!/usr/bin/env python
+
+"""
+Bootstrapper for running USD programs and Python scripts
+"""
+
+from __future__ import print_function
+
+import argparse
+import json
+import logging
+import os
+import platform
+import shutil
+import subprocess
+import sys
+import tempfile
+
+try:
+    from conans.util.config_parser import ConfigParser
+except ImportError as exc:
+    print("ERROR: Cannot import a Conan module. Has Conan been pip installed? (%s)" % str(exc))
+    sys.exit(1)
+
+try:
+    from conans.model.ref import get_reference_fields
+except ImportError:
+    from conans.client.command import get_reference_fields
+
+
+logger = logging.getLogger("usd-bootstrap")
+
+
+def _get_package_folder(
+    settings, options, package_ref, conan_user_home, conan_user_home_short
+):
+    """
+    Invoke conan info to find the package_folder for a given reference.
+    Settings and options are passed in too, in order to fully identify which package_id
+    is required.
+
+    conan_user_home can be None, if it was found in the user's environment already.
+    """
+    assert package_ref
+    package_ref_suffixed = package_ref
+    if "@" not in package_ref:
+        package_ref_suffixed = package_ref + "@"
+    env = os.environ.copy()
+    if conan_user_home:
+        env["CONAN_USER_HOME"] = conan_user_home
+    if conan_user_home_short:
+        env["CONAN_USER_HOME_SHORT"] = conan_user_home_short
+    args = [
+        "conan",
+        "info",
+        "--paths",
+        package_ref_suffixed,
+    ]
+    for setting in settings.splitlines():
+        args.extend(
+            [
+                "-s",
+                setting,
+            ]
+        )
+    for option in options.splitlines():
+        if ":" in option:
+            args.extend(["-o", option])
+        else:
+            args.extend(["-o", "USD:{}".format(option)])
+    if platform.system() == "Windows":
+        # pylint: disable=consider-using-with
+        # see https://docs.python.org/3/library/tempfile.html#tempfile.NamedTemporaryFile for why
+        temp_file = tempfile.NamedTemporaryFile(delete=False)
+        temp_filename = temp_file.name
+        args.extend(
+            [
+                "--json",
+                temp_filename,
+            ]
+        )
+        logger.debug("Running '%s' in env '%s'", " ".join(args), env)
+        subprocess.check_output(args, env=env)
+        library_data = json.load(temp_file)
+        temp_file.close()
+        os.unlink(temp_filename)
+    else:
+        with tempfile.NamedTemporaryFile() as temp_file:
+            args.extend(
+                [
+                    "--json",
+                    temp_file.name,
+                ]
+            )
+            logger.debug("Running '%s' in env '%s'", " ".join(args), env)
+            subprocess.check_output(args, env=env)
+            library_data = json.load(temp_file)
+    this_library = next(
+        item for item in library_data if item["reference"] == package_ref
+    )
+    package_dir = os.path.normpath(str(this_library["package_folder"]))
+    logger.debug("%s package_folder=%s", package_ref, package_dir)
+    return package_dir
+
+
+def _get_conan_user_home(start_dir):
+    """
+    Find the CONAN_USER_HOME (location of the local cache) given a starting location (the USD root).
+    Note that on Windows, this is more complex, because USD uses short paths so must follow Conan
+    files back to the original cache.
+
+    If the user has defined the environment variables already, these are honoured.
+    """
+    is_windows = platform.system() == "Windows"
+    # early out if set in the environment
+    if is_windows:
+        if "CONAN_USER_HOME" in os.environ and "CONAN_USER_HOME_SHORT" in os.environ:
+            logger.debug("Found CONAN_USER_HOME AND CONAN_USER_HOME_SHORT in the environment; honouring their values:")
+            logger.debug("\tCONAN_USER_HOME='%s'", os.environ["CONAN_USER_HOME"])
+            logger.debug("\tCONAN_USER_HOME_SHORT='%s'", os.environ["CONAN_USER_HOME_SHORT"])
+            return None, None
+        logger.debug("CONAN_USER_HOME and CONAN_USER_HOME_SHORT environment variables were not found.")
+    else:
+        if "CONAN_USER_HOME" in os.environ:
+            logger.debug("Found CONAN_USER_HOME in the environment; honouring their values:")
+            logger.debug("\tCONAN_USER_HOME='%s'", os.environ["CONAN_USER_HOME"])
+            return None, None
+        logger.debug("CONAN_USER_HOME environment variable was not found.")
+    logger.debug("Searching for local cache starting from package directory '%s'...", start_dir)
+    parent = os.path.dirname(start_dir)
+    conan_user_home_short = None
+    while parent and not parent.endswith(".conan"):
+        if is_windows:
+            real_path = os.path.join(parent, "real_path.txt")
+            if os.path.isfile(real_path):
+                with open(real_path, "rt") as real_path_file:
+                    parent = real_path_file.read().strip()
+                conan_user_home_short = os.path.dirname(os.path.dirname(real_path))
+                continue
+        new_parent = os.path.dirname(parent)
+        if new_parent == parent:
+            parent = None
+        else:
+            parent = new_parent
+    if not parent:
+        raise RuntimeError("Unable to locate Conan local cache, starting from directory '{}'".format(start_dir))
+    conan_user_home = os.path.dirname(parent)
+    logger.debug("\tConan user home is '%s'", conan_user_home)
+    if conan_user_home_short:
+        logger.debug("\tConan user home short is '%s'", conan_user_home_short)
+    return conan_user_home, conan_user_home_short
+
+
+def _bootstrap_usd_command(command_args, env, launcher, use_debugger):
+    """
+    Bootstrap the USD command (program or Python script, latter withtthe launcher)
+    with an environment suitable for running USD enabled programs with all
+    dependencies added in.
+    """
+    full_env = os.environ.copy()
+    full_env.update(env)
+    args = []
+    if use_debugger:
+        # TODO: this is pretty experimental at the moment - it would be better if this ran detached
+        if platform.system() == "Windows":
+            args.extend(
+                [
+                    "devenv",
+                    "/debugexe",
+                ]
+            )
+        elif platform.system() == "Darwin":
+            args.extend(
+                [
+                    "lldb",
+                    "--",
+                ]
+            )
+        else:
+            args.extend(
+                [
+                    "gdb",
+                    "--args",
+                ]
+            )
+    if launcher:
+        args.append(launcher)
+    args.extend(command_args)
+    logger.debug(
+        "Running USD command: '%s' in environment '%s'", " ".join(args), full_env
+    )
+    output = subprocess.check_output(args, env=full_env).decode("utf-8")
+    if output:
+        print(output)
+
+
+def _get_pip_env():
+    """
+    Get the environment that pip will run in, defining the directory where temporary
+    files can be generated during processing.
+    """
+    temp_env = os.environ.copy()
+    temp_dir = tempfile.gettempdir()
+    local_temp_dir = os.path.join(temp_dir, "fnusd-bootstrap-pip-temp")
+    if platform.system() == "Windows":
+        temp_env["TMP"] = local_temp_dir
+        temp_env["TEMP"] = local_temp_dir
+    else:
+        temp_env["TMPDIR"] = local_temp_dir
+    return temp_env
+
+
+def _get_pip_target_dir(forced):
+    """
+    Get the directory that is the target of pip installations.
+
+    This is in the user's home directory so it persists across reboots.
+    """
+    target_dir = os.path.join(os.path.expanduser("~"), "fnusd-bootstrap-site-packages")
+    if forced and os.path.isdir(target_dir):
+        logger.debug("Deleting existing bootstrap site packages directory '%s'", target_dir)
+        shutil.rmtree(target_dir, ignore_errors=True)
+    return target_dir
+
+
+def _pip_install(package_version_tuple_list, forced):
+    """
+    Perform a pip installation of the specified package (and optionally version of) to a
+    subdirectory of the specified root.
+
+    Returns the path to add to PYTHONPATH.
+    """
+    local_site_packages_dir = _get_pip_target_dir(forced)
+    pip_env = _get_pip_env()
+    for package, version in package_version_tuple_list:
+        args = [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "-qq",
+            "--target={}".format(local_site_packages_dir),
+            "--no-cache-dir",  # since it may be cached on a different drive
+            "{}{}".format(package, "=={}".format(version) if version else ""),
+        ]
+        logger.debug(
+            "Running pip command: '%s' in environment '%s'", " ".join(args), pip_env
+        )
+        subprocess.check_call(args, env=pip_env)
+    return local_site_packages_dir
+
+
+def _prepare_environment(
+    library_paths,
+    framework_paths,
+    plugin_paths,
+    usd_root,
+    python_root,
+    python_major_dot_minor,
+    tbb_root,
+    boost_root,
+    pyside_root,
+    qt_root,
+    glew_root,
+    openexr_root,
+    imath_root,
+    forced
+):
+    """
+    Prepare an environment dictionary that is suitable for running programs and Python scripts
+    using USD.
+
+    Some arguments passed in may be None, if the build of USD did not support those features.
+    """
+    assert os.path.isdir(usd_root)
+    logger.debug("Prepare environment with")
+    logger.debug("Lib paths:          %s", " ".join(library_paths))
+    logger.debug("Framework paths:    %s", " ".join(framework_paths))
+    logger.debug("USD plugin paths:   %s", " ".join(plugin_paths))
+    logger.debug("USD:                %s", usd_root)
+    logger.debug("Python:             %s", python_root)
+    logger.debug("Python Major.Minor: %s", python_major_dot_minor)
+    logger.debug("TBB:                %s", tbb_root)
+    logger.debug("Boost:              %s", boost_root)
+    logger.debug("PySide:             %s", pyside_root)
+    logger.debug("Qt:                 %s", qt_root)
+    logger.debug("GLEW:               %s", glew_root)
+    logger.debug("OpenEXR:            %s", openexr_root)
+    logger.debug("Imath:              %s", imath_root)
+    env = {}
+    pythonpath = [os.path.join(usd_root, "lib", "python")]
+    if platform.system() == "Darwin":
+        framework_paths = []
+        lib_paths = [os.path.join(usd_root, "lib")]
+        if tbb_root:
+            lib_paths.append(os.path.join(tbb_root, "lib"))
+        if boost_root:
+            lib_paths.append(os.path.join(boost_root, "lib"))
+        if python_root:
+            framework_paths.append(python_root)
+            if qt_root:
+                framework_paths.append(os.path.join(qt_root, "lib"))
+            if pyside_root:
+                lib_paths.append(os.path.join(pyside_root, "lib"))
+                pythonpath.append(
+                    os.path.join(
+                        pyside_root,
+                        "lib",
+                        "python{}".format(python_major_dot_minor),
+                        "site-packages",
+                    )
+                )
+            if glew_root:
+                lib_paths.append(os.path.join(glew_root, "lib"))
+            if openexr_root:
+                lib_paths.append(os.path.join(openexr_root, "lib"))
+            if imath_root:
+                lib_paths.append(os.path.join(imath_root, "lib"))
+        env["DYLD_LIBRARY_PATH"] = os.pathsep.join(lib_paths + library_paths)
+        env["DYLD_FRAMEWORK_PATH"] = os.pathsep.join(framework_paths + framework_paths)
+    elif platform.system() == "Windows":
+        bin_paths = [os.path.join(usd_root, "lib")]
+        if tbb_root:
+            bin_paths.append(os.path.join(tbb_root, "bin"))
+        if boost_root:
+            bin_paths.append(os.path.join(boost_root, "lib"))
+        if python_root:
+            bin_paths.append(python_root)
+            if qt_root:
+                bin_paths.append(os.path.join(qt_root, "bin"))
+            if pyside_root:
+                bin_paths.append(os.path.join(pyside_root, "bin"))
+                pythonpath.append(os.path.join(pyside_root, "lib", "site-packages"))
+            if glew_root:
+                bin_paths.append(os.path.join(glew_root, "bin"))
+            if openexr_root:
+                bin_paths.append(os.path.join(openexr_root, "bin"))
+            if imath_root:
+                bin_paths.append(os.path.join(imath_root, "bin"))
+        bin_paths.append("%PATH%")
+        env["PATH"] = os.pathsep.join(bin_paths + library_paths)
+        env["PXR_USD_WINDOWS_DLL_PATH"] = env["PATH"]
+    else:
+        lib_paths = [os.path.join(usd_root, "lib")]
+        if tbb_root:
+            lib_paths.append(os.path.join(tbb_root, "lib"))
+        if boost_root:
+            lib_paths.append(os.path.join(boost_root, "lib"))
+        if python_root:
+            lib_paths.append(os.path.join(python_root, "lib"))
+            if qt_root:
+                lib_paths.append(os.path.join(qt_root, "lib"))
+            if pyside_root:
+                lib_paths.append(os.path.join(pyside_root, "lib"))
+                pythonpath.append(
+                    os.path.join(
+                        pyside_root,
+                        "lib",
+                        "python{}".format(python_major_dot_minor),
+                        "site-packages",
+                    )
+                )
+            if glew_root:
+                lib_paths.append(os.path.join(glew_root, "lib"))
+            if openexr_root:
+                lib_paths.append(os.path.join(openexr_root, "lib"))
+            if imath_root:
+                lib_paths.append(os.path.join(imath_root, "lib"))
+        env["LD_LIBRARY_PATH"] = os.pathsep.join(lib_paths + library_paths)
+    if qt_root:
+        env["QT_PLUGIN_PATH"] = os.path.join(qt_root, "plugins")
+        # need PyOpenGL to run usdview
+        # this is not provided in a Conan local cache at this time
+        pythonpath.append(_pip_install([("PyOpenGL", "3.1.5")], forced))
+    if plugin_paths:
+        env["{{PXR_OVERRIDE_PLUGINPATH_NAME}}"] = os.pathsep.join(plugin_paths)
+    env["PYTHONPATH"] = os.pathsep.join(pythonpath)
+    return env
+
+
+def _cache_path(usd_root):
+    """
+    Path of the cache file
+    """
+    return os.path.join(usd_root, ".bootstrapcache")
+
+
+def _read_cache(usd_root):
+    """
+    Read the cache file from disk.
+    """
+    cache_file_path = _cache_path(usd_root)
+    if os.path.isfile(cache_file_path):
+        with open(cache_file_path, "rt") as cache_file:
+            cache = json.load(cache_file)
+            return cache
+    return None
+
+
+def _generate_cache(root_package_dir, usd_root, library_paths, framework_paths, plugin_paths, forced):
+    """
+    Generate a cache file that contains environments and paths suitable for running programs
+    and Python scripts that use USD.
+
+    All dependencies exist in the Conan local cache. The one exception to this is PyOpenGL,
+    which is handled elsewhere.
+    """
+    conan_user_home, conan_user_home_short = _get_conan_user_home(usd_root)
+
+    conaninfo_path = os.path.join(root_package_dir or usd_root, "conaninfo.txt")
+    with open(conaninfo_path, "rt") as conaninfo:
+        conaninfo_contents = conaninfo.read()
+    config_parser = ConfigParser(
+        conaninfo_contents,
+        allowed_fields=["full_requires", "full_settings", "full_options"],
+        raise_unexpected_field=False,
+    )
+    python_package_ref = None
+    tbb_package_ref = None
+    boost_package_ref = None
+    pyside_package_ref = None
+    qt_package_ref = None
+    glew_package_ref = None
+    openexr_package_ref = None
+    imath_package_ref = None
+
+    for package_ref in config_parser.full_requires.splitlines():
+        if package_ref.startswith("Python"):
+            python_package_ref = package_ref.split(":")[0]
+        if package_ref.startswith("tbb"):
+            tbb_package_ref = package_ref.split(":")[0]
+        if package_ref.startswith("boost"):
+            boost_package_ref = package_ref.split(":")[0]
+        if package_ref.startswith("PySide2"):
+            pyside_package_ref = package_ref.split(":")[0]
+        if package_ref.startswith("Qt"):
+            qt_package_ref = package_ref.split(":")[0]
+        if package_ref.startswith("GLEW"):
+            glew_package_ref = package_ref.split(":")[0]
+        if package_ref.startswith("OpenEXR"):
+            openexr_package_ref = package_ref.split(":")[0]
+        if package_ref.startswith("imath"):
+            imath_package_ref = package_ref.split(":")[0]
+
+    if python_package_ref:
+        python_version = get_reference_fields(python_package_ref)[1].split(".")
+        python_major = python_version[0]
+        python_minor = python_version[1]
+        python_major_dot_minor = "{}.{}".format(python_major, python_minor)
+
+        python_root = _get_package_folder(
+            config_parser.full_settings,
+            config_parser.full_options,
+            python_package_ref,
+            conan_user_home,
+            conan_user_home_short,
+        )
+        if platform.system() == "Darwin":
+            pylauncher = os.path.join(
+                python_root,
+                "Python.framework",
+                "Versions",
+                python_major_dot_minor,
+                "bin",
+                "python{}".format(python_major_dot_minor),
+            )
+        elif platform.system() == "Windows":
+            build_type = None
+            for setting in config_parser.full_settings.splitlines():
+                if setting.startswith("build_type"):
+                    build_type = setting.split("=")[1]
+            assert build_type
+            if build_type == "Debug":
+                pylauncher = os.path.join(python_root, "python_d.exe")
+            else:
+                pylauncher = os.path.join(python_root, "python.exe")
+        else:
+            pylauncher = os.path.join(
+                python_root, "bin", "python{}".format(python_major_dot_minor)
+            )
+    else:
+        python_root = None
+        pylauncher = None
+        python_major_dot_minor = None
+
+    tbb_root = (
+        _get_package_folder(
+            config_parser.full_settings,
+            config_parser.full_options,
+            tbb_package_ref,
+            conan_user_home,
+            conan_user_home_short,
+        )
+        if tbb_package_ref
+        else None
+    )
+    boost_root = (
+        _get_package_folder(
+            config_parser.full_settings,
+            config_parser.full_options,
+            boost_package_ref,
+            conan_user_home,
+            conan_user_home_short,
+        )
+        if boost_package_ref
+        else None
+    )
+    pyside_root = (
+        _get_package_folder(
+            config_parser.full_settings,
+            config_parser.full_options,
+            pyside_package_ref,
+            conan_user_home,
+            conan_user_home_short,
+        )
+        if pyside_package_ref
+        else None
+    )
+    qt_root = (
+        _get_package_folder(
+            config_parser.full_settings,
+            config_parser.full_options,
+            qt_package_ref,
+            conan_user_home,
+            conan_user_home_short,
+        )
+        if qt_package_ref
+        else None
+    )
+    glew_root = (
+        _get_package_folder(
+            config_parser.full_settings,
+            config_parser.full_options,
+            glew_package_ref,
+            conan_user_home,
+            conan_user_home_short,
+        )
+        if glew_package_ref
+        else None
+    )
+    openexr_root = (
+        _get_package_folder(
+            config_parser.full_settings,
+            config_parser.full_options,
+            openexr_package_ref,
+            conan_user_home,
+            conan_user_home_short,
+        )
+        if openexr_package_ref
+        else None
+    )
+    imath_root = (
+        _get_package_folder(
+            config_parser.full_settings,
+            config_parser.full_options,
+            imath_package_ref,
+            conan_user_home,
+            conan_user_home_short,
+        )
+        if imath_package_ref
+        else None
+    )
+
+    env = _prepare_environment(
+        library_paths,
+        framework_paths,
+        plugin_paths,
+        usd_root,
+        python_root,
+        python_major_dot_minor,
+        tbb_root,
+        boost_root,
+        pyside_root,
+        qt_root,
+        glew_root,
+        openexr_root,
+        imath_root,
+        forced,
+    )
+
+    cache = {}
+    cache["env"] = env
+    cache["pylauncher"] = pylauncher
+    return cache
+
+
+def _main():
+    """
+    Program entry point
+    """
+    class ExtendListAction(argparse.Action):
+        def __call__(self, parser, namespace, values, option_string=None):
+            items = getattr(namespace, self.dest) or []
+            items.extend(values)
+            setattr(namespace, self.dest, items)
+
+    parser = argparse.ArgumentParser()
+    parser.register('action', 'extendlist', ExtendListAction) # 'extend' is 3.8+
+    parser.add_argument(
+        "-p",
+        "--python",
+        action="store_true",
+        help="Use Python as a launcher for the command.",
+    )
+    parser.add_argument(
+        "-f",
+        "--force",
+        action="store_true",
+        help="Force regeneration of the cached environment.",
+    )
+    parser.add_argument(
+        "-d",
+        "--debugger",
+        action="store_true",
+        help="EXPERIMENTAL: Launch the process in a debugger.",
+    )
+    parser.add_argument(
+        "-v", "--verbose", action="store_true", help="Enable verbose logging."
+    )
+    parser.add_argument(
+        "-L", action="extendlist", nargs="*", default=[], help="Append library search paths"
+    )
+    parser.add_argument(
+        "-F",
+        action="extendlist",
+        nargs="*",
+        default=[],
+        help="Append MacOSX framework search paths",
+    )
+    parser.add_argument(
+        "-P",
+        action="extendlist",
+        nargs="*",
+        default=[],
+        help="Append USD plugin search paths",
+    )
+    parser.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="Disable any caching of environment data - always regenerate it.",
+    )
+    parser.add_argument(
+        "-r",
+        "--root-package",
+        help="Specify root package to read conaninfo.txt from. Useful when Conan overrides are specified in a downstream package. Default is the conaninfo.txt beside this Python script in the USD package.",
+    )
+    parser.add_argument("usd_command", nargs=argparse.REMAINDER)
+    args = parser.parse_args()
+
+    if not args.usd_command:
+        parser.error("No USD command provided")
+
+    logging.basicConfig(level="DEBUG" if args.verbose else "INFO")
+
+    usd_root = os.path.dirname(os.path.realpath(__file__))
+    if args.no_cache or args.force:
+        cache = None
+    else:
+        cache = _read_cache(usd_root)
+    if not cache:
+        cache = _generate_cache(args.root_package, usd_root, args.L, args.F, args.P, args.force)
+        if not args.no_cache:
+            with open(_cache_path(usd_root), "wt") as cache_file:
+                json.dump(cache, cache_file)
+
+    env = cache["env"]
+    pylauncher = cache["pylauncher"] if args.python else None
+
+    _bootstrap_usd_command(args.usd_command, env, pylauncher, args.debugger)
+
+
+if __name__ == "__main__":
+    _main()

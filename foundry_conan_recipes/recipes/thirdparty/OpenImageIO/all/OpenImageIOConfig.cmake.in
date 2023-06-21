@@ -1,0 +1,110 @@
+if (CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "OpenImageIO requires at least CMake version 3.0.0")
+endif()
+
+get_filename_component(_openimage_io_install_prefix "${{CMAKE_CURRENT_LIST_DIR}}/.." ABSOLUTE)
+
+if (NOT TARGET OpenImageIO::OpenImageIO)
+  message(STATUS "Found OpenImageIO: ${{_openimage_io_install_prefix}}")
+
+  include(CMakeFindDependencyMacro)
+  find_dependency(Imath REQUIRED)
+  find_dependency(OpenEXR REQUIRED)
+  find_dependency(JPEG REQUIRED)
+  find_dependency(PNG REQUIRED)
+  find_dependency(TIFF REQUIRED)
+  find_dependency(ZLIB REQUIRED)
+
+  find_dependency(Boost {CONAN_BOOST_VERSION}
+    COMPONENTS
+    chrono
+    date_time
+    filesystem
+    regex
+    system
+    thread
+    REQUIRED
+  )
+
+  set(LIBS  Boost::chrono
+            Boost::date_time
+            Boost::filesystem
+            Boost::regex
+            Boost::system
+            Boost::thread
+            Imath::Imath
+            JPEG::JPEG
+            OpenEXR::Iex
+            OpenEXR::IlmThread
+            OpenEXR::OpenEXRCore
+            OpenEXR::OpenEXR
+            PNG::PNG
+            TIFF::TIFF
+            ZLIB::ZLIB
+            ${{CMAKE_DL_LIBS}}
+   )
+
+  set(INCLUDES  ${{_openimage_io_install_prefix}}/include
+                ${{Boost_INCLUDE_DIRS}}
+  )
+
+  add_library(OpenImageIO::OpenImageIO_Util IMPORTED {OPENIMAGEIO_LIBTYPE})
+  set_target_properties(
+      OpenImageIO::OpenImageIO_Util
+      PROPERTIES
+      INTERFACE_INCLUDE_DIRECTORIES "${{INCLUDES}}"
+      IMPORTED_LOCATION ${{_openimage_io_install_prefix}}/lib/{OPENIMAGEIO_LIBNAME_UTIL}{OPENIMAGEIO_LIBEXT}
+      INTERFACE_LINK_LIBRARIES "${{LIBS}}"
+  )
+
+  add_library(OpenImageIO::OpenImageIO IMPORTED {OPENIMAGEIO_LIBTYPE})
+  set_target_properties(
+      OpenImageIO::OpenImageIO
+      PROPERTIES
+      INTERFACE_INCLUDE_DIRECTORIES "${{INCLUDES}}"
+      IMPORTED_LOCATION ${{_openimage_io_install_prefix}}/lib/{OPENIMAGEIO_LIBNAME}{OPENIMAGEIO_LIBEXT}
+      INTERFACE_LINK_LIBRARIES "${{LIBS}};OpenImageIO::OpenImageIO_Util"
+  )
+
+  if({OPENIMAGEIO_LIBTYPE} STREQUAL "SHARED")
+    if(UNIX)
+      set_target_properties(
+        OpenImageIO::OpenImageIO
+        PROPERTIES
+        IMPORTED_NO_SONAME true
+      )
+      set_target_properties(
+        OpenImageIO::OpenImageIO_Util
+        PROPERTIES
+        IMPORTED_NO_SONAME true
+      )
+    elseif(WIN32)
+      set_target_properties(
+        OpenImageIO::OpenImageIO
+        PROPERTIES
+        IMPORTED_IMPLIB ${{_openimage_io_install_prefix}}/lib/OpenImageIO_Foundry.lib
+      )
+      set_target_properties(
+        OpenImageIO::OpenImageIO_Util
+        PROPERTIES
+        IMPORTED_IMPLIB ${{_openimage_io_install_prefix}}/lib/OpenImageIO_Util_Foundry.lib
+      )
+    endif()
+  else()
+    if(WIN32)
+      target_compile_definitions(
+        OpenImageIO::OpenImageIO
+        INTERFACE
+        OIIO_STATIC_BUILD
+        OIIO_STATIC_DEFINE
+      )
+      target_compile_definitions(
+        OpenImageIO::OpenImageIO_Util
+        INTERFACE
+        OIIO_STATIC_BUILD
+        OIIO_STATIC_DEFINE
+      )
+    endif()
+  endif()
+endif()
+

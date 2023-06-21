@@ -1,0 +1,34 @@
+if (CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "Perl requires at least CMake version 3.0.0")
+endif()
+
+get_filename_component(_perl_install_prefix "${{CMAKE_CURRENT_LIST_DIR}}/.." ABSOLUTE)
+
+message(STATUS "Found Perl: ${{_perl_install_prefix}}")
+
+if (NOT TARGET Perl::perl)
+
+  add_library(Perl::perl IMPORTED {PERL_LIBTYPE})
+  set_target_properties(
+    Perl::perl
+    PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES ${{_perl_install_prefix}}/{PERL_INCLUDEDIR}
+    IMPORTED_LOCATION ${{_perl_install_prefix}}/{PERL_LIBDIR}/{PERL_LIBPREFIX}{PERL_LIBNAME}{PERL_LIBEXT}
+  )
+  if({PERL_LIBTYPE} STREQUAL "SHARED")
+    if(WIN32)
+      set_target_properties(
+        Perl::perl
+        PROPERTIES
+        IMPORTED_IMPLIB ${{_perl_install_prefix}}/lib/CORE/{PERL_LIBNAME}.lib
+      )
+    elseif(UNIX)
+      set_target_properties(
+        Perl::perl
+        PROPERTIES
+        IMPORTED_NO_SONAME true
+      )
+    endif()
+  endif()
+
+endif()

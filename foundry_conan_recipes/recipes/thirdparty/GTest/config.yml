@@ -1,0 +1,14 @@
+versions:
+  "1.10.0":
+    folder: "all"
+    variants:
+      options:
+        - shared: True
+        - shared: False
+
+  "1.12.1":
+    folder: "all"
+    variants:
+      options:
+        - shared: True
+        - shared: False

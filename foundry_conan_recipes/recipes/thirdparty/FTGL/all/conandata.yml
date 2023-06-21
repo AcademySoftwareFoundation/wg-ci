@@ -1,0 +1,4 @@
+sources:
+  "2.1.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/ftgl.git
+    git_hash: fa27a11c934b7eb230c679a11eb95c9b1839476a # branch foundry/v2.1.3.rc5

@@ -1,0 +1,7 @@
+sources:
+  "5.32.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/perl5.git
+    git_hash: bf9ca2c5ff9af2ddaaad63d4d7805caaca142ccf # head of foundry/v5.32.0
+  "5.36.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/perl5.git
+    git_hash: 3666a67690ff124e6e09a293a4589d72b0d3d40e # head of foundry/v5.36.0

@@ -1,0 +1,30 @@
+if (TARGET GTS::GTS)
+  return()
+endif ()
+
+include(CMakeFindDependencyMacro)
+find_dependency(GLib CONFIG REQUIRED)
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH) # remove one directory level i.e. "cmake/"
+
+message(STATUS "Found GTS: ${_IMPORT_PREFIX}")
+
+add_library(GTS::GTS SHARED IMPORTED)
+
+set_target_properties(GTS::GTS
+    PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+{% if os == "Windows" %}
+    INTERFACE_LINK_LIBRARIES GLib::GLib
+{% else %}
+    INTERFACE_LINK_LIBRARIES "GLib::GLib;-lm"
+{% endif %}
+    IMPORTED_LOCATION "${_IMPORT_PREFIX}/{{lib_dirname}}/{{lib_filename}}"
+{% if win_lib_filename %}
+    IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/{{win_lib_filename}}"
+{% endif %}
+)
+
+unset(_IMPORT_PREFIX)

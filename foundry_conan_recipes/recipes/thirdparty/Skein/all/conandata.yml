@@ -1,0 +1,4 @@
+sources:
+  "1.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/skein.git
+    git_hash: 2a94ebab6a7e16ebeee5855af741d3781fbfefd1 # HEAD of master branch

@@ -1,0 +1,9 @@
+sources:
+  "2.3.13.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/oiio.git
+    git_hash: 5a9710fe6e65c8c7c5a8e96e1e43e70b36016130 # tag v2.3.13.0
+  "2.3.21.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/oiio.git
+    git_hash: 05c951385b26b8528366d79593257c9e2ceb8877 # tag v2.3.21.0
+
+

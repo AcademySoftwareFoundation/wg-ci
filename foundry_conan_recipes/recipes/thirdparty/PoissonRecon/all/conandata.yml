@@ -1,0 +1,4 @@
+sources:
+  "V2":
+    git_url:  git@a_gitlab_url:libraries/conan/thirdparty/PoissonRecon.git
+    git_hash: cc82f6ad560ec3689b71539fa99b4da7dc5d5a7d # SHA for HEAD of foundry/nuke_recmake

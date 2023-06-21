@@ -1,0 +1,4 @@
+sources:
+  "1.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/zipstream.git
+    git_hash: 289234829cd2d03871da1004d25195457731d526 # SHA of head of foundry/v1.0

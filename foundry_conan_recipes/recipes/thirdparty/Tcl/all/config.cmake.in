@@ -1,0 +1,74 @@
+if (CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "tcl requires at least CMake version 3.0.0")
+endif()
+
+
+get_filename_component(_tcl_install_prefix "${{CMAKE_CURRENT_LIST_DIR}}/.." ABSOLUTE)
+
+
+message(STATUS "Found TCL: ${{_tcl_install_prefix}}")
+
+if (NOT TARGET TCL::TCL)
+
+    add_library(TCL::TCL IMPORTED {TCL_LIBTYPE})
+    set_target_properties(
+      TCL::TCL
+      PROPERTIES
+      INTERFACE_INCLUDE_DIRECTORIES ${{_tcl_install_prefix}}/include
+    )
+    if ( {TCL_LIBTYPE} STREQUAL "SHARED")
+      set_target_properties(
+        TCL::TCL
+        PROPERTIES
+        IMPORTED_LOCATION ${{_tcl_install_prefix}}/{TCL_DIR}/{TCL_LIBNAME}{TCL_LIBEXT}
+      )
+      if(WIN32)
+        set_target_properties(
+          TCL::TCL
+          PROPERTIES
+          IMPORTED_IMPLIB ${{_tcl_install_prefix}}/lib/{TCL_LIBNAME}.lib
+        )
+      elseif(UNIX)
+        set_target_properties(
+          TCL::TCL
+          PROPERTIES
+          IMPORTED_NO_SONAME true
+        )
+      endif()
+    else()
+      set(TCL_EXTRA_LIBS "")
+      if ( {TCL_USE_ZLIB} )
+        find_package(zlib REQUIRED NO_SYSTEM_ENVIRONMENT_PATH)
+        list(APPEND TCL_EXTRA_LIBS "zlib::zlib")
+      endif()
+      set_target_properties(
+        TCL::TCL
+        PROPERTIES
+        IMPORTED_LOCATION ${{_tcl_install_prefix}}/lib/{TCL_LIBNAME}{TCL_LIBEXT}
+      )
+      if(WIN32)
+        set_target_properties(
+          TCL::TCL
+          PROPERTIES
+          INTERFACE_COMPILE_DEFINITIONS STATIC_BUILD
+          INTERFACE_LINK_LIBRARIES "${{TCL_EXTRA_LIBS}};Netapi32.lib"
+        )
+      elseif(APPLE)
+        set_target_properties(
+          TCL::TCL
+          PROPERTIES
+          INTERFACE_LINK_OPTIONS "-framework;CoreFoundation"
+          INTERFACE_LINK_LIBRARIES "${{TCL_EXTRA_LIBS}}"
+        )
+      elseif(UNIX)
+        set_target_properties(
+          TCL::TCL
+          PROPERTIES
+          INTERFACE_LINK_LIBRARIES "${{TCL_EXTRA_LIBS}};-lpthread;-ldl"
+        )
+      endif()
+
+
+    endif()
+
+endif()

@@ -1,0 +1,23 @@
+versions:
+  "1.2.5.3":
+    folder: "all"
+    variants:
+      options:
+        - shared: True
+        - shared: False
+      only_profiles:
+        - vfx20
+  "1.2.11":
+    folder: "all"
+    variants:
+      options:
+        - shared: True
+        - shared: False
+  "1.2.13":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      options:
+        - shared: True
+        - shared: False

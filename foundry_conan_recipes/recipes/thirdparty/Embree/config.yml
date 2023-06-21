@@ -1,0 +1,19 @@
+versions:
+  "3.11.0":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      platforms:
+        - mac
+        - linux
+        - win
+      excluded_profiles:
+        - vfx20
+  "3.13.5":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null
+      excluded_profiles:
+        - vfx20

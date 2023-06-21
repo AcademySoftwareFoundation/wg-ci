@@ -1,0 +1,8 @@
+versions:
+  "0.6.3":
+    folder: "all"
+    variants:
+      build_types:
+        - Release
+      config:
+        pkgref_namespace: null

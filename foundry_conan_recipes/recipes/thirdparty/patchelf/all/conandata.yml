@@ -1,0 +1,4 @@
+sources:
+  "0.11":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/patchelf.git
+    git_hash: d6b2a72d9ec3bdfde4b1aacdada823ce388968bb # tag 0.11

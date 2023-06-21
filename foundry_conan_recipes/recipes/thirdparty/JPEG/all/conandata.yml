@@ -1,0 +1,8 @@
+sources:
+  "6b":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/jpeg.git
+    git_hash: ab75b7602d98d6899890977baf1ea6fcd3f8d02a # commit hash for HEAD of foundry/v6b branch
+  "9e":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/jpeg.git
+    git_hash: e5669cd12189cc297ad07ee58cfec0fd9ec7bbb7 # commit hash for HEAD of foundry/v9e branch
+

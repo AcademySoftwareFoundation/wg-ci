@@ -1,0 +1,22 @@
+sources:
+  #"19.11":
+  #  git_url: git@a_gitlab_url:libraries/cpp/usd/fnusd.git
+  #  git_hash: 888cab2fbefcfef2cbf514e8dd3a08d7f6aaf848 # current head of 19.11_foundry_patches branch
+  "20.08":
+    git_url: git@a_gitlab_url:libraries/cpp/usd/fnusd.git
+    git_hash: 9963bf9e8fbcf156dd600bbdde8c92b603a91709 # current head of foundry/20.08 branch
+  "21.05":
+    git_url: git@a_gitlab_url:libraries/cpp/usd/fnusd.git
+    git_hash: 2ee2fc4d3dc0264212530bb799fd58201e0902ff # current head of foundry/21.05 branch
+  "21.05-metal":
+    git_url: git@a_gitlab_url:libraries/cpp/usd/usd-metal.git
+    git_hash: 154cfc2beea74f0ddc3d7178f4bac264096663b9 # current head of foundry/v21.05 branch on usd-metal repo
+  "22.03":
+    git_url: git@a_gitlab_url:libraries/cpp/usd/fnusd.git
+    git_hash: 32ae3fa63a2e16774b0c581c94190dc15435ea1a # current head of foundry/22.03 branch
+  "22.05":
+    git_url: git@a_gitlab_url:libraries/cpp/usd/fnusd.git
+    git_hash: df47f0cf9fbc51638a9b5acbfdceec7b31e7ae0d # current head of foundry/22.05a branch
+  "22.05-vfx23":
+    git_url: git@a_gitlab_url:libraries/cpp/usd/fnusd.git
+    git_hash: df47f0cf9fbc51638a9b5acbfdceec7b31e7ae0d # current head of foundry/22.05a branch

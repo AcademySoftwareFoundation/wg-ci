@@ -1,0 +1,20 @@
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH) # remove one directory level i.e. "cmake/"
+message(STATUS "Found LZ4: ${_IMPORT_PREFIX}")
+
+if(NOT TARGET lz4::lz4)
+    add_library(lz4::lz4 {{ 'SHARED' if shared else 'STATIC' }} IMPORTED)
+    set_target_properties(lz4::lz4
+        PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+        {% if os == "Windows" and shared %}
+            IMPORTED_IMPLIB   "${_IMPORT_PREFIX}/lib/{{libprefix}}lz4.lib"
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/{{libprefix}}lz4.dll"
+        {% else %}
+            IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib/{{libprefix}}lz4.{{libsuffix}}"
+        {% endif %}
+    )
+endif()
+
+unset(_IMPORT_PREFIX)

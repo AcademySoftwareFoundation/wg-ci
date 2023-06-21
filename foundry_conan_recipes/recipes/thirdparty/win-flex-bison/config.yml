@@ -1,0 +1,12 @@
+versions:
+  "2.5.24":
+    folder: "all"
+    variants:
+      platforms:
+        - win
+      build_types:
+        - Release
+      config:
+        pkgref_namespace: null
+      only_profiles:
+        - vfx20

@@ -1,0 +1,22 @@
+if(CMAKE_VERSION VERSION_LESS 3.10.0)
+    message(FATAL_ERROR "OpenNURBS requires at least CMake version 3.10.0")
+endif()
+
+get_filename_component(_openNurbs_install_prefix "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
+message(STATUS "Found OpenNURBS: ${_openNurbs_install_prefix}")
+
+if(NOT TARGET OpenNURBS::OpenNURBS)
+    add_library(OpenNURBS::OpenNURBS IMPORTED STATIC)
+
+    set_target_properties(OpenNURBS::OpenNURBS
+        PROPERTIES
+            INTERFACE_INCLUDE_DIRECTORIES "${_openNurbs_install_prefix}/include"
+            IMPORTED_LOCATION "${_openNurbs_install_prefix}/lib/{{LIBRARY_PREFIX}}{{LIBRARY_NAME}}{{LIBRARY_SUFFIX}}"
+
+        {% if os == "Linux" %}
+            IMPORTED_NO_SONAME true
+        {% endif %}
+    )
+endif()
+
+unset(_openNurbs_install_prefix)

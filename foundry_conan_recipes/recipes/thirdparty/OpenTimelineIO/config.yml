@@ -1,0 +1,11 @@
+versions:
+  "0.14.0":
+    folder: "all"
+    variants:
+      only_profiles:
+        - vfx20
+  "0.15.0":
+    folder: "all"
+    variants:
+      only_profiles:
+        - vfx20

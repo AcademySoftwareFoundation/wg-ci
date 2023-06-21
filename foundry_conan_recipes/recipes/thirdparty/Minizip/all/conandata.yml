@@ -1,0 +1,8 @@
+# From the minizip source page (the original writers website)
+# http://www.winimage.com/zLibDll/minizip.html It mentions that minizip is now
+# part of zlib under contrib/minizip.  Looking at the Changes it mentions it is
+# still version 1.1, so we retain that version number; rather than using zlibs.
+sources:
+  "1.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/zlib.git
+    git_hash: cacf7f1d4e3d44d871b605da3b647f07d718623f # tag v1.2.11

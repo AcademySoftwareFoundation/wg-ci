@@ -1,0 +1,7 @@
+sources:
+  "1.0.0-alpha.6":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/OpenAssetIO-Test-CMake.git
+    git_hash: bec079804c122a5cede22c62e1055c674b5bd172  # SHA of tag v1.0.0-alpha.1
+  "1.0.0-alpha.10":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/OpenAssetIO-Test-CMake.git
+    git_hash: bec079804c122a5cede22c62e1055c674b5bd172  # SHA of tag v1.0.0-alpha.1

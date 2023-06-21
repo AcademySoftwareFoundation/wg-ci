@@ -1,0 +1,5 @@
+sources:
+  "0.2.3":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/libspnav.git
+    git_hash: 872c7bd7583fc17d409cc272d9e8ae7e450552ff # commit hash for tag v0.2.3
+    

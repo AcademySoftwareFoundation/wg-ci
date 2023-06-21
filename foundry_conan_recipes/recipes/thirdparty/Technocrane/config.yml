@@ -1,0 +1,8 @@
+versions:
+  "20210828":
+    folder: "all"
+    variants:
+      platforms:
+        - win
+      build_types:
+        - Release

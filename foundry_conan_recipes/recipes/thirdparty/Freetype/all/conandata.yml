@@ -1,0 +1,4 @@
+sources:
+  "2.10.4":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/freetype2.git
+    git_hash: 6a2b3e4007e794bfc6c91030d0ed987f925164a8 # tag VER-2-10-4

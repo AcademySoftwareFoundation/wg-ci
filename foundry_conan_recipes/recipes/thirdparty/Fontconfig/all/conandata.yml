@@ -1,0 +1,4 @@
+sources:
+  "2.13.93":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/fontconfig.git
+    git_hash: d06103e3e764bd43758e213414a1716858ab384c # tag 2.13.93

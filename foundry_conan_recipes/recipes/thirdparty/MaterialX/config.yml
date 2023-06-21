@@ -1,0 +1,24 @@
+versions:
+  "1.38.6":
+    folder: "all"
+    variants:
+      vfx22:
+        options:
+          - python_version: None
+            aces_version: None
+          - python_version: "3.9"
+            aces_version: "1.2"
+        config:
+          pkgref_namespace: null
+        only_profiles:
+          - vfx22
+      vfx23:
+        options:
+          - python_version: None
+            aces_version: None
+          - python_version: "3.10"
+            aces_version: "1.3"
+        config:
+          pkgref_namespace: null
+        only_profiles:
+          - vfx23

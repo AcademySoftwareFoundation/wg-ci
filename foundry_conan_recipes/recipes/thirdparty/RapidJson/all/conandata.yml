@@ -1,0 +1,4 @@
+sources:
+  "1.1.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/rapidjson.git
+    git_hash: f54b0e47a08782a6131cc3d60f94d038fa6e0a51  # #Tag v1.1.0.

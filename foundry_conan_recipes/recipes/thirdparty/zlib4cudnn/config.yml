@@ -1,0 +1,6 @@
+versions:
+  "1.2.11":
+    folder: "all"
+    variants:
+      excluded_profiles:
+        - vfx20

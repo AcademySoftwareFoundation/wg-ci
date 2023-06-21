@@ -1,0 +1,13 @@
+sources:
+  "2.5.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/pybind11.git
+    git_hash: 7f81faa4763da87a3a1517d9a1f50ce0110d3258  # Tag v2.5.0 + Foundry-specific modifications.
+  "2.6.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/pybind11.git
+    git_hash: f1abf5d9159b805674197f6bc443592e631c9130
+  "2.9.1":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/pybind11.git
+    git_hash: ffa346860b306c9bbfb341aed9c14c067751feb8  # Tag v2.9.1
+  "2.9.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/pybind11.git
+    git_hash: 3275f8549d24e8b28c725e70520e00d515b09cee  # Foundry v2.9.2 branch

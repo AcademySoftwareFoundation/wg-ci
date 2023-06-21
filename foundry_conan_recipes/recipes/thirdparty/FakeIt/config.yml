@@ -1,0 +1,6 @@
+versions:
+  "2.0.9":
+    folder: "all"
+    variants:
+      config:
+        pkgref_namespace: null

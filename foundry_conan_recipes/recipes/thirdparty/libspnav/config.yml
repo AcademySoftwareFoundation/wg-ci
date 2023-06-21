@@ -1,0 +1,10 @@
+versions:
+  "0.2.3":
+    folder: "all"
+    variants:
+      options:
+        - shared: False
+      platforms:
+        - linux
+      config:
+        pkgref_namespace: null

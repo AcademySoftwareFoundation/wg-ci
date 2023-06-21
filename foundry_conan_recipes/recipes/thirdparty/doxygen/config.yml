@@ -1,0 +1,19 @@
+versions:
+  "1.8.20":
+    folder: all
+    variants:
+      config:
+        pkgref_namespace: null
+      only_profiles:
+        - vfx22
+      build_types:
+        - Release
+  "1.9.6":
+    folder: all
+    variants:
+      config:
+        pkgref_namespace: null
+      only_profiles:
+        - vfx22
+      build_types:
+        - Release

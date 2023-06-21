@@ -1,0 +1,27 @@
+versions:
+  "20121115":
+    folder: "all"
+    variants:
+      only_profiles:
+        - vfx20
+  "20180212":
+    folder: "all"
+    variants:
+      excluded_profiles:
+        - vfx20
+      platforms:
+        - win
+        - linux
+        - mac
+      config:
+        pkgref_namespace: null
+    variants_foundrygl:
+      excluded_profiles:
+        - vfx20
+      platforms:
+        - mac
+        - mac_arm
+      options:
+          Qt:GLBackend: FoundryGL
+      config:
+        pkgref_namespace: null

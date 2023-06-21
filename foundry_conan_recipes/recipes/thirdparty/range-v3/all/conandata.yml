@@ -1,0 +1,4 @@
+sources:
+  "0.12.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/range-v3.git
+    git_hash: 3891b20ede0b5db5b2131107851cebd507fa722c # SHA for HEAD of foundry/v0.12.0 branch

@@ -1,0 +1,7 @@
+sources:
+  "2.14.02":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/nasm.git
+    git_hash: 713e7b6da19cfef3a42f6844cab2ac21ffca0341 # HEAD of branch foundry/v2.14.02
+
+build-environment:
+  conan: 1.28.1

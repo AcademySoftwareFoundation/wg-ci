@@ -1,0 +1,87 @@
+if (CMAKE_VERSION VERSION_LESS 3.10.0)
+    message(FATAL_ERROR "CUDA Config requires CMake 3.10+")
+endif()
+
+# Protect against multiple inclusion, which would fail when already imported targets are added once more.
+set(_targetsDefined)
+set(_targetsNotDefined)
+set(_expectedTargets)
+
+foreach(_expectedTarget CUDA::NVCC CUDA::Headers CUDA::cudart CUDA::cuFFT CUDA::nvrtc)
+    list(APPEND _expectedTargets ${_expectedTarget})
+
+    if(NOT TARGET ${_expectedTarget})
+        list(APPEND _targetsNotDefined ${_expectedTarget})
+    endif()
+
+    if(TARGET ${_expectedTarget})
+        list(APPEND _targetsDefined ${_expectedTarget})
+    endif()
+endforeach()
+
+
+# All expected targets are defined, we're done
+if("${_targetsDefined}" STREQUAL "${_expectedTargets}")
+    unset(_targetsDefined)
+    unset(_targetsNotDefined)
+    unset(_expectedTargets)
+    return()
+endif()
+
+if(NOT "${_targetsDefined}" STREQUAL "")
+    message(FATAL_ERROR "Some (but not all) targets in this export set were already defined.\nTargets Defined: ${_targetsDefined}\nTargets not yet defined: ${_targetsNotDefined}\n")
+endif()
+unset(_targetsDefined)
+unset(_targetsNotDefined)
+unset(_expectedTargets)
+
+
+# Compute the installation prefix relative to this file.
+get_filename_component(_IMPORT_PREFIX "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
+if(_IMPORT_PREFIX STREQUAL "/")
+    set(_IMPORT_PREFIX "")
+endif()
+
+# Set the nvrtc dso name, so that downstream projects can use it if needed
+set(CUDA_NVRTC_LIBNAME {{nvrtc_lib_name}})
+
+add_executable(CUDA::NVCC IMPORTED)
+add_library(CUDA::Headers INTERFACE IMPORTED)
+add_library(CUDA::cudart SHARED IMPORTED)
+add_library(CUDA::cuFFT SHARED IMPORTED)
+add_library(CUDA::nvrtc SHARED IMPORTED)
+
+set_target_properties(CUDA::NVCC
+    PROPERTIES{% if os == "Linux" %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/nvcc"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/nvcc.exe"{% endif %}
+)
+
+set_target_properties(CUDA::Headers
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"
+)
+
+set_target_properties(CUDA::cudart
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"{% if os == "Linux" %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib64/libcudart.so"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/cudart64_110.dll"
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/x64/cudart.lib"{% endif %}
+)
+
+set_target_properties(CUDA::cuFFT
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"{% if os == "Linux" %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib64/libcufft.so"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/cufft64_10.dll"
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/x64/cufft.lib"{% endif %}
+)
+set_target_properties(CUDA::nvrtc
+    PROPERTIES
+        INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include"{% if os == "Linux" %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/lib64/${CUDA_NVRTC_LIBNAME}"{% else %}
+        IMPORTED_LOCATION "${_IMPORT_PREFIX}/bin/${CUDA_NVRTC_LIBNAME}"
+        IMPORTED_IMPLIB "${_IMPORT_PREFIX}/lib/x64/nvrtc.lib"{% endif %}
+)

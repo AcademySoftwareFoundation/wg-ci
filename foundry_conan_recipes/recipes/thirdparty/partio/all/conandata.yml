@@ -1,0 +1,4 @@
+sources:
+  "1.14.6":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/partio.git
+    git_hash: 5864e050cb3ada5f9f59dd9cd0c37864f4c0c459 # SHA for HEAD of foundry/v1.14.6

@@ -1,0 +1,8 @@
+versions:
+  "5.0.0":
+    folder: "all"
+    variants:
+      platforms:
+        - mac
+      only_profiles:
+        - vfx20

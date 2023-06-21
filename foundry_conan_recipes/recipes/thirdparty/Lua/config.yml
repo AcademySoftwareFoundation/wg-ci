@@ -1,0 +1,7 @@
+versions:
+  "5.1.5":
+    folder: "5.1"
+    variants:
+      options:
+        - shared: True
+        - shared: False

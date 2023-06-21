@@ -1,0 +1,19 @@
+versions:
+  "1.7.10":
+    folder: "all"
+    variants:
+      options:
+        - shared: False
+        - shared: True
+      only_profiles:
+        - vfx20
+  "1.8.3":
+    folder: "all"
+    variants:
+      options:
+        - shared: False
+        - shared: True
+      config:
+        pkgref_namespace: null
+      excluded_profiles:
+        - vfx20

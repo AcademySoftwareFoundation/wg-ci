@@ -1,0 +1,16 @@
+sources:
+  "2.7.18":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/cpython.git
+    git_hash: 1838768f621a6aef21460859ed3097189d36e4c8 # head of foundry/v2.7.18 branch
+
+  "3.7.7":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/cpython.git
+    git_hash: 74691790627c2afa45433f331ca8a1b9f9990734 # head of foundry/v3.7.7 branch
+
+  "3.9.10":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/cpython.git
+    git_hash: fc80903a66443a1e08a6e9ed35c020582aaf32ef # head of foundry/v3.9.10 branch
+
+  "3.10.10":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/cpython.git
+    git_hash: 693bcebd65ca8b74a44d766335bdab0707908332 # head of foundry/v3.10.10 branch

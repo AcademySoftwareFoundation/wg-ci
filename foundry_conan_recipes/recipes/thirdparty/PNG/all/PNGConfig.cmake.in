@@ -1,0 +1,33 @@
+if (CMAKE_VERSION VERSION_LESS 3.0.0)
+  message(FATAL_ERROR "PNG requires at least CMake version 3.0.0")
+endif()
+
+get_filename_component(_png_install_prefix "${{CMAKE_CURRENT_LIST_DIR}}/.." ABSOLUTE)
+
+message(STATUS "Found PNG: ${{_png_install_prefix}}")
+
+if (NOT TARGET PNG::PNG)
+
+  add_library(PNG::PNG IMPORTED {LIBPNG_LIBTYPE})
+  set_target_properties(
+      PNG::PNG
+      PROPERTIES
+      INTERFACE_INCLUDE_DIRECTORIES ${{_png_install_prefix}}/include
+      IMPORTED_LOCATION ${{_png_install_prefix}}/lib/{LIBPNG_LIBNAME}{LIBPNG_LIBEXT}
+  )
+  if(UNIX AND NOT APPLE)
+    set_target_properties(
+      PNG::PNG
+      PROPERTIES
+      INTERFACE_LINK_LIBRARIES "zlib::zlib;{LIBPNG_LINUX_LNK_LIBS}"
+    )
+  else()
+    set_target_properties(
+    PNG::PNG
+    PROPERTIES
+    INTERFACE_LINK_LIBRARIES "zlib::zlib"
+    )
+  endif()
+  find_package(zlib REQUIRED NO_SYSTEM_ENVIRONMENT_PATH)
+endif()
+

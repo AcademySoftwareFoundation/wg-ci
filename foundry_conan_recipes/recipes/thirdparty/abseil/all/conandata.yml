@@ -1,0 +1,7 @@
+sources:
+  "20200923.2":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/abseil-cpp.git
+    git_hash: 0f3bb466b868b523cf1dc9b2aaaed65c77b28862  # branch foundry/v20200923.2
+  "20211102.0":
+    git_url: git@a_gitlab_url:libraries/conan/thirdparty/abseil-cpp.git
+    git_hash: 215105818dfde3174fe799600bb0f3cae233d0bf  # tag 20211102.0
