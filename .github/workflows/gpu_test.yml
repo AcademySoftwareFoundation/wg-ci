@@ -26,5 +26,6 @@ jobs:
           #sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub
           #sudo apt-get update
           #sudo apt -y install libnpp-11-8
+          cat /proc/driver/nvidia/version
           dpkg -l | grep -i nvidia
           ls -l /usr/lib/x86_64-linux-gnu/libnvoptix.so.*
