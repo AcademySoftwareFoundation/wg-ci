@@ -7,25 +7,37 @@ on:
 jobs:
   ubuntu-gpu:
     runs-on: ubuntu-20.04-gpu-6c-112g-336h-16vr
+    container:
+      image: aswf/ci-common:3
+      env:
+        - DISPLAY: $DISPLAY
+        - QT_X11_NO_MITSHM: 1
+      volumes:
+        - /tmp/.X11-unix:/tmp/.X11-unix
+      options: --gpus all
     steps:
-      - name: Update APT repo for CUDA
-        run: |
-          cat /etc/apt/sources.list
-          ls -l /etc/apt/sources.list.d/
-          echo '#### cuda.list ####'
-          cat /etc/apt/sources.list.d/cuda.list
-          echo '#### cuda.list.save ####'
-          cat /etc/apt/sources.list.d/cuda.list.save
-          echo '#### nvidia-docker.list ####'
-          cat /etc/apt/sources.list.d/nvidia-docker.list
-          echo '### Get rid of cuda.list.save ###'
-          #sudo rm /etc/apt/sources.list.d/cuda.list.save
-          #sudo apt-key del 7fa2af80
-          #wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb
-          #sudo dpkg -i cuda-keyring_1.0-1_all.deb
-          #sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub
-          #sudo apt-get update
-          #sudo apt -y install libnpp-11-8
-          cat /proc/driver/nvidia/version
-          dpkg -l | grep -i nvidia
-          ls -l /usr/lib/x86_64-linux-gnu/libnvoptix.so.*
+       - name: run glxinfo inside container
+         run: |
+           nvidia-smi
+           glxinfo
+#      - name: Update APT repo for CUDA
+#        run: |
+#          cat /etc/apt/sources.list
+#          ls -l /etc/apt/sources.list.d/
+#          echo '#### cuda.list ####'
+#          cat /etc/apt/sources.list.d/cuda.list
+#          echo '#### cuda.list.save ####'
+#          cat /etc/apt/sources.list.d/cuda.list.save
+#          echo '#### nvidia-docker.list ####'
+#          cat /etc/apt/sources.list.d/nvidia-docker.list
+#          echo '### Get rid of cuda.list.save ###'
+#          #sudo rm /etc/apt/sources.list.d/cuda.list.save
+#          #sudo apt-key del 7fa2af80
+#          #wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.0-1_all.deb
+#          #sudo dpkg -i cuda-keyring_1.0-1_all.deb
+#          #sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub
+#          #sudo apt-get update
+#          #sudo apt -y install libnpp-11-8
+#          cat /proc/driver/nvidia/version
+#          dpkg -l | grep -i nvidia
+#          ls -l /usr/lib/x86_64-linux-gnu/libnvoptix.so.*
