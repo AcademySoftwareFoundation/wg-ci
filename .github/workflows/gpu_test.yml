@@ -6,7 +6,7 @@ on:
   pull_request:
 jobs:
   ubuntu-gpu:
-    runs-on: ubuntu-20.04-gpu-6c-112g-336h-16vr
+    runs-on: ubuntu-22.04-gpu-6c-112g-336h-16vr
     container:
       image: aswf/ci-common:3
       env:
