@@ -10,8 +10,8 @@ jobs:
     container:
       image: aswf/ci-common:3
       env:
-        - DISPLAY: $DISPLAY
-        - QT_X11_NO_MITSHM: 1
+        DISPLAY: $DISPLAY
+        QT_X11_NO_MITSHM: 1
       volumes:
         - /tmp/.X11-unix:/tmp/.X11-unix
       options: --gpus all
