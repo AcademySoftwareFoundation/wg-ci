@@ -6,20 +6,21 @@ on:
   pull_request:
 jobs:
   ubuntu-gpu:
-    runs-on: ubuntu-20.04-gpu-6c-112g-336h-16vr
-    container:
-      image: aswf/ci-common:3-clang15
-      env:
-        DISPLAY: $DISPLAY
-        QT_X11_NO_MITSHM: 1
-      volumes:
-        - /tmp/.X11-unix:/tmp/.X11-unix
-      options: --gpus all
+#    runs-on: ubuntu-20.04-gpu-6c-112g-336h-16vr
+    runs-on: ubuntu-20.04-gpu-12c-224g-672h-32vr
+#    container:
+#      image: aswf/ci-common:3-clang15
+#      env:
+#        DISPLAY: $DISPLAY
+#        QT_X11_NO_MITSHM: 1
+#      volumes:
+#        - /tmp/.X11-unix:/tmp/.X11-unix
+#      options: --gpus all
     steps:
        - name: run glxinfo inside container
          run: |
            nvidia-smi
-           glxinfo
+#           glxinfo
 #      - name: Update APT repo for CUDA
 #        run: |
 #          cat /etc/apt/sources.list
