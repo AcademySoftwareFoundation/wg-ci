@@ -39,6 +39,8 @@ The TAC member sponsor of this working group is Daniel Heckenberg.
 
 ## Deliverables
 
+[CI Working Group Wiki](https://wiki.aswf.io/display/CIWG)
+
 Docker configurations for VFX Reference Platform guided dependencies on [GitHub](https://github.com/AcademySoftwareFoundation/aswf-docker)
 
 Docker container images providing VFX Reference Platform compliant build environments hosted from an [unthrottled Docker Hub account](https://hub.docker.com/u/aswf)
