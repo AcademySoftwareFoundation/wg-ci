@@ -7,7 +7,7 @@ on:
 jobs:
   ubuntu-gpu:
 #    runs-on: ubuntu-20.04-gpu-6c-112g-336h-16vr
-    runs-on: ubuntu-20.04-gpu-12c-224g-672h-32vr
+    runs-on: ubuntu-20.04-gpu-8c-32g-300h
 #    container:
 #      image: aswf/ci-common:3-clang15
 #      env:
