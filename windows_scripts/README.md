@@ -7,7 +7,7 @@ Without VC22 and windows sdk, compiling all the libraries requires 30 GB of disc
 - download and install vc22 (community edition) if not already done.
 - download and install windows sdk.
 - download and unzip cmake: https://github.com/Kitware/CMake/releases/download/v3.29.2/cmake-3.29.2-windows-x86_64.zip
-- create the installation directory (D:\ASWF for example) and copy the .bat files provided in the 'windows_scripts' folder.
+- create the installation directory (D:\ASWF for example) and copy the .bat files provided in this folder ('windows_scripts').
 - download prebuild boost: https://sourceforge.net/projects/boost/files/boost-binaries/1.80.0/boost_1_80_0-msvc-14.3-64.exe/download
 installation take some time.
  
