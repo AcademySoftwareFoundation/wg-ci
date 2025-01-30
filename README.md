@@ -1,26 +1,26 @@
 # Compiling ASWF (and related) libraries on windows (with Visual Studio 2022)
-this document describes the steps to compile 
-OpenSubdiv, ptex, seexpr, partio, alembic, OpenExr, OpenVdb, MaterialX, OpenColorIO, OpenImageIO, OpenTimelineIO, OpenFx, OpenShadingLanguage and OpenUSD. Without VC22 and windows sdk, compiling all the libraries requires 30 GB of disc space and take a day or two to complete. All the libraries are compiled on the same directory (D:\ASWF for me, but fill free to choose whatever suits your environment).
+This document describes the steps to compile 
+OpenSubdiv, ptex, seexpr, partio, alembic, OpenExr, OpenVdb, MaterialX, OpenColorIO, OpenImageIO, OpenTimelineIO, OpenFx, OpenShadingLanguage and OpenUSD. 
+Without VC22 and windows sdk, compiling all the libraries requires 30 GB of disc space and take a day or two to complete. All the libraries are compiled on the same directory (D:\ASWF for me, but fill free to choose whatever suits your environment, if possible without a space in the path).
 
 ## Prerequisite
 - download and install vc22 (community edition) if not already done.
-- download and install windows sdk
-- downlaod and unzip cmake: https://github.com/Kitware/CMake/releases/download/v3.29.2/cmake-3.29.2-windows-x86_64.zip
-- create the installation directory (D:\ASWF) and copy the .bat files provided in the 'windows_scripts' folder.
-- download pre built boost: https://sourceforge.net/projects/boost/files/boost-binaries/1.80.0/boost_1_80_0-msvc-14.3-64.exe/download
-installtion take some time.
+- download and install windows sdk.
+- download and unzip cmake: https://github.com/Kitware/CMake/releases/download/v3.29.2/cmake-3.29.2-windows-x86_64.zip
+- create the installation directory (D:\ASWF for example) and copy the .bat files provided in the 'windows_scripts' folder.
+- download prebuild boost: https://sourceforge.net/projects/boost/files/boost-binaries/1.80.0/boost_1_80_0-msvc-14.3-64.exe/download
+installation take some time.
  
 - download and unzip doxygen: https://www.doxygen.nl/download.html
-- download and unzip prebuild llvm : https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.4/clang+llvm-18.1.4-x86_64-pc-windows-msvc.tar.xz
-- dowload and unzip pthread: http://mirrors.kernel.org/sourceware/pthreads-win32/pthreads-w32-2-9-1-release.zip
+- download and unzip prebuild LLVM : https://github.com/llvm/llvm-project/releases/download/llvmorg-18.1.4/clang+llvm-18.1.4-x86_64-pc-windows-msvc.tar.xz
+- download and unzip pthread: http://mirrors.kernel.org/sourceware/pthreads-win32/pthreads-w32-2-9-1-release.zip
 
-- download and unzip tbb: https://github.com/uxlfoundation/oneTBB/releases/download/v2020.3/tbb-2020.3-win.zip
+- download and unzip TBB: https://github.com/uxlfoundation/oneTBB/releases/download/v2020.3/tbb-2020.3-win.zip
 
-- edit the build_setup.bat file, and set pathes between the 2 
-`REM #####################`
+- edit the build_setup.bat file, and set paths between the 2 `REM #####################`
 
 ## libraries
-This the libraries that are needed. Some are used by one of the target, some by many. There are compiled by the bat scripts the first time there are needed. So, for example, go to https://github.com/pybind/pybind11/tree/master, click on the code button, downlad as zip, and unzip the file in the main folder (that will create a pybind11-master folder).
+These are the needed libraries to compile everything. Some are used by one of the target, some by many. They are compiled by the 'bat' scripts the first time there are needed. So, for example, go to https://github.com/pybind/pybind11/tree/master, click on the code button, download as zip, and unzip the file in the main folder (that will create a pybind11-master folder).
 - zlib: https://www.zlib.net/zlib-1.3.1.tar.gz
 - pybind11: https://github.com/pybind/pybind11/tree/master
 - blosc: https://github.com/Blosc/c-blosc
@@ -42,13 +42,15 @@ This the libraries that are needed. Some are used by one of the target, some by 
 
 ## ASWF, Disney and Pixar libraries
 Open a command prompt. Go to the directory where the libraries are being compiled. First, launch `build_setup`. All the steps should be executed in this command prompt. If not, build_setup should be relaunched to setup the compilation environment.
-Everythink is installed in the "install" directory.
+Everything is installed in the "install" directory.
+
+### Some Libraries
+- run `build_libs` to compiled some of the needed libraries, already downloaded.
 
 ### OpenEXR: 
 - download https://github.com/AcademySoftwareFoundation/openexr
 (code->download as zip, unzip in the main folder)
 - launch `build_openex`
-- 
 - test: download from https://polyhaven.com/a/qwantani_afternoon in the 'samples' folder
         run `exrinfo samples\qwantani_afternoon_4k.exr`
 
@@ -58,7 +60,7 @@ Everythink is installed in the "install" directory.
 - test: run `install\bin\tutorials\osd_tutorial_0.exe`
 
 ### ptex:
-- downlaod https://github.com/wdas/ptex
+- download https://github.com/wdas/ptex
 - run `build_ptex`
 - test: download from https://ptex.us/samples/teapot.zip and unzip it in the 'samples' folder
   - run `ptxinfo samples\teapot\teapot.ptx`
@@ -79,16 +81,16 @@ Everythink is installed in the "install" directory.
    - run `vdb_print samples\fire.vdb with 
 
 ### MaterialX: 
-  there are 2 build scripts for materialx: 'build_materialx.bat' and 'build_materialx_git.bat'.
+  There are 2 build scripts for MaterialX: 'build_materialx.bat' and 'build_materialx_git.bat'.
 
-  the first one works on an unziped file, but is missing viewer libraries, so it buids the libraries and the python bindings, but not the viewer.
+  The first one works on an unzipped file, but is missing viewer libraries, so it builds the libraries and the python bindings, but not the viewer.
 
-  the second one use git to download materialx sources and dependencies and build materilax libraries, python binding and the viewer.
-#### Without viewer
+  The second one use git to download MaterialX sources and dependencies and build MaterialX libraries, python binding and the viewer.
+#### Without viewer:
 - download https://github.com/AcademySoftwareFoundation/MaterialX
 - run `build_materialx`
  
-#### With viewer
+#### With viewer:
 - run `build_materialx_git`
 - test: run `MaterialXView.exe`
 
