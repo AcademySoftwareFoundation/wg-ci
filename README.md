@@ -6,7 +6,7 @@ OpenSubdiv, ptex, seexpr, partio, alembic, OpenExr, OpenVdb, MaterialX, OpenColo
 - download and install vc22 (community edition) if not already done.
 - download and install windows sdk
 - downlaod and unzip cmake: https://github.com/Kitware/CMake/releases/download/v3.29.2/cmake-3.29.2-windows-x86_64.zip
-- create the installation directory (D:\ASWF) and copy the .bat files provided there.
+- create the installation directory (D:\ASWF) and copy the .bat files provided in the 'windows_scripts' folder.
 - download pre built boost: https://sourceforge.net/projects/boost/files/boost-binaries/1.80.0/boost_1_80_0-msvc-14.3-64.exe/download
 installtion take some time.
  
