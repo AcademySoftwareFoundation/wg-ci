@@ -19,7 +19,7 @@ installation take some time.
 
 - edit the build_setup.bat file, and set paths between the 2 `REM #####################`
 
-## libraries
+## External Libraries
 These are the needed libraries to compile everything. Some are used by one of the target, some by many. They are compiled by the 'bat' scripts the first time there are needed. So, for example, go to https://github.com/pybind/pybind11/tree/master, click on the code button, download as zip, and unzip the file in the main folder (that will create a pybind11-master folder).
 - zlib: https://www.zlib.net/zlib-1.3.1.tar.gz
 - pybind11: https://github.com/pybind/pybind11/tree/master
