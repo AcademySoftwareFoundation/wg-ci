@@ -1,3 +1,5 @@
+![CI WG Logo](assets/Continuous%20Integration%20WG%20Logo%20Color.svg)
+
 # ASWF Continuous Integration Working Group
 
 The ASWF's investment in CI build infrastructure provides the industry's open source software community with the solid foundation needed to improve best practices and address the unique challenges we face.
