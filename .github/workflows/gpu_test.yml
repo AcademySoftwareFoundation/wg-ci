@@ -13,7 +13,7 @@ jobs:
           dpkg -l | grep container-toolkit
       - name: upgrade NVIDIA Container Toolkit
         run: |
-          apt-get install --only-upgrade nvidia-container-toolkit
+          sudo apt-get install --only-upgrade nvidia-container-toolkit
       - name: new version of NVIDIA Container Toolkit
         run: |
           dpkg -l | grep container-toolkit
@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-20.04-gpu-t4-4c-16g-176h
     container:
       image: aswf/ci-osl:2025
-      options: --gpus all,capabilities=graphics,utility
+      options: -e NVIDIA_DRIVER_CAPABILITIES=graphics,utility --gpus all
 #     env:
 #       DISPLAY: $DISPLAY
 #       QT_X11_NO_MITSHM: 1
