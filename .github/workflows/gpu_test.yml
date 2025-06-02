@@ -5,6 +5,14 @@ on:
       - 'main'
   pull_request:
 jobs:
+  container-toolkit:
+    runs-on: ubuntu-20.04-gpu-t4-4c-16g-176h
+    steps:
+      - name: version of NVIDIA Container Toolkit
+        run: |
+          dpkg -l | grep conainer-toolkit
+          apt-get install --only-upgrade nvidia-container-toolkit
+          dpkg -l | grep container-toolkit
   ubuntu-gpu:
 #    runs-on: ubuntu-20.04-gpu-6c-112g-336h-16vr
     runs-on: ubuntu-20.04-gpu-t4-4c-16g-176h
