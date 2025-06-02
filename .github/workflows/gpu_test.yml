@@ -8,18 +8,21 @@ jobs:
   ubuntu-gpu:
 #    runs-on: ubuntu-20.04-gpu-6c-112g-336h-16vr
     runs-on: ubuntu-20.04-gpu-t4-4c-16g-176h
-#    container:
-#      image: aswf/ci-common:3-clang15
-#      env:
-#        DISPLAY: $DISPLAY
-#        QT_X11_NO_MITSHM: 1
-#      volumes:
-#        - /tmp/.X11-unix:/tmp/.X11-unix
-#      options: --gpus all
+    container:
+      image: aswf/ci-osl:2025
+      options: --gpus 'all,"capabilities=graphics,utility"'
+#     env:
+#       DISPLAY: $DISPLAY
+#       QT_X11_NO_MITSHM: 1
+#     volumes:
+#       - /tmp/.X11-unix:/tmp/.X11-unix
+#     options: --gpus 'all,"capabilities=graphics,utility"'
     steps:
        - name: run glxinfo inside container
          run: |
            nvidia-smi
+           mount | grep nvidia
+           ls -l /usr/lib64/libnv*
 #           glxinfo
 #      - name: Update APT repo for CUDA
 #        run: |
