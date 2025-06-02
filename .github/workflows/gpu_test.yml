@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-20.04-gpu-t4-4c-16g-176h
     container:
       image: aswf/ci-osl:2025
-      options: --gpus 'all,"capabilities=graphics,utility"'
+      options: --gpus all,capabilities=graphics,utility
 #     env:
 #       DISPLAY: $DISPLAY
 #       QT_X11_NO_MITSHM: 1
