@@ -10,8 +10,12 @@ jobs:
     steps:
       - name: version of NVIDIA Container Toolkit
         run: |
-          dpkg -l | grep conainer-toolkit
+          dpkg -l | grep container-toolkit
+      - name: upgrade NVIDIA Container Toolkit
+        run: |
           apt-get install --only-upgrade nvidia-container-toolkit
+      - name: new version of NVIDIA Container Toolkit
+        run: |
           dpkg -l | grep container-toolkit
   ubuntu-gpu:
 #    runs-on: ubuntu-20.04-gpu-6c-112g-336h-16vr
