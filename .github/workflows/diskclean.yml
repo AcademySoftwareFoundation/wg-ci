@@ -1,0 +1,21 @@
+name: diskclean
+on:
+  workflow_dispatch:
+jobs:
+  ubuntu-diskclean:
+    runs-on: ubuntu-latest
+    container:
+      image: aswf/ci-oiio:2026
+      options: -v /:/host/root
+    steps:
+       - name: disk space before cleanup
+         run: |
+           df -h /host/root
+       - name: clean up some stuff
+         run: |
+           rm -rf /host/root/usr/share/dotnet \
+            /host/root/usr/local/lib/android \
+            /host/root/usr/local/.ghcup
+       - name: any more disk space after cleanup?
+         run: |
+           df -h /host/root
