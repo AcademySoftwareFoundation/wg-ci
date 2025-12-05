@@ -1,9 +1,6 @@
 name: diskclean
 on:
-  push:
-    branches:
-      - 'main'
-  pull_request:
+  workflow_dispatch:
 jobs:
   ubuntu-diskclean:
     runs-on: ubuntu-latest
