@@ -1,6 +1,10 @@
 name: diskclean
 on:
   workflow_dispatch:
+  push:
+  branches:
+    - 'jfpanisset-patch-6'
+  pull_request:
 jobs:
   ubuntu-diskclean:
     # ubuntu-latest aka ubuntu-24.04 starts out with 2GB more free disk space than ubuntu-22.04
