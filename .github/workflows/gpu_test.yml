@@ -1,0 +1,16 @@
+name: GPU_TEST
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+jobs:
+  ubuntu-gpu:
+    runs-on: ubuntu-20.04-gpu-t4-4c-16g-176h
+    container:
+        image: aswf/ci-common:2027-clang22.1
+        options: '-e NVIDIA_DRIVER_CAPABILITIES=compute,graphics,utility --gpus all'
+    steps:
+      - name: Test NVIDIA driver version
+        run: |
+            nvidia-smi
