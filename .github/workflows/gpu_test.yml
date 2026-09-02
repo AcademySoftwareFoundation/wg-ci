@@ -7,8 +7,10 @@ on:
 jobs:
   ubuntu-gpu:
     runs-on: ubuntu-20.04-gpu-t4-4c-16g-176h
+    container:
+        image: aswf/ci-common:2027-clang22.1
+        options: '-e NVIDIA_DRIVER_CAPABILITIES=compute,graphics,utility --gpus all'
     steps:
-      - name: Update APT repo for CUDA
+      - name: Test NVIDIA driver version
         run: |
-            cat /etc/os-release
             nvidia-smi
