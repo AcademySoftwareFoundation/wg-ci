@@ -6,11 +6,15 @@ on:
   pull_request:
 jobs:
   ubuntu-gpu:
-    runs-on: ubuntu-20.04-gpu-t4-4c-16g-176h
-    container:
-        image: aswf/ci-common:7-clang22.1
-        options: '-e NVIDIA_DRIVER_CAPABILITIES=compute,graphics,utility --gpus all'
+    # runs-on: ubuntu-20.04-gpu-t4-4c-16g-176h
+    runs-on: ubuntu-22.04-8c-32g-300h
+    # container:
+    #     image: aswf/ci-common:7-clang22.1
+    #    options: '-e NVIDIA_DRIVER_CAPABILITIES=compute,graphics,utility --gpus all'
     steps:
-      - name: Test NVIDIA driver version
+      - name: Show runner OS version
         run: |
-            nvidia-smi
+          cat /etc/os-release    
+      # - name: Test NVIDIA driver version
+      #   run: |
+      #      nvidia-smi
